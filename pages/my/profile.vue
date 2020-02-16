@@ -124,16 +124,9 @@ import Textbox from "~/components/ui/Textbox";
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)
-      return redirect("/account/login?return=my/profile");
+      return redirect("/login?return=my/profile");
   },
-  async asyncData({ store }) {
-    let profile = {};
-    let userDetails = await store.dispatch("auth/fetch");
-    profile = Object.assign({}, userDetails);
-    profile.dob = profile.dob || {};
-    profile.state = profile.state || {};
-    return { profile };
-  },
+  async asyncData({ store }) {},
   data() {
     return {
       user: null,
@@ -152,6 +145,14 @@ export default {
     })
   },
   components: { Textbox },
+  async created() {
+    let profile = {};
+    let userDetails = await this.$store.dispatch("auth/fetch");
+    profile = Object.assign({}, userDetails);
+    profile.dob = profile.dob || {};
+    profile.state = profile.state || {};
+    this.profile = profile;
+  },
   async mounted() {
     this.getStates(this.profile.country);
     this.getCities(this.profile.state);

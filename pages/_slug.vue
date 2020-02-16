@@ -1,19 +1,22 @@
 <template>
   <div class="bg-white">
     <h1 v-if="!product">Not found</h1>
-    <div v-else class="relative">
-      <div class="z-10 flex absolute w-full items-center justify-between px-4 py-3 sm:p-0">
+    <div
+      v-else
+      class="relative"
+    >
+      <div class="z-10 absolute w-full">
         <button
           @click="$router.go(-1)"
-          class="mt-1 px-auto py-auto text-center absolute rounded-full left-0 w-10 h-10"
+          class="bg-black opacity-25  mt-1 px-auto py-auto text-center absolute rounded-full top-0 left-0 w-10 h-10"
         >
-          <i class="fa fa-long-arrow-left text-white" />
+          <i class="fa fa-long-arrow-left text-white align-middle" />
         </button>
         <nuxt-link
           to="/search"
-          class="mt-3 px-auto py-auto text-center absolute rounded-full right-0 w-10 h-10"
+          class="bg-black opacity-25 pt-2 mt-1 px-auto py-auto text-center absolute rounded-full top-0 right-0 w-10 h-10"
         >
-          <i class="fa fa-search text-white" />
+          <i class="fa fa-search text-white align-middle" />
         </nuxt-link>
       </div>
       <div
@@ -21,11 +24,12 @@
         class="bg-contain h-48 relative flex justify-center"
       >
         <div
+          v-if="product.vendor.info"
           class="w-3/4 text-xl bg-black text-center py-2 absolute bottom-0 text-white font-bold"
           style="background-color: rgba(0,0,0,.5);"
         >
           <!-- <div class="opacity-100 text-white"></div> -->
-          {{ product.restaurant }}
+          {{ product.vendor.info.restaurant }}
         </div>
       </div>
 
@@ -33,14 +37,17 @@
       <div class="rounded-t-lg z-10 px-4">
         <div class="py-5">
           <div class="flex justify-between items-center text-gray-600 text-sm">
-            <img :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'" class="w-5" />
+            <img
+              :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'"
+              class="w-5"
+            />
             <div>
               <i class="fa fa-history" /> 33min
             </div>
             <div>
               <i class="fa fa-map-marker" /> 27kms
             </div>
-            By {{ product.restaurant }}
+            By {{ product.vendor.info.restaurant }}
             <div v-if="product.stock < 5">Only {{ product.stock }} left</div>
           </div>
           <h1 class="font-bold text-xl">{{ product.name }}</h1>
@@ -64,7 +71,11 @@
           </div>-->
           <h2 class="text-2xl font-bold">{{ product.rate | currency }}</h2>
           <div class="flex justify-around">
-            <CartButtons :product="product" :variant="userSelectedVariant" :notify="true" />
+            <CartButtons
+              :product="product"
+              :variant="userSelectedVariant"
+              :notify="true"
+            />
           </div>
         </div>
         <div class="font-semibold pb-3 text-xs px-5">{{ product.description }}</div>
@@ -74,6 +85,12 @@
         <h3 class="font-bold px-3 text-2xl">About Mom</h3>
         <div class="flex bg-gray-100 rounded-lg p-6 mb-6">
           <img
+            v-if="product.vendor.avatar"
+            class="h-24 w-24 rounded-full mx-0 mr-6"
+            v-lazy="product.vendor.avatar"
+          />
+          <img
+            v-else
             class="h-24 w-24 rounded-full mx-0 mr-6"
             src="https://randomuser.me/api/portraits/women/17.jpg"
           />
@@ -87,31 +104,46 @@
               <i class="fa fa-star" />
               {{product.vendor.rating}} 120 reviews
             </div>
-            <div class="text-gray-600" v-if="product.vendor.info">{{product.vendor.info.speciality}}</div>
+            <div
+              class="text-gray-600"
+              v-if="product.vendor.info"
+            >{{product.vendor.info.speciality}}</div>
           </div>
         </div>
         <h3 class="font-bold px-3 text-2xl">Mom's Today's Menu</h3>
         <div class="flex flex-wrap px-2 py-3 mb-4">
           <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
+            <img
+              src="/seattle.jpg "
+              class="object-contain rounded-lg shadow"
+            />
           </div>
           <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
+            <img
+              src="/seattle.jpg "
+              class="object-contain rounded-lg shadow"
+            />
           </div>
           <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
+            <img
+              src="/seattle.jpg "
+              class="object-contain rounded-lg shadow"
+            />
           </div>
         </div>
-        <h3 class="font-bold px-3 text-2xl">Kitchen Photos</h3>
-        <div class="flex px-2 py-3 mb-4">
-          <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
-          </div>
-          <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
-          </div>
-          <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
+        <div v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
+          <h3 class="font-bold px-3 text-2xl">Kitchen Photos</h3>
+          <div class="flex px-2 py-3 mb-4">
+            <div
+              class="px-2 w-1/3"
+              v-for="(p,ix) in product.vendor.info.kitchenPhotos"
+              :key="ix"
+            >
+              <img
+                v-lazy="p"
+                class="object-contain h-24 rounded-lg shadow"
+              />
+            </div>
           </div>
         </div>
       </div>
