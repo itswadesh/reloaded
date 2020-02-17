@@ -7,7 +7,7 @@
       </div>
       <div class="w-1/3 mx-4 text-center">
         <button
-          @click="applyCoupon(code)"
+          @click="applyOffer(code)"
           class="text-gray-400 text-xl rounded-lg px-6 hover:text-white"
           style="background-color: rgba(0,0,0,.25);"
         >Apply</button>
@@ -29,7 +29,11 @@ export default {
     terms: String
   },
   methods: {
-    ...mapActions({ applyCoupon: "cart/applyCoupon" })
+    ...mapActions({ applyCoupon: "cart/applyCoupon" }),
+    applyOffer(code) {
+      this.applyCoupon(code);
+      this.$router.push("/cart");
+    }
   }
 };
 </script>

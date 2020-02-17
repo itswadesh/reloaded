@@ -46,16 +46,22 @@
         </div>-->
         <CartBanners />
       </div>
-      <div class="w-full flex flex-wrap hr-line justify-between pb-2 relative bg-white my-4">
-        <input
-          type="search"
-          class="bg-gray-200 border p-2 w-full rounded focus:outline-none"
-          placeholder="Promo Code"
-        />
+      <div
+        class="mx-4 my-4 p-2 w-full flex items-center justify-between bg-gray-100"
+        v-if="cart.discount"
+      >
+        Promo Code
+        {{cart.discount.code}}
         <button
+          v-if="cart.discount.code"
           @click="applyCoupon(0)"
-          class="absolute right-0 text-sm mt-2 text-gray-500 pr-2 focus:outline-none hover:text-gray-600 cursor-pointer"
-        >APPLY</button>
+          class="text-sm text-gray-500 focus:outline-none hover:text-gray-600 cursor-pointer"
+        >REMOVE</button>
+        <nuxt-link
+          to="/offers"
+          v-else
+          class="block text-sm text-gray-500 focus:outline-none hover:text-gray-600 cursor-pointer"
+        >APPLY</nuxt-link>
       </div>
       <CartSummary :cart="cart">
         <Button @click="$router.push('/checkout/address')" color="primary">SELECT ADDRESS</Button>

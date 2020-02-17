@@ -10,17 +10,14 @@
         </div>
         <div class="flex justify-between mt-1">
           <div class="w-1/2 text-sm text-left">Item discount</div>
-          <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.discount | currency}}</div>
+          <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.discount.amount | currency}}</div>
         </div>
-        <div
-          class="flex justify-between mt-1"
-          v-if="$store.state.settings && $store.state.settings.shipping"
-        >
+        <div class="flex justify-between mt-1" v-if="cart.shipping">
           <div class="w-1/2 text-sm text-left">Shipping fee</div>
           <div
             class="ml-2 w-1/2 text-black-400 text-right"
-            v-if="$store.state.settings.shipping.charge>0"
-          >{{$store.state.settings.shipping.charge| currency}}</div>
+            v-if="cart.shipping.charge>0"
+          >{{cart.shipping.charge| currency}}</div>
           <div class="ml-2 w-1/2 text-black-400 text-right" v-else>FREE</div>
         </div>
         <div class="mt-1">
