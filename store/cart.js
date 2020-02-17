@@ -47,8 +47,9 @@ const actions = {
       commit("setErr", e, { root: true });
     }
   },
-  applyDiscount({ commit }, payload) {
-    commit("applyDiscount", payload);
+  async applyCoupon({ commit }, payload) {
+    let data = await this.$axios.$get("api/coupons/apply/" + payload);
+    commit("setCart", data);
   },
   async checkout(
     { commit, state, rootState, getters },
@@ -108,7 +109,7 @@ const mutations = {
   toggleCart(state, payload) {
     state.showCart = payload;
   },
-  applyDiscount(state, amount) {
+  coupon(state, amount) {
     state.discount = amount;
   }
 };

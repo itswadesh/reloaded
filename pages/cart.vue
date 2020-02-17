@@ -53,6 +53,7 @@
           placeholder="Promo Code"
         />
         <button
+          @click="applyCoupon(0)"
           class="absolute right-0 text-sm mt-2 text-gray-500 pr-2 focus:outline-none hover:text-gray-600 cursor-pointer"
         >APPLY</button>
       </div>
@@ -73,7 +74,7 @@ import CartBanners from "~/components/cart/CartBanners";
 import CartItemSkeleton from "~/components/cart/CartItemSkeleton";
 import CartItem from "~/components/cart/CartItem";
 import Button from "~/components/ui/Button";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -92,6 +93,7 @@ export default {
     })
   },
   methods: {
+    ...mapActions({ applyCoupon: "cart/applyCoupon" }),
     go(url) {
       this.$router.go(-1);
     }
