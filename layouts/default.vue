@@ -1,7 +1,10 @@
 <template>
-  <div style="" class="bg-gray-100 antialiased min-h-screen">
+  <div
+    style=""
+    class="bg-gray-100 antialiased min-h-screen"
+  >
     <!-- <Header /> -->
-    <div class="mb-24">
+    <div class="mb-12">
       <nuxt />
     </div>
     <Footer />

@@ -1,10 +1,7 @@
 <template>
   <div class="bg-white">
     <h1 v-if="!product">Not found</h1>
-    <div
-      v-else
-      class="relative"
-    >
+    <div v-else class="relative">
       <div class="z-10 absolute w-full">
         <button
           @click="$router.go(-1)"
@@ -24,7 +21,7 @@
         class="bg-contain h-48 relative flex justify-center"
       >
         <div
-          v-if="product.vendor.info"
+          v-if="product.vendor && product.vendor.info"
           class="w-3/4 text-xl bg-black text-center py-2 absolute bottom-0 text-white font-bold"
           style="background-color: rgba(0,0,0,.5);"
         >
@@ -41,13 +38,11 @@
               :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'"
               class="w-5"
             />
-            <div>
-              <i class="fa fa-history" /> 33min
+            <div><i class="fa fa-history" /> 33min</div>
+            <div><i class="fa fa-map-marker" /> 27kms</div>
+            <div v-if="product.vendor && product.vendor.info">
+              By {{ product.vendor.info.restaurant }}
             </div>
-            <div>
-              <i class="fa fa-map-marker" /> 27kms
-            </div>
-            By {{ product.vendor.info.restaurant }}
             <div v-if="product.stock < 5">Only {{ product.stock }} left</div>
           </div>
           <h1 class="font-bold text-xl">{{ product.name }}</h1>
@@ -78,7 +73,9 @@
             />
           </div>
         </div>
-        <div class="font-semibold pb-3 text-xs px-5">{{ product.description }}</div>
+        <div class="font-semibold pb-3 text-xs px-5">
+          {{ product.description }}
+        </div>
       </div>
       <hr class="mb-4" />
       <div v-if="product.vendor">
@@ -95,40 +92,32 @@
             src="https://randomuser.me/api/portraits/women/17.jpg"
           />
           <div class="text-left">
-            <h2 class="text-lg">{{product.vendor.firstName}} {{product.vendor.lastName}}</h2>
+            <h2 class="text-lg">
+              {{ product.vendor.firstName }} {{ product.vendor.lastName }}
+            </h2>
             <div class="text-gray-600 text-xs tracking-wide">
               <i class="fa fa-map-marker" />
-              {{product.vendor.city}}
+              {{ product.vendor.city }}
             </div>
             <div class="text-green-500 text-sm">
               <i class="fa fa-star" />
-              {{product.vendor.rating}} 120 reviews
+              {{ product.vendor.rating }} 120 reviews
             </div>
-            <div
-              class="text-gray-600"
-              v-if="product.vendor.info"
-            >{{product.vendor.info.speciality}}</div>
+            <div class="text-gray-600" v-if="product.vendor.info">
+              {{ product.vendor.info.speciality }}
+            </div>
           </div>
         </div>
         <h3 class="font-bold px-3 text-2xl">Mom's Today's Menu</h3>
         <div class="flex flex-wrap px-2 py-3 mb-4">
           <div class="px-2 w-1/3">
-            <img
-              src="/seattle.jpg "
-              class="object-contain rounded-lg shadow"
-            />
+            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
           </div>
           <div class="px-2 w-1/3">
-            <img
-              src="/seattle.jpg "
-              class="object-contain rounded-lg shadow"
-            />
+            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
           </div>
           <div class="px-2 w-1/3">
-            <img
-              src="/seattle.jpg "
-              class="object-contain rounded-lg shadow"
-            />
+            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
           </div>
         </div>
         <div v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
@@ -136,13 +125,10 @@
           <div class="flex px-2 py-3 mb-4">
             <div
               class="px-2 w-1/3"
-              v-for="(p,ix) in product.vendor.info.kitchenPhotos"
+              v-for="(p, ix) in product.vendor.info.kitchenPhotos"
               :key="ix"
             >
-              <img
-                v-lazy="p"
-                class="object-contain h-24 rounded-lg shadow"
-              />
+              <img v-lazy="p" class="object-contain h-24 rounded-lg shadow" />
             </div>
           </div>
         </div>

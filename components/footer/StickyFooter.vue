@@ -1,34 +1,37 @@
 <template>
-  <div class="mt-2 shadow-lg w-full bg-gray-100 border-t overflow-x-auto fixed bottom-0 z-10">
-    <div class="flex px-3 py-1 justify-around items-center">
+  <div class="mt-2 shadow-lg w-full bg-gray-100 border-t overflow-x-auto fixed bottom-0 z-10 text-gray-600">
+    <div class="flex justify-around items-center">
       <nuxt-link
         to="/search"
-        class="cursor-pointer flex flex-col flex-1 justify-center items-center"
+        class="category-item"
       >
         <i class="fa fa-search" />
         <span class="text-xs">Discovery</span>
       </nuxt-link>
       <!-- <a
         href="/search"
-        class="cursor-pointer flex flex-col flex-1 justify-center items-center"
+        class="category-item"
       >
         <i class="fa fa-truck" /><span>Cart</span>
       </a>-->
       <nuxt-link
         to="/account"
-        class="cursor-pointer flex flex-col flex-1 justify-center items-center"
+        class="category-item"
       >
         <i class="fa fa-user" />
         <span class="text-xs">Account</span>
       </nuxt-link>
       <nuxt-link
         to="/offers"
-        class="cursor-pointer flex flex-col flex-1 justify-center items-center"
+        class="category-item"
       >
         <i class="fa fa-tag" />
         <span class="text-xs">Offers</span>
       </nuxt-link>
-      <nuxt-link to="/cart" class="cursor-pointer flex flex-col flex-1 justify-center items-center">
+      <nuxt-link
+        to="/cart"
+        class="category-item"
+      >
         <i class="fa fa-shopping-cart" />
         <span class="text-xs">Cart</span>
       </nuxt-link>

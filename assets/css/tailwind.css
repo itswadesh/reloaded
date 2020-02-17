@@ -2,7 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 body {
-  font-family: Karla,Roboto,sans-serif;
+  font-family: Karla, Roboto, sans-serif;
   color: #2d2d2d;
 }
 html,
@@ -54,10 +54,10 @@ img[lazy="loading"] {
     transform: scale(1);
   }
 }
-.category-item{
+.category-item {
   @apply cursor-pointer px-2 py-3 flex flex-col flex-1 justify-center items-center;
 }
-.category-item:hover{
+.category-item:hover {
   @apply bg-gray-200;
 }
 .price-breakup {
@@ -113,6 +113,14 @@ button,
 button:focus {
   outline: none;
 }
+a.fab i {
+  @apply m-auto align-middle;
+  transform: translateY(50%);
+  cursor: pointer;
+}
+button.fab i {
+  @apply m-auto;
+}
 .rnd-mnt {
   width: max-content;
   background-color: #fff;
@@ -167,7 +175,7 @@ button:focus {
 }
 .primary {
   /* background: linear-gradient(87deg, #fb6340, #da1c5f) !important; */
-  background:linear-gradient(87deg,#fb6340,#fbb140)!important;
+  background: linear-gradient(87deg, #fb6340, #fbb140) !important;
   border-color: #fb6340;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   color: white;
