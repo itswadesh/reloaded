@@ -5,7 +5,7 @@
       <div class="z-10 absolute w-full">
         <button
           @click="$router.go(-1)"
-          class="bg-black opacity-25  mt-1 px-auto py-auto text-center absolute rounded-full top-0 left-0 w-10 h-10"
+          class="bg-black opacity-25 mt-1 px-auto py-auto text-center absolute rounded-full top-0 left-0 w-10 h-10"
         >
           <i class="fa fa-long-arrow-left text-white align-middle" />
         </button>
@@ -32,20 +32,21 @@
 
       <!-- <img v-lazy="`${product.img}`" alt class="w-full object-cover h-48 mb-2" /> -->
       <div class="rounded-t-lg z-10 px-4">
-        <div class="py-5">
+        <div class="mt-4 mb-2">
           <div class="flex justify-between items-center text-gray-600 text-sm">
-            <img
-              :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'"
-              class="w-5"
-            />
-            <div><i class="fa fa-history" /> 33min</div>
-            <div><i class="fa fa-map-marker" /> 27kms</div>
-            <div v-if="product.vendor && product.vendor.info">
-              By {{ product.vendor.info.restaurant }}
+            <img :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'" class="w-5" />
+            <div>
+              <i class="fa fa-history" /> 33min
             </div>
+            <div>
+              <i class="fa fa-map-marker" /> 27kms
+            </div>
+            <div
+              v-if="product.vendor && product.vendor.info"
+            >By {{ product.vendor.info.restaurant }}</div>
             <div v-if="product.stock < 5">Only {{ product.stock }} left</div>
           </div>
-          <h1 class="font-bold text-xl">{{ product.name }}</h1>
+          <h1 class="font-bold text-xl mt-2">{{ product.name }}</h1>
           <!-- <div class="flex justify-between items-center text-sm mt-4">
             <div class="bg-orange-500 rounded-full px-3 text-white">free delivery</div>
             <div class="text-gray-600">
@@ -66,20 +67,14 @@
           </div>-->
           <h2 class="text-2xl font-bold">{{ product.rate | currency }}</h2>
           <div class="flex justify-around">
-            <CartButtons
-              :product="product"
-              :variant="userSelectedVariant"
-              :notify="true"
-            />
+            <CartButtons :product="product" :variant="userSelectedVariant" :notify="true" />
           </div>
         </div>
-        <div class="font-semibold pb-3 text-xs px-5">
-          {{ product.description }}
-        </div>
+        <div class="font-semibold pb-3 text-xs px-5">{{ product.description }}</div>
       </div>
       <hr class="mb-4" />
       <div v-if="product.vendor">
-        <h3 class="font-bold px-3 text-2xl">About Mom</h3>
+        <h3 class="font-bold px-3 text-2xl">About Chef</h3>
         <div class="flex bg-gray-100 rounded-lg p-6 mb-6">
           <img
             v-if="product.vendor.avatar"
@@ -92,9 +87,7 @@
             src="https://randomuser.me/api/portraits/women/17.jpg"
           />
           <div class="text-left">
-            <h2 class="text-lg">
-              {{ product.vendor.firstName }} {{ product.vendor.lastName }}
-            </h2>
+            <h2 class="text-lg">{{ product.vendor.firstName }} {{ product.vendor.lastName }}</h2>
             <div class="text-gray-600 text-xs tracking-wide">
               <i class="fa fa-map-marker" />
               {{ product.vendor.city }}
@@ -103,32 +96,33 @@
               <i class="fa fa-star" />
               {{ product.vendor.rating }} 120 reviews
             </div>
-            <div class="text-gray-600" v-if="product.vendor.info">
-              {{ product.vendor.info.speciality }}
-            </div>
-          </div>
-        </div>
-        <h3 class="font-bold px-3 text-2xl">Mom's Today's Menu</h3>
-        <div class="flex flex-wrap px-2 py-3 mb-4">
-          <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
-          </div>
-          <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
-          </div>
-          <div class="px-2 w-1/3">
-            <img src="/seattle.jpg " class="object-contain rounded-lg shadow" />
-          </div>
-        </div>
-        <div v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
-          <h3 class="font-bold px-3 text-2xl">Kitchen Photos</h3>
-          <div class="flex px-2 py-3 mb-4">
             <div
-              class="px-2 w-1/3"
+              class="text-gray-600"
+              v-if="product.vendor.info"
+            >{{ product.vendor.info.speciality }}</div>
+          </div>
+        </div>
+        <!-- <div class="mb-4" v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
+          <h3 class="font-bold mb-2 px-3 text-2xl">Chef's today's menu</h3>
+          <div class="flex flex-wrap px-2">
+            <div
+              class="px-1 w-1/3 mb-2"
               v-for="(p, ix) in product.vendor.info.kitchenPhotos"
               :key="ix"
             >
-              <img v-lazy="p" class="object-contain h-24 rounded-lg shadow" />
+              <img v-lazy="p" class="object-cover h-24 rounded-lg shadow" />
+            </div>
+          </div>
+        </div>-->
+        <div class="mb-4" v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
+          <h3 class="font-bold mb-2 px-3 text-2xl">Kitchen Photos</h3>
+          <div class="flex flex-wrap px-2">
+            <div
+              class="px-1 w-1/3 mb-2"
+              v-for="(p, ix) in product.vendor.info.kitchenPhotos"
+              :key="ix"
+            >
+              <img v-lazy="p" class="object-cover h-24 rounded-lg shadow" />
             </div>
           </div>
         </div>

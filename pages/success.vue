@@ -23,7 +23,7 @@
       </div>
       <div class="py-2 text-center">
         <nuxt-link
-          to="/live"
+          to="/search"
           class="inline-block bg-orange-500 mt-8 mb-2 text-white rounded-full py-2 px-8"
         >Order more</nuxt-link>
         <button @click="refresh()" class="border rounded-full px-4 py-2">
@@ -37,13 +37,15 @@
     <div>
       <HereMap ref="map" lat="18.732447" lng="82.829516" width="100" height="300px" />
     </div>
+    <StickyFooter />
   </div>
 </template>
 <script>
 import Heading from "~/components/Heading";
 import HereMap from "~/components/HereMap";
+import StickyFooter from "~/components/footer/StickyFooter";
 export default {
-  components: { Heading, HereMap },
+  components: { Heading, HereMap, StickyFooter },
   data() {
     return {
       order: null,

@@ -21,7 +21,7 @@
         <div class="text-red-500 text-xs">Only {{ p.stock }} left</div>
         <img :src="p.type === 'V' ? 'veg.png' : 'non-veg.png'" class="w-5 mr-1 mt-1" />
       </div>
-      <div class="border-t py-1 text-xs">By {{ p.restaurant }}</div>
+      <div class="border-t py-1 text-xs" v-if="p.vendor">By {{ p.vendor.restaurant }}</div>
     </div>
   </div>
 </template>
