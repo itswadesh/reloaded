@@ -32,18 +32,18 @@ export const head = {
       href: "https://fonts.googleapis.com/css?family=Karla&display=swap"
     }
   ],
-  script: [
-    {
-      src: "//js.api.here.com/v3/3.1/mapsjs-core.js",
-      type: "text/javascript",
-      charset: "utf-8"
-    },
-    {
-      src: "//js.api.here.com/v3/3.1/mapsjs-service.js",
-      type: "text/javascript",
-      charset: "utf-8"
-    }
-  ]
+  // script: [
+  //   {
+  //     src: "//js.api.here.com/v3/3.1/mapsjs-core.js",
+  //     type: "text/javascript",
+  //     charset: "utf-8"
+  //   },
+  //   {
+  //     src: "//js.api.here.com/v3/3.1/mapsjs-service.js",
+  //     type: "text/javascript",
+  //     charset: "utf-8"
+  //   }
+  // ]
 };
 export const sorts = [
   { name: "Relevance", val: null },

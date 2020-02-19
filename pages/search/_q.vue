@@ -25,12 +25,12 @@ import Banner from "~/components/Banner";
 import Product from "~/components/Product";
 import ListCard from "~/components/ListCard";
 import Categories from "~/components/Categories";
-import c from "~/mixins/";
+import { query, search, infiniteScroll } from "~/mixins";
 import { TITLE, DESCRIPTION, KEYWORDS, sharingLogo } from "~/config";
 import { constructURL } from "~/lib/";
 export default {
   layout: "search",
-  mixins: [c],
+  mixins: [query, search, infiniteScroll],
   async asyncData({ params, query, $axios }) {
     let products = [],
       fl = {},

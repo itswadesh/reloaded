@@ -100,13 +100,11 @@
 <script>
 const Textbox = () => import("~/components/ui/Textbox");
 const CheckoutHeader = () => import("~/components/checkout/CheckoutHeader");
-import m from "~/mixins";
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)
       return redirect("/login?return=/checkout/add");
   },
-  mixins: [m],
   data() {
     return {
       a: {}
