@@ -12,7 +12,7 @@
         >
           <label class="cursor-pointer w-full flex justify-between">
             <Radio
-              :checked="selectedAddress==a._id"
+              v-model="selectedAddress"
               @changed="addressChanged"
               :value="a._id"
             />

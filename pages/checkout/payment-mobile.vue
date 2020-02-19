@@ -161,11 +161,12 @@ export default {
   },
   methods: {
     ...mapActions({
-      applyDiscount: "cart/applyDiscount"
+      applyDiscount: "cart/applyDiscount",
+      checkout: "cart/checkout"
     }),
     async submit() {
       if (this.paymentMethod == "COD") {
-        this.checkout();
+        this.checkout({ paymentMethod: "COD", address: this.address });
         return;
       }
       const vm = this;
@@ -226,9 +227,6 @@ export default {
     },
     user() {
       return (this.$store.state.auth || {}).user || null;
-    },
-    checkout() {
-      console.log("COD...............");
     }
   },
   layout: "none"

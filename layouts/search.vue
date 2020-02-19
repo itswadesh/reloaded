@@ -1,19 +1,19 @@
 <template>
   <div class="bg-gray-100 antialiased min-h-screen">
-    <!-- <Header /> -->
+    <Search class="my-2 mx-1" />
     <div class="mb-12">
       <nuxt />
     </div>
-    <Footer />
+    <StickyFooter />
     <BackToTopDark />
   </div>
 </template>
 <script>
 import { BackToTopDark } from "~/components/ui";
-import Header from "~/components/Header";
-import Footer from "~/components/footer/Footer";
+import Search from "~/components/Search";
+import StickyFooter from "~/components/footer/StickyFooter";
 
 export default {
-  components: { Header, Footer, BackToTopDark }
+  components: { Search, StickyFooter, BackToTopDark }
 };
 </script>

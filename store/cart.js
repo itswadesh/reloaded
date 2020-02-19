@@ -16,7 +16,7 @@ const getters = {
   },
   checkCart: state => ({ pid, vid }) => {
     // Returns true when there is item in cart
-    var found = state.items.some(function (el) {
+    var found = state.items.some(function(el) {
       return el._id === pid;
     });
     return found;
@@ -37,7 +37,7 @@ const actions = {
       const data = await this.$axios.$get("api/cart");
       commit("setCart", data);
       return data;
-    } catch (e) { }
+    } catch (e) {}
   },
   async addToCart({ commit }, payload) {
     try {
@@ -60,13 +60,11 @@ const actions = {
       case "COD":
         try {
           commit("busy", true, { root: true });
-          let order = await this.$axios.$post("api/orders", {
+          let order = await this.$axios.$post("api/food-orders", {
             address,
             paymentMethod
           });
-          this.$router.push(
-            "/order-success?id=" + order._id + "&amount=" + order.amount.total
-          );
+          this.$router.push("/success?id=" + order._id);
         } catch (err) {
           commit("setErr", err, { root: true });
         } finally {

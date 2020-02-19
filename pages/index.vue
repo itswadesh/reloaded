@@ -7,12 +7,20 @@
       <!-- <BestSellers />
       <RecentVisit />-->
       <div class="flex flex-wrap">
-        <div class="w-1/2" v-for="p in products" :key="p._id">
-          <Product :p="p" class />
+        <div
+          class="w-1/2"
+          v-for="p in products"
+          :key="p._id"
+        >
+          <Product
+            :p="p"
+            class
+          />
         </div>
       </div>
     </div>
     <Footer />
+    <StickyFooter />
     <GeoLocation />
   </div>
 </template>

@@ -7,13 +7,13 @@
     </div>
 
     <div v-if="geo">
-      Your location data is {{ geo.lat }},
+      <!-- Your location data is {{ geo.lat }},
       {{ geo.lng }}
       {{ geo.country }}
       {{ geo.state }}
       {{ geo.state_district }}
       {{ geo.county }}
-      {{ geo.postcode }}
+      {{ geo.postcode }} -->
     </div>
   </div>
 </template>
