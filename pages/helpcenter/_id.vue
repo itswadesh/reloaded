@@ -92,7 +92,7 @@ export default {
               question: "What is the procedure for Returns or Exchange?",
               answer:
                 "You can return your product easily through litekart app in few seconds. Just follow these steps:<br>" +
-                "<ul style='margin-left: 40px'><li>You can Sign in to your Litekart Account From  <a href='https://www.litekart.pk/account/login' style='color: #9b000a'>Here</a>.</li><li>Go to my order section.</li><li>Click on the View order for the specific order you want to place replacement/refund Request</li><li>Select refund/replace option from the top and then click one or all items that you want return or replaced.</li><li>Select the quantities and reason for replacement/refund</li><li>Click on the SAVE button to submit the request</li></ul>",
+                "<ul style='margin-left: 40px'><li>You can Sign in to your Litekart Account From  <a href='https://www.litekart.pk/login' style='color: #9b000a'>Here</a>.</li><li>Go to my order section.</li><li>Click on the View order for the specific order you want to place replacement/refund Request</li><li>Select refund/replace option from the top and then click one or all items that you want return or replaced.</li><li>Select the quantities and reason for replacement/refund</li><li>Click on the SAVE button to submit the request</li></ul>",
               active: false
             },
             {

@@ -11,7 +11,11 @@
           :key="a._id"
         >
           <label class="cursor-pointer w-full flex justify-between">
-            <Radio :checked="selectedAddress==a._id" @changed="addressChanged" :value="a._id" />
+            <Radio
+              :checked="selectedAddress==a._id"
+              @changed="addressChanged"
+              :value="a._id"
+            />
             <div class="flex-1 ml-2">
               <div class="font-semibold">{{a.firstName}} {{a.lastName}}</div>
               <div class="py-2 text-xs">
@@ -56,7 +60,11 @@
           :item="item"
           class="flex my-5 border-b border-dotted pb-2"
         >
-          <img class="rounded w-12 h-12 object-cover mr-2" v-lazy="item.img" alt />
+          <img
+            class="rounded w-12 h-12 object-cover mr-2"
+            v-lazy="item.img"
+            alt
+          />
           <div>
             <div class="text-lg">{{item.name}}</div>
             <div class="text-sm font-bold">{{item.rate | currency}}</div>
@@ -79,7 +87,7 @@ const CheckoutHeader = () => import("~/components/checkout/CheckoutHeader");
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)
-      return redirect("/account/login?return=/checkout/address");
+      return redirect("/login?return=/checkout/address");
   },
   data() {
     return {

@@ -104,7 +104,7 @@ import m from "~/mixins";
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)
-      return redirect("/account/login?return=/checkout/add");
+      return redirect("/login?return=/checkout/add");
   },
   mixins: [m],
   data() {

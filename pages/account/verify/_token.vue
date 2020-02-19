@@ -1,19 +1,22 @@
 <template>
   <div class="signin-page">
-        <div class="account-container">
-            <center v-if="err" class="error">
-                Account verification failed. Please try again
-            </center>
-            <center v-else-if="verification">
-                <div v-if="verification.status===200">Account verification complete.
-                    <nuxt-link to="/account/login">Click here to login</nuxt-link>
-                </div>
-                <div v-else>
-                    Account verification failed. Please try again
-                </div>
-            </center>
+    <div class="account-container">
+      <center
+        v-if="err"
+        class="error"
+      >
+        Account verification failed. Please try again
+      </center>
+      <center v-else-if="verification">
+        <div v-if="verification.status===200">Account verification complete.
+          <nuxt-link to="/login">Click here to login</nuxt-link>
         </div>
+        <div v-else>
+          Account verification failed. Please try again
+        </div>
+      </center>
     </div>
+  </div>
 </template>
 
 <script>
@@ -40,15 +43,13 @@ export default {
         {
           hid: "description",
           name: "description",
-          content:
-            "Forgot Password"
+          content: "Forgot Password"
         },
         {
           hid: "og:description",
           name: "Description",
           property: "og:description",
-          content:
-            "Forgot Password"
+          content: "Forgot Password"
         },
 
         {
@@ -64,8 +65,7 @@ export default {
         },
         {
           name: "twitter:description",
-          content:
-            "Forgot Password"
+          content: "Forgot Password"
         }
       ]
     };

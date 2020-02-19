@@ -2,11 +2,15 @@
   <div>
     <CheckoutHeader selected="payment" />
     <div>
-      <div
-        class="p-3 lg:py-2 lg:px-0 flex shadow lg:shadow-none items-center justify-between lg:w-1/2 m-auto"
-      >
-        <nuxt-link to="/checkout/address" class="flex items-center">
-          <i class="fa fa-arrow-left mb-1" aria-hidden="true"></i>
+      <div class="p-3 lg:py-2 lg:px-0 flex shadow lg:shadow-none items-center justify-between lg:w-1/2 m-auto">
+        <nuxt-link
+          to="/checkout/address"
+          class="flex items-center"
+        >
+          <i
+            class="fa fa-arrow-left mb-1"
+            aria-hidden="true"
+          ></i>
           <div class="font-bold text-gray-700 text-xl ml-3">Payment</div>
         </nuxt-link>
         <div class="text-xs text-gray-600">Step 3 of 3</div>
@@ -33,7 +37,7 @@
       </div>-->
       <div class="p-2 lg:px-0 text-sm text-gray-700 p-2 lg:w-1/2 m-auto">
         <div>PAYMENT OPTIONS</div>
-        <div class="my-2 font-semibold bg-white border border-gray-300">
+        <div class="my-2 font-semibold bg-white border rounded border-gray-300">
           <!-- <div class="px-3 flex justify-between px-2 py-3 border-b border-gray-300">
             <div>CREDIT/DEBIT</div>
             <a
@@ -41,18 +45,21 @@
               class="text-secondary"
             >SELECT</a>
           </div>-->
-          <div class="px-3 flex justify-between px-2 py-3 border-b border-gray-300">
+          <label class="text-secondary px-3 flex justify-between px-2 py-3 border-b border-gray-300">
+            <div>ONLINE</div>
+            <Radio
+              value="Online"
+              v-model="paymentMethod"
+            />
+          </label>
+          <label class="px-3 flex justify-between px-2 py-3 border-b border-gray-300">
             <div>CASH/CARD ON DELIVERY</div>
-            <!-- <span              class="text-secondary"            >SELECT</span> -->
-          </div>
+            <Radio
+              value="COD"
+              v-model="paymentMethod"
+            />
+          </label>
           <!-- <div class="px-3 flex justify-between px-2 py-3 border-b border-gray-300">
-            <div>NET BANKING</div>
-            <a
-              href="#"
-              class="text-secondary"
-            >SELECT</a>
-          </div>
-          <div class="px-3 flex justify-between px-2 py-3 border-b border-gray-300">
             <div>PHONEPE/BHIM UPI</div>
             <a
               href="#"
@@ -76,8 +83,7 @@
         </div>
       </div>
       <div class="p-2 lg:px-0 text-sm text-gray-700 p-2 lg:w-1/2 m-auto mb-32 lg:mb-2">
-        <div>DELIVER TO:</div>
-        <br />
+        <div>DELIVER TO</div>
         <div class="w-full flex justify-between bg-white shadow rounded">
           <div class="flex-1 p-2">
             <div class="font-semibold">{{ address.firstName }} {{ address.lastName }}</div>
@@ -92,7 +98,10 @@
                 <span class="font-bold">{{ address.phone }}</span>
               </div>
               <div class="pt-2">
-                <nuxt-link to="/checkout/address" class="text-blue-700 font-semibold">Change Address</nuxt-link>
+                <nuxt-link
+                  to="/checkout/address"
+                  class="text-blue-700 font-semibold"
+                >Change Address</nuxt-link>
               </div>
             </div>
           </div>
@@ -101,18 +110,25 @@
           </div>-->
         </div>
       </div>
-      <div
-        class="shadow-md lg:shadow-none font-bold fixed w-full bottom-0 bg-white p-2 lg:w-1/2 m-auto lg:relative"
-      >
+      <div class="shadow-md lg:shadow-none font-bold fixed w-full bottom-0 bg-white p-2 lg:w-1/2 m-auto lg:relative">
         <div class="flex p-3">
           <div class="flex-1 text-center">
             <div>{{ cart.total | currency }}</div>
             <div>
-              <nuxt-link to="/cart" class="text-red-400">view details</nuxt-link>
+              <nuxt-link
+                to="/cart"
+                class="text-red-400"
+              >view details</nuxt-link>
             </div>
           </div>
           <div class="flex-1 p-1">
-            <button @click="checkout" class="px-5 py-2 w-full primary text-white rounded">Pay Now</button>
+            <button
+              @click="submit"
+              class="px-5 py-2 w-full primary text-white rounded"
+            >
+              <span v-if="paymentMethod=='COD'">Place Order</span>
+              <span v-else>Pay Now</span>
+            </button>
           </div>
         </div>
       </div>
@@ -129,7 +145,7 @@ export default {
   data() {
     return {
       address: {},
-      paymentMethod: "COD"
+      paymentMethod: "Online"
     };
   },
   async created() {
@@ -147,11 +163,15 @@ export default {
     ...mapActions({
       applyDiscount: "cart/applyDiscount"
     }),
-    async checkout() {
+    async submit() {
+      if (this.paymentMethod == "COD") {
+        this.checkout();
+        return;
+      }
       const vm = this;
-      vm.$store.commit("busy", true, { root: true });
       let rp = {};
       try {
+        vm.$store.commit("busy", true, { root: true });
         rp = await this.$axios.$post("api/razorpay", { address: this.address });
       } catch (e) {
         return this.$store.commit(
@@ -206,6 +226,9 @@ export default {
     },
     user() {
       return (this.$store.state.auth || {}).user || null;
+    },
+    checkout() {
+      console.log("COD...............");
     }
   },
   layout: "none"

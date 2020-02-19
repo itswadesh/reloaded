@@ -10,8 +10,14 @@
                 <span class="font-extrabold">RESET PASSWORD</span>
               </h1>
             </div>
-            <p            class="success"            v-if="success"            >{{success}}</p>
-            <p            class="info"            v-else            >Enter your new password</p>
+            <p
+              class="success"
+              v-if="success"
+            >{{success}}</p>
+            <p
+              class="info"
+              v-else
+            >Enter your new password</p>
             <form
               novalidate
               autocomplete="off"
@@ -20,16 +26,32 @@
             >
               <div class="p-6">
                 <div>
-                  <Textbox v-model="password" name="newPassword" label="New Password" ref="newPassword" type="password" class="w-full" v-validate="'required|min:3'" />
+                  <Textbox
+                    v-model="password"
+                    name="newPassword"
+                    label="New Password"
+                    ref="newPassword"
+                    type="password"
+                    class="w-full"
+                    v-validate="'required|min:3'"
+                  />
                   <p
-          class="input_err"
-          v-if="errors.first('password')"
-        >{{errors.first('password')}}</p>
-                  <Textbox v-model="confirm" name="repeatPassword" label="Repeat Password" ref="repeatPassword" type="password" class="w-full" v-validate="'required|min:3'" />
+                    class="input_err"
+                    v-if="errors.first('password')"
+                  >{{errors.first('password')}}</p>
+                  <Textbox
+                    v-model="confirm"
+                    name="repeatPassword"
+                    label="Repeat Password"
+                    ref="repeatPassword"
+                    type="password"
+                    class="w-full"
+                    v-validate="'required|min:3'"
+                  />
                   <p
-          class="input_err"
-          v-if="errors.first('password_confirmation')"
-        >{{errors.first('password_confirmation')}}</p>
+                    class="input_err"
+                    v-if="errors.first('password_confirmation')"
+                  >{{errors.first('password_confirmation')}}</p>
                 </div>
                 <div class="flex items-center justify-between">
                   <button
@@ -74,7 +96,7 @@ export default {
   created() {
     this.token = this.$route.params.token;
   },
-  components:{Textbox},
+  components: { Textbox },
   methods: {
     async submit() {
       if (!this.password) {
@@ -99,7 +121,7 @@ export default {
           );
           this.err = null;
           this.$store.commit("info", "Password reset successful");
-          this.$router.push("/account/login");
+          this.$router.push("/login");
         } catch (e) {
           this.success = null;
           if (e && e.response) {

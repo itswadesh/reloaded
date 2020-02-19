@@ -67,7 +67,7 @@ export default {
         qty: -100000
       });
       if (!(this.$store.state.auth || {}).user) {
-        this.$router.push("/account/login?return=checkout");
+        this.$router.push("/login?return=checkout");
         return;
       } else {
         this.saveToWishlist(item);

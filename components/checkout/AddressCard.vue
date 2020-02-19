@@ -32,9 +32,7 @@
 </template>
 
 <script>
-import Radio from "~/components/ui/Radio";
 export default {
-  components: { Radio },
   methods: {
     go(url) {
       this.$router.push(url);

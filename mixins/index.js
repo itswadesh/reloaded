@@ -1,3 +1,4 @@
+import { locationExpiry } from "~/config";
 export default {
   data() {
     return {
@@ -37,7 +38,7 @@ export default {
           );
           geo.coords = { lat: location.latitude, lng: location.longitude };
           console.log("Geo...", geo);
-          this.$cookies.set("geo", geo, { path: "/" });
+          this.$cookies.set("geo", geo, { path: "/", maxAge: locationExpiry });
           return geo;
         } catch (e) {
           this.$store.commit("busy", false);

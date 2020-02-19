@@ -1,34 +1,45 @@
 <template>
-  <label class="common-customRadio vertical-filters-label">
+  <label class="radio">
     <input
-      :checked="checked"
       type="radio"
-      class="discount-input"
-      name="discount-product"
+      :checked="shouldBeChecked"
       :value="value"
-      @change="$emit('changed', value)"
+      @change="updateInput"
+      class="mr-1 align-middle"
     >
-    <slot />
-    <div class="common-radioIndicator"></div>
+    <slot class="align-middle" />
+    <div class="common-radioIndicator align-middle"></div>
   </label>
 </template>
-
 <script>
 export default {
+  model: {
+    prop: "modelValue",
+    event: "change"
+  },
   props: {
-    value: { type: String },
-    checked: { type: Boolean }
+    value: {
+      type: String
+    },
+    modelValue: {
+      default: ""
+    }
+  },
+  computed: {
+    shouldBeChecked() {
+      return this.modelValue == this.value;
+    }
+  },
+  methods: {
+    updateInput() {
+      this.$emit("change", this.value);
+    }
   }
-  // data() {
-  //   return {
-  //     content: this.value
-  //   };
-  // }
 };
 </script>
 
 <style scoped>
-.common-customRadio input:checked ~ .common-radioIndicator:before {
+.radio input:checked ~ .common-radioIndicator:before {
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
@@ -57,7 +68,7 @@ export default {
   padding: 2px;
   text-align: center;
 }
-.common-customRadio {
+.radio {
   position: relative;
   cursor: pointer;
   vertical-align: middle;
@@ -68,8 +79,7 @@ export default {
   top: 0;
   left: 0;
 }
-.common-customRadio input {
-  margin: 0 10px 0 0;
+.radio input {
   visibility: hidden;
 }
 </style>

@@ -8,17 +8,36 @@
         <center>Please select location</center>
       </h3>
       <div class="flex justify-center">
-        <div class="d-flex" cols="12" sm="6">
-          <select v-model="location" filled label="Select City">
-            <option v-for="(c, ix) in cities" :key="ix">
+        <div
+          class="d-flex"
+          cols="12"
+          sm="6"
+        >
+          <select
+            v-model="location"
+            filled
+            label="Select City"
+          >
+            <option
+              v-for="(c, ix) in cities"
+              :key="ix"
+            >
               {{ c }}
             </option>
           </select>
         </div>
       </div>
       <div class="flex justify-center">
-        <div class="flex" cols="12" sm="6">
-          <button @click="saveLocaion" color="primary" :block="true">
+        <div
+          class="flex"
+          cols="12"
+          sm="6"
+        >
+          <button
+            @click="saveLocaion"
+            color="primary"
+            :block="true"
+          >
             Continue
           </button>
         </div>
@@ -49,7 +68,10 @@ export default {
   },
   methods: {
     saveLocaion() {
-      this.$cookies.set("city", this.location, { path: "/" });
+      this.$cookies.set("city", this.location, {
+        path: "/",
+        maxAge: locationExpiry
+      });
       this.$router.push("/");
     },
     go(url) {
