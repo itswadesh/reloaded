@@ -1,13 +1,8 @@
-import { locationExpiry } from "~/config";
+import { locationExpiry, cities } from "~/config";
 const GOOGLE_MAPS_KEY = process.env.GOOGLE_MAPS_KEY;
 export default {
   data() {
-    return {
-      errorStr: "",
-      gettingLocation: false,
-      geo: null,
-      location: { latitude: "", longitude: "" }
-    };
+    return {};
   },
   mounted() {
     let recaptchaScript = document.createElement("script");
@@ -59,28 +54,25 @@ export default {
         );
       });
     },
-    async locateMe() {
-      let geo = this.$cookies.get("geo");
-      if (!geo && process.client) {
+    async locateMe(l) {
+      if (l) {
         try {
           this.$store.commit("busy", true);
-          const location = (await this.getLocation()).coords;
-          geo = await this.$axios.$get(
+          let location = l.coords;
+          // const location = (await this.getLocation()).coords; // Location accuracy is too bad shows Anugul
+          let geo = await this.$axios.$get(
             `/api/geo/location?lat=${location.latitude}&lng=${location.longitude}`
-            // `/api/geo/location?lat=18.722615&lng=82.839649`
           );
           geo.coords = { lat: location.latitude, lng: location.longitude };
           console.log("Geo...", geo);
           this.$cookies.set("geo", geo, { path: "/", maxAge: locationExpiry });
           return geo;
         } catch (e) {
-          this.$toast.show(e.message);
+          this.$store.commit("setErr", e.message);
           return null;
         } finally {
           this.$store.commit("busy", false);
         }
-      } else {
-        return geo;
       }
     },
     showInMap(pos) {

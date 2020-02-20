@@ -12,7 +12,16 @@ export const KEYWORDS =
   "litekart.in,litekart Accessories,Affordable Luxury,India's Best Women's Online Shopping,Online Jewellery,litekart, online shopping, online jewelry, jewellery, handbags, clutches, sunglasses, ethnic jewellery, nightwear, lingrie, clothing, bracelets, rings, sets, necklace, pendants, earrings, online jewellery in lahore, online shopping in India, litekart online shopping, litekart jewelry";
 export const HOST = "https://www.misiki.in";
 export const sharingLogo = "https://www.frontendfun.com/logo.svg";
-export const cities = ["Sunabeda", "Berhampur"];
+export const cities = [
+  {
+    name: "Sunabeda",
+    coords: { latitude: "18.729889", longitude: "82.831749" }
+  },
+  {
+    name: "Berhampur",
+    coords: { latitude: "19.311403", longitude: "84.788816" }
+  }
+];
 export const PAY_KEY = "rzp_test_o1gRrVKAzCT2Ke";
 export const head = {
   titleTemplate: "%s - Litekart",
@@ -31,7 +40,7 @@ export const head = {
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/css?family=Karla&display=swap"
     }
-  ],
+  ]
   // script: [
   //   {
   //     src: "//js.api.here.com/v3/3.1/mapsjs-core.js",

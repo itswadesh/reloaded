@@ -6,14 +6,14 @@
       <i>Getting your location...</i>
     </div>
 
-    <div v-if="geo">
-      <!-- Your location data is {{ geo.lat }},
-      {{ geo.lng }}
-      {{ geo.country }}
-      {{ geo.state }}
-      {{ geo.state_district }}
-      {{ geo.county }}
-      {{ geo.postcode }} -->
+    <div
+      v-if="geo"
+      class="mb-16 align-middle text-center"
+    >
+      Your location is {{ geo.town }} <nuxt-link
+        to="/change-location"
+        class="px-2 rounded text-secondary"
+      >Change</nuxt-link>
     </div>
   </div>
 </template>
@@ -21,9 +21,27 @@
 <script>
 import { location } from "~/mixins";
 export default {
+  data() {
+    return {
+      errorStr: null,
+      geo: null,
+      gettingLocation: false
+    };
+  },
   mixins: [location],
   async mounted() {
-    this.geo = await this.locateMe();
+    try {
+      this.geo = this.$cookies.get("geo");
+      if (!this.geo && process.client) {
+        this.$router.push("/change-location");
+        // this.gettingLocation = true;
+        // this.geo = await this.locateMe();
+      }
+    } catch (e) {
+      this.errorStr = e;
+    } finally {
+      this.gettingLocation = false;
+    }
   }
 };
 </script>

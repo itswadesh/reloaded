@@ -15,7 +15,7 @@
         <i class="fa fa-truck" /><span>Cart</span>
       </a>-->
       <nuxt-link
-        to="/account"
+        to="/my/"
         class="category-item"
       >
         <i class="fa fa-user" />

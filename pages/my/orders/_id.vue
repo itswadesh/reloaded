@@ -143,6 +143,10 @@
 import HereMap from "~/components/HereMap";
 
 export default {
+  fetch({ store, redirect }) {
+    if (!(store.state.auth || {}).user)
+      return redirect("/login?return=/my/orders");
+  },
   async asyncData({ params, query, route, redirect, $axios, store }) {
     let order = null,
       err = null;

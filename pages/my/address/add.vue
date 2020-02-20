@@ -96,6 +96,10 @@
 const Textbox = () => import("~/components/ui/Textbox");
 const CheckoutHeader = () => import("~/components/checkout/CheckoutHeader");
 export default {
+  fetch({ store, redirect }) {
+    if (!(store.state.auth || {}).user)
+      return redirect("/login?return=/my/address");
+  },
   data() {
     return {
       a: {}

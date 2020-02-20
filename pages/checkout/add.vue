@@ -134,9 +134,9 @@ export default {
     } else {
       this.$store.commit("busy", true);
       this.a = await this.locateMe();
-      this.a.town = this.a.county;
-      this.a.city = this.a.state_district;
-      this.a.zip = this.a.postcode;
+      // this.a.town = this.a.county;
+      // this.a.city = this.a.state_district;
+      // this.a.zip = this.a.postcode;
       this.a.firstName = this.user.firstName;
       this.a.lastName = this.user.lastName;
       this.a.phone = this.user.phone;

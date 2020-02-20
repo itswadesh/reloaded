@@ -6,18 +6,43 @@
           <div class="border-teal border-t-12 bg-white mb-6 rounded shadow-2xl">
             <div class="p-0 secondary text-white rounded rounded-b-none">
               <h1 class="text-xl mb-6 text-left p-3">
-                <span class="font-extrabold" v-if="!signup">SIGN IN</span>
-                <span class="font-extrabold" v-else>SIGN UP</span> TO YOUR ACCOUNT
+                <span
+                  class="font-extrabold"
+                  v-if="!signup"
+                >SIGN IN</span>
+                <span
+                  class="font-extrabold"
+                  v-else
+                >SIGN UP</span> TO YOUR ACCOUNT
               </h1>
             </div>
-            <form novalidate autocomplete="off" @submit.stop.prevent="submit()" class="center">
+            <form
+              novalidate
+              autocomplete="off"
+              @submit.stop.prevent="submit()"
+              class="center"
+            >
               <div class="p-6">
                 <div>
-                  <Textbox v-model="uid" label="Email/Phone" @keyup="onPhoneChange" />
+                  <Textbox
+                    v-model="uid"
+                    label="Email/Phone"
+                    @keyup="onPhoneChange"
+                  />
                 </div>
                 <div v-if="showOTP">
-                  <Textbox v-if="signup" v-model="firstName" label="Fisrt Name" class="w-full" />
-                  <Textbox v-if="signup" v-model="lastName" label="Last Name" class="w-full" />
+                  <Textbox
+                    v-if="signup"
+                    v-model="firstName"
+                    label="Fisrt Name"
+                    class="w-full"
+                  />
+                  <Textbox
+                    v-if="signup"
+                    v-model="lastName"
+                    label="Last Name"
+                    class="w-full"
+                  />
                   <!-- <p class="text-red-500 mb-5 text-xs font-hairline">Please enter password</p> -->
                   <!-- Show password box -->
                   <div v-if="!isPhone">
@@ -71,7 +96,11 @@
                     :class="{'primary text-white':!loading,'border border-gray-400 bg-gray-300':loading}"
                   >
                     <div v-if="loading">
-                      <img src="/loading.svg" :class="{'loading':loading}" alt />
+                      <img
+                        src="/loading.svg"
+                        :class="{'loading':loading}"
+                        alt
+                      />
                     </div>
                     <span v-else>{{submitText}}</span>
                   </button>
@@ -90,7 +119,9 @@
 
 <script>
 import Textbox from "~/components/ui/Textbox";
+import { location } from "~/mixins";
 export default {
+  mixins: [location],
   data() {
     return {
       loading: false,
@@ -106,6 +137,11 @@ export default {
       otp: "",
       showOTP: false
     };
+  },
+  async created() {
+    // let geoCookie = await this.$cookies.get("geo");
+    // let geo = await this.locateMe(geoCookie.coords);
+    // console.log(geo);
   },
   components: { Textbox },
   computed: {
@@ -175,6 +211,10 @@ export default {
             password: this.otp,
             route: this.$route.query.return
           });
+          let geoCookie = this.$cookies.get("geo");
+          if (!geoCookie && process.client) {
+            this.$router.push("/change-location");
+          }
         } catch (e) {
         } finally {
           this.loading = false;

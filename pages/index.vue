@@ -1,8 +1,7 @@
 <template>
   <div>
-    <!-- <Header /> -->
     <Hero />
-    <div class="container">
+    <div class="container antialiased min-h-screen">
       <Categories />
       <!-- <BestSellers />
       <RecentVisit />-->
@@ -19,7 +18,7 @@
         </div>
       </div>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
     <StickyFooter />
     <GeoLocation />
   </div>
