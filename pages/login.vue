@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="bg-gray-100 xs:mobile-login h-full px-4">
-      <div class="container mx-auto h-full flex items-center">
+      <div class="container h-full flex items-center justify-center">
         <div class="lg:w-1/3 w-full">
-          <div class="border-teal border-t-12 bg-white mb-6 rounded shadow-2xl">
-            <div class="p-0 secondary text-white rounded rounded-b-none">
-              <h1 class="text-xl mb-6 text-left p-3">
+          <div class="border-teal border-t-12 bg-white mb-6 rounded shadow">
+            <div class="p-0 text-secondary text-white rounded rounded-b-none">
+              <h1 class="text-xl mb-6 text-center p-3">
                 <span
                   class="font-extrabold"
                   v-if="!signup"
@@ -56,36 +56,42 @@
                     />
                   </div>
                   <!-- Show OTP box -->
-                  <div v-else>
-                    <div
-                      id="wraper1"
-                      class="otp-seperator w-1 h-1 rounded absolute"
-                      :class="{'wraper-hide':otp.length>0}"
-                    ></div>
-                    <div
-                      id="wraper2"
-                      class="otp-seperator w-1 h-1 rounded absolute"
-                      :class="{'wraper-hide':otp.length>1}"
-                    ></div>
-                    <div
-                      id="wraper3"
-                      class="otp-seperator w-1 h-1 rounded absolute"
-                      :class="{'wraper-hide':otp.length>2}"
-                    ></div>
-                    <div
-                      id="wraper4"
-                      class="otp-seperator w-1 h-1 rounded absolute"
-                      :class="{'wraper-hide':otp.length>3}"
-                    ></div>
-                    <input
-                      v-model="otp"
-                      name="otp"
-                      ref="otp"
-                      class="outline-none pl-4 otp-content w-32 bg-transparent border border-gray-400"
-                      maxlength="4"
-                      autocomplete="off"
-                      @keyup="onKeyUpEvent(otp.length, $event)"
-                    />
+                  <div
+                    v-else
+                    class=" text-center"
+                  >
+                    <p class="text-red-500 mb-5 text-xs font-hairline">Please enter OTP sent to mobile number</p>
+                    <div class="otp-container relative inline-block rounded p-2 w-32 w-12 mb-10 bg-gray-200">
+                      <div
+                        id="wraper1"
+                        class="otp-seperator w-1 h-1 rounded absolute"
+                        :class="{'wraper-hide':otp.length>0}"
+                      ></div>
+                      <div
+                        id="wraper2"
+                        class="otp-seperator w-1 h-1 rounded absolute"
+                        :class="{'wraper-hide':otp.length>1}"
+                      ></div>
+                      <div
+                        id="wraper3"
+                        class="otp-seperator w-1 h-1 rounded absolute"
+                        :class="{'wraper-hide':otp.length>2}"
+                      ></div>
+                      <div
+                        id="wraper4"
+                        class="otp-seperator w-1 h-1 rounded absolute"
+                        :class="{'wraper-hide':otp.length>3}"
+                      ></div>
+                      <input
+                        v-model="otp"
+                        name="otp"
+                        ref="otp"
+                        class="outline-none pl-4 otp-content w-32 bg-transparent border border-gray-400"
+                        maxlength="4"
+                        autocomplete="off"
+                        @keyup="onKeyUpEvent(otp.length, $event)"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div class="flex-col items-center justify-between">
@@ -104,9 +110,9 @@
                     </div>
                     <span v-else>{{submitText}}</span>
                   </button>
-                  <p class="text-xs mt-2">
+                  <!-- <p class="text-xs mt-2">
                     <nuxt-link to="/account/forgot-password">Forgot Password?</nuxt-link>
-                  </p>
+                  </p> -->
                 </div>
               </div>
             </form>
@@ -216,6 +222,7 @@ export default {
             this.$router.push("/change-location");
           }
         } catch (e) {
+          this.$store.commit("setErr", e.response.data);
         } finally {
           this.loading = false;
         }
@@ -333,5 +340,45 @@ export default {
 .container {
   max-height: 80vh !important;
   min-height: 80vh !important;
+}
+.wraper-hide {
+  visibility: hidden;
+}
+.border-t {
+  border-bottom: 1px solid lightgray;
+}
+.big-button {
+  background: linear-gradient(87deg, #fb6340, #da1c5f) !important;
+  border-color: #fb6340;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.otp-container .otp-seperator {
+  background-color: #dfe1e6;
+  border: 1px solid #dfe1e6;
+}
+.otp-container #wraper1 {
+  top: 20px;
+  left: 28px;
+}
+.otp-container #wraper2 {
+  top: 20px;
+  left: 51px;
+}
+.otp-container #wraper3 {
+  top: 20px;
+  left: 76px;
+}
+.otp-container #wraper4 {
+  top: 20px;
+  left: 100px;
+}
+.otp-container .otp-content {
+  letter-spacing: 15px;
+  border: 1px solid transparent;
+}
+input + label {
+  position: relative;
+  z-index: 999;
 }
 </style>
