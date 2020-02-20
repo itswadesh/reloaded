@@ -23,8 +23,9 @@
           <div class="p-6">
             <div>
               <Textbox
+                type="tel"
                 v-model="uid"
-                label="Email/Phone"
+                label="Phone"
                 @keyup="onPhoneChange"
                 class="bg-gray-200"
               />
@@ -82,6 +83,7 @@
                     :class="{'wraper-hide':otp.length>3}"
                   ></div>
                   <input
+                    type="tel"
                     v-model="otp"
                     name="otp"
                     ref="otp"
