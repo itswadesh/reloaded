@@ -100,7 +100,9 @@
 <script>
 const Textbox = () => import("~/components/ui/Textbox");
 const CheckoutHeader = () => import("~/components/checkout/CheckoutHeader");
+// import { location } from "~/mixins";
 export default {
+  // mixins: [location],
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)
       return redirect("/login?return=/checkout/add");
@@ -133,13 +135,13 @@ export default {
       }
     } else {
       this.$store.commit("busy", true);
-      this.a = await this.locateMe();
-      // this.a.town = this.a.county;
-      // this.a.city = this.a.state_district;
-      // this.a.zip = this.a.postcode;
-      this.a.firstName = this.user.firstName;
-      this.a.lastName = this.user.lastName;
-      this.a.phone = this.user.phone;
+      let geoCookie = this.$cookies.get("geo");
+      if (geoCookie) {
+        this.a = geoCookie;
+        this.a.firstName = this.user.firstName;
+        this.a.lastName = this.user.lastName;
+        this.a.phone = this.user.phone;
+      }
       this.$store.commit("busy", false);
     }
   },
