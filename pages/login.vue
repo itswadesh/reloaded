@@ -1,123 +1,120 @@
 <template>
-  <div>
-    <div class="bg-gray-100 xs:mobile-login h-full px-4">
-      <div class="container h-full flex items-center justify-center">
-        <div class="lg:w-1/3 w-full">
-          <div class="border-teal border-t-12 bg-white mb-6 rounded shadow">
-            <div class="p-0 text-secondary text-white rounded rounded-b-none">
-              <h1 class="text-xl mb-6 text-center p-3">
-                <span
-                  class="font-extrabold"
-                  v-if="!signup"
-                >SIGN IN</span>
-                <span
-                  class="font-extrabold"
-                  v-else
-                >SIGN UP</span> TO YOUR ACCOUNT
-              </h1>
+  <div class="bg-gray-200 h-screen flex flex-col items-center justify-center">
+    <div class="lg:w-1/3 w-full px-4">
+      <div class="bg-white rounded shadow">
+        <div class="text-secondary text-white">
+          <h1 class="text-xl mb-2 text-center p-3">
+            <span
+              class="font-extrabold"
+              v-if="!signup"
+            >SIGN IN</span>
+            <span
+              class="font-extrabold"
+              v-else
+            >SIGN UP</span> TO YOUR ACCOUNT
+          </h1>
+        </div>
+        <form
+          novalidate
+          autocomplete="off"
+          @submit.stop.prevent="submit()"
+          class="center"
+        >
+          <div class="p-6">
+            <div>
+              <Textbox
+                v-model="uid"
+                label="Email/Phone"
+                @keyup="onPhoneChange"
+                class="bg-gray-200"
+              />
             </div>
-            <form
-              novalidate
-              autocomplete="off"
-              @submit.stop.prevent="submit()"
-              class="center"
-            >
-              <div class="p-6">
-                <div>
-                  <Textbox
-                    v-model="uid"
-                    label="Email/Phone"
-                    @keyup="onPhoneChange"
-                  />
-                </div>
-                <div v-if="showOTP">
-                  <Textbox
-                    v-if="signup"
-                    v-model="firstName"
-                    label="Fisrt Name"
-                    class="w-full"
-                  />
-                  <Textbox
-                    v-if="signup"
-                    v-model="lastName"
-                    label="Last Name"
-                    class="w-full"
-                  />
-                  <!-- <p class="text-red-500 mb-5 text-xs font-hairline">Please enter password</p> -->
-                  <!-- Show password box -->
-                  <div v-if="!isPhone">
-                    <Textbox
-                      v-model="password"
-                      name="password"
-                      label="Password"
-                      ref="password"
-                      type="password"
-                      class="w-full"
-                    />
-                  </div>
-                  <!-- Show OTP box -->
+            <div v-if="showOTP">
+              <Textbox
+                v-if="signup"
+                v-model="firstName"
+                label="Fisrt Name"
+                class="w-full bg-gray-200"
+              />
+              <Textbox
+                v-if="signup"
+                v-model="lastName"
+                label="Last Name"
+                class="w-full bg-gray-200"
+              />
+              <!-- <p class="text-red-500 mb-5 text-xs font-hairline">Please enter password</p> -->
+              <!-- Show password box -->
+              <div v-if="!isPhone">
+                <Textbox
+                  v-model="password"
+                  name="password"
+                  label="Password"
+                  ref="password"
+                  type="password"
+                  class="w-full  bg-gray-200"
+                />
+              </div>
+              <!-- Show OTP box -->
+              <div
+                v-else
+                class=" text-center"
+              >
+                <p class="text-red-500 mb-5 text-xs font-hairline">Please enter OTP sent to mobile number</p>
+                <div class="otp-container relative inline-block rounded p-2 w-32 w-12 mb-10 bg-gray-200">
                   <div
-                    v-else
-                    class=" text-center"
-                  >
-                    <p class="text-red-500 mb-5 text-xs font-hairline">Please enter OTP sent to mobile number</p>
-                    <div class="otp-container relative inline-block rounded p-2 w-32 w-12 mb-10 bg-gray-200">
-                      <div
-                        id="wraper1"
-                        class="otp-seperator w-1 h-1 rounded absolute"
-                        :class="{'wraper-hide':otp.length>0}"
-                      ></div>
-                      <div
-                        id="wraper2"
-                        class="otp-seperator w-1 h-1 rounded absolute"
-                        :class="{'wraper-hide':otp.length>1}"
-                      ></div>
-                      <div
-                        id="wraper3"
-                        class="otp-seperator w-1 h-1 rounded absolute"
-                        :class="{'wraper-hide':otp.length>2}"
-                      ></div>
-                      <div
-                        id="wraper4"
-                        class="otp-seperator w-1 h-1 rounded absolute"
-                        :class="{'wraper-hide':otp.length>3}"
-                      ></div>
-                      <input
-                        v-model="otp"
-                        name="otp"
-                        ref="otp"
-                        class="outline-none pl-4 otp-content w-32 bg-transparent border border-gray-400"
-                        maxlength="4"
-                        autocomplete="off"
-                        @keyup="onKeyUpEvent(otp.length, $event)"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="flex-col items-center justify-between">
-                  <button
-                    type="submit"
-                    :disabled="loading"
-                    class="flex items-center justify-center h-14 text-2xl outline-none w-full font-bold py-2 rounded"
-                    :class="{'primary text-white':!loading,'border border-gray-400 bg-gray-300':loading}"
-                  >
-                    <div v-if="loading">
-                      <img
-                        src="/loading.svg"
-                        :class="{'loading':loading}"
-                        alt
-                      />
-                    </div>
-                    <span v-else>{{submitText}}</span>
-                  </button>
-                  <!-- <p class="text-xs mt-2">
-                    <nuxt-link to="/account/forgot-password">Forgot Password?</nuxt-link>
-                  </p> -->
+                    id="wraper1"
+                    class="otp-seperator w-1 h-1 rounded absolute"
+                    :class="{'wraper-hide':otp.length>0}"
+                  ></div>
+                  <div
+                    id="wraper2"
+                    class="otp-seperator w-1 h-1 rounded absolute"
+                    :class="{'wraper-hide':otp.length>1}"
+                  ></div>
+                  <div
+                    id="wraper3"
+                    class="otp-seperator w-1 h-1 rounded absolute"
+                    :class="{'wraper-hide':otp.length>2}"
+                  ></div>
+                  <div
+                    id="wraper4"
+                    class="otp-seperator w-1 h-1 rounded absolute"
+                    :class="{'wraper-hide':otp.length>3}"
+                  ></div>
+                  <input
+                    v-model="otp"
+                    name="otp"
+                    ref="otp"
+                    class="outline-none pl-4 otp-content w-32 bg-transparent border border-gray-400"
+                    maxlength="4"
+                    autocomplete="off"
+                    @keyup="onKeyUpEvent(otp.length, $event)"
+                  />
                 </div>
               </div>
-            </form>
+            </div>
+            <div class="flex-col items-center justify-between">
+              <button
+                type="submit"
+                :disabled="loading"
+                class="flex items-center justify-center h-14 text-2xl outline-none w-full font-bold py-2 rounded"
+                :class="{'primary text-white':!loading,'border border-gray-400 bg-gray-300':loading}"
+              >
+                <div v-if="loading">
+                  <img
+                    src="/loading.svg"
+                    :class="{'loading':loading}"
+                    alt
+                  />
+                </div>
+                <span v-else>{{submitText}}</span>
+              </button>
+              <!-- <p class="text-xs mt-2">
+                    <nuxt-link to="/account/forgot-password">Forgot Password?</nuxt-link>
+                  </p> -->
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
