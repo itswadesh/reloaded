@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button @click="pinLocation()">Try It</button>
-    <p id="mapholder"></p>
+    <button @click="drawBoundries()">Try It</button>
+    <p id="map"></p>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style>
-#mapholder {
+#map {
   width: 500px;
   height: 500px;
 }

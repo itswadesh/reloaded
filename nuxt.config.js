@@ -1,3 +1,4 @@
+import { join } from 'path'
 require("dotenv").config();
 const { API_URL, head, HOST } = require("./config");
 const PROXY = process.env.API_URL || API_URL;
@@ -41,5 +42,18 @@ export default {
     "/api/": PROXY,
     "/auth": PROXY,
     "/images": PROXY
+  },
+  build: {
+    postcss: {
+      plugins: {
+        tailwindcss: join(__dirname, 'tailwind.config.js'),
+        'postcss-pxtorem': {
+          propList: [
+            '*',
+            '!border*',
+          ]
+        }
+      }
+    }
   }
 };

@@ -13,6 +13,31 @@ export default {
     document.head.appendChild(recaptchaScript);
   },
   methods: {
+    drawBoundries() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 18.8561, lng: 82.7347 },
+        zoom: 12,
+      });
+
+      var triangleCoords = [
+        { lat: 18.849335, lng: 82.734222 },
+        { lat: 18.827176, lng: 82.975917 },
+        { lat: 18.357822, lng: 82.724857 },
+        { lat: 18.456663, lng: 82.964658 },
+        { lat: 18.795072, lng: 82.228701 },
+        { lat: 19.100792, lng: 82.267496 }
+      ];
+      var point = new google.maps.LatLng(18.8561, 82.7347);
+      var bermudaTriangle = new google.maps.Polygon({ paths: triangleCoords });
+
+      google.maps.event.addListener(map, 'click', function (e) {
+        console.log(e)
+        var resultColor =
+          google.maps.geometry.poly.containsLocation(point, bermudaTriangle)
+        console.log(resultColor)
+
+      });
+    },
     pinLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -32,7 +57,7 @@ export default {
         lng: pos.coords.longitude
       };
       // var position = new google.maps.LatLng(18.732081, 82.830031);
-      var map = new google.maps.Map(document.getElementById("mapholder"), {
+      var map = new google.maps.Map(document.getElementById("map"), {
         zoom: 18,
         center: position
       });
@@ -81,7 +106,7 @@ export default {
         lng: pos.coords.longitude
       };
       // var position = new google.maps.LatLng(18.732081, 82.830031);
-      var map = new google.maps.Map(document.getElementById("mapholder"), {
+      var map = new google.maps.Map(document.getElementById("map"), {
         zoom: 18,
         center: position
       });
