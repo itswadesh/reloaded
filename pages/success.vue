@@ -4,6 +4,13 @@
     <h1 class="text-xl text-center font-bold bg-white py-3" v-else-if="!order">Order Not Found</h1>
     <div v-else>
       <Heading title="Success" />
+      <h2
+        v-if="order.delivery"
+        class="text-md text-center font-bold bg-white py-3 bg-yellow-200 text-gray-500 border-t border-b-2 border-dashed mb-2"
+      >
+        OTP:
+        <span class="text-primary">{{order.delivery.otp}}</span>
+      </h2>
       <div class="px-8 text-lg tracking-wider">
         <!-- <div class="flex justify-center py-6">
         <img src="seattle.jpg" class="h-40 w-40 rounded-full" />

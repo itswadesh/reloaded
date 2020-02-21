@@ -11,11 +11,7 @@
           :key="a._id"
         >
           <label class="cursor-pointer w-full flex justify-between">
-            <Radio
-              v-model="selectedAddress"
-              @changed="addressChanged"
-              :value="a._id"
-            />
+            <Radio v-model="selectedAddress" @changed="addressChanged" :value="a._id" />
             <div class="flex-1 ml-2">
               <div class="font-semibold">{{a.firstName}} {{a.lastName}}</div>
               <div class="py-2 text-xs">
@@ -50,24 +46,20 @@
       </div>
       <!-- Right sidebar -->
       <div class="w-full px-2">
-        <label class="flex justify-start border rounded p-2 text-sm border-green-300 bg-green-100">
+        <!-- <label class="flex justify-start border rounded p-2 text-sm border-green-300 bg-green-100">
           <div class="font-bold text-black">Standard Delivery</div>
           <div class="text-gray-500">Delivery Charge ₹149</div>
-        </label>
+        </label>-->
         <div
           v-for="(item,ix) in cart.items"
           :key="ix"
           :item="item"
           class="flex my-5 border-b border-dotted pb-2"
         >
-          <img
-            class="rounded w-12 h-12 object-cover mr-2"
-            v-lazy="item.img"
-            alt
-          />
+          <img class="rounded w-12 h-12 object-cover mr-2" v-lazy="item.img" alt />
           <div>
             <div class="text-lg">{{item.name}}</div>
-            <div class="text-sm font-bold">{{item.rate | currency}}</div>
+            <div class="text-sm text-gray-600">{{item.rate | currency}} * {{item.qty}}</div>
           </div>
         </div>
         <CartSummaryCheckout :selectedAddress="selectedAddress" />

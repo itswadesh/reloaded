@@ -17,7 +17,7 @@
 <script>
 import Header from "~/components/Header";
 import StickyFooter from "~/components/footer/StickyFooter";
-import AccountMenu from "~/components/AccountMenu";
+import AccountMenu from "~/components/AccountMenu2";
 export default {
   components: { Header, StickyFooter, AccountMenu }
 };

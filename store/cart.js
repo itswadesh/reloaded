@@ -2,11 +2,12 @@ const state = state => ({
   items: [],
   qty: 0,
   subtotal: 0,
-  discount: 0,
+  discount: null,
+  shipping: null,
+  tax: null,
   total: 0,
   offer_total: 0,
-  showCart: false,
-  promo: null
+  showCart: false
 });
 
 // getters
@@ -16,7 +17,7 @@ const getters = {
   },
   checkCart: state => ({ pid, vid }) => {
     // Returns true when there is item in cart
-    var found = state.items.some(function(el) {
+    var found = state.items.some(function (el) {
       return el._id === pid;
     });
     return found;
@@ -37,7 +38,7 @@ const actions = {
       const data = await this.$axios.$get("api/cart");
       commit("setCart", data);
       return data;
-    } catch (e) {}
+    } catch (e) { }
   },
   async addToCart({ commit }, payload) {
     try {
@@ -99,10 +100,11 @@ const mutations = {
     }
     state.items = data.items || [];
     state.qty = data.qty;
-    state.discount = data.discount || 0;
+    state.discount = data.discount;
     state.subtotal = data.subtotal;
     state.total = data.total;
-    state.offer_total = data.offer_total;
+    state.shipping = data.shipping;
+    state.tax = data.tax;
   },
   toggleCart(state, payload) {
     state.showCart = payload;

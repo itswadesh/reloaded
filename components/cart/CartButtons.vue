@@ -1,6 +1,5 @@
 <template>
   <div class="flex" v-if="product">
-    <span class="mt-1">Quantity: &nbsp;</span>
     <div v-if="!checkCart({ pid: product._id })" @click="addToBag({pid:product._id,qty:1})">
       <button
         class="primary rounded-full w-8 h-8"

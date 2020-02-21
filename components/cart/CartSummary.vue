@@ -1,31 +1,32 @@
 <template>
-  <div class="lg:w-1/4 xs:w-full px-3 py-4 bg-gray-100">
-    <div class="border-b border-dotted lg:mb-0">
-      <p class="text-black font-normal text-xl">Price Summary</p>
-      <span class="text-gray-400 text-xs">Includes GST and all government taxes</span>
-      <div class="flex justify-between mt-1">
-        <div class="w-1/2 text-sm text-left">Total item price</div>
-        <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.subtotal| currency}}</div>
-      </div>
-      <div class="flex justify-between mt-1">
-        <div class="w-1/2 text-sm text-left">Item discount</div>
-        <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.discount.amount | currency}}</div>
-      </div>
+  <div
+    class="lg:w-1/4 w-full px-3 py-4 bg-gray-100 border-t-2 border-b-2 border-gray-300 border-dashed"
+  >
+    <p class="text-black font-normal text-xl">Price Summary</p>
+    <span class="text-gray-400 text-xs">Includes GST and all government taxes</span>
+    <div class="flex justify-between mt-1">
+      <div class="w-1/2 text-sm text-left">Total item price</div>
+      <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.subtotal| currency}}</div>
+    </div>
+    <div class="flex justify-between mt-1" v-if="cart.discount.amount>0">
+      <div class="w-1/2 text-sm text-left">Item discount</div>
+      <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.discount.amount | currency}}</div>
+    </div>
+    <div class="flex justify-between mt-1" v-if="cart.shipping">
+      <div class="w-1/2 text-sm text-left">Shipping fee</div>
       <div
-        class="flex justify-between mt-1"
-        v-if="cart.shipping"
-      >
-        <div class="w-1/2 text-sm text-left">Shipping fee</div>
-        <div
-          class="ml-2 w-1/2 text-black-400 text-right"
-          v-if="cart.shipping.charge>0"
-        >{{cart.shipping.charge| currency}}</div>
-        <div
-          class="ml-2 w-1/2 text-black-400 text-right"
-          v-else
-        >FREE</div>
-      </div>
-      <!-- <<div class="mt-1">
+        class="ml-2 w-1/2 text-black-400 text-right"
+        v-if="cart.shipping.charge>0"
+      >{{cart.shipping.charge| currency}}</div>
+      <div class="ml-2 w-1/2 text-black-400 text-right" v-else>FREE</div>
+    </div>
+    <div class="flex justify-between mt-1" v-if="cart.tax">
+      <div class="w-1/2 text-sm text-left">Tax (CGST + SGST)</div>
+      <div
+        class="ml-2 w-1/2 text-black-400 text-right text-xs"
+      >{{cart.tax.cgst | currency('₹',2)}} + {{cart.tax.sgst | currency('₹',2)}}</div>
+    </div>
+    <!-- <<div class="mt-1">
         <p class="text-xs text-gray-400 pb-2">
           Free shipping on orders of ₹999 or
           more. For first purchase,
@@ -45,9 +46,10 @@
             >Know More</span>
           </div>
         </div>
-      </div> -->
-    </div>
-    <div class="w-full right-0 lg:relative fixed bottom-0 bg-white px-2 lg:px-0 lg:py-0 py-4 shadow lg:shadow-none">
+    </div>-->
+    <div
+      class="w-full right-0 lg:relative fixed bottom-0 bg-white px-2 lg:px-0 lg:py-0 py-4 shadow lg:shadow-none"
+    >
       <div class="flex justify-between">
         <div class="w-1/2 text-lg font-bold text-left">Total</div>
         <div class="ml-2 w-1/2 font-bold text-black-400 text-right">{{cart.total | currency}}</div>

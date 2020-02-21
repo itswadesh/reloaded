@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import AccountMenu from "~/components/AccountMenu";
+import AccountMenu from "~/components/AccountMenu2";
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user) return redirect("/login?return=/my");

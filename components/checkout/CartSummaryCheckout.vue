@@ -3,26 +3,26 @@
     <div class="leading-relaxed bg-yellow-100 p-2">
       <h3 class="font-semibold text-lg text-black">Price Details</h3>
       <div class="flex justify-between mt-1">
-        <div class="text-sm text-left">Bag Total</div>
-        <div class="ml-2 font-bold text-right">{{cart.subtotal| currency}}</div>
+        <div class="w-1/2 text-sm text-left">Total item price</div>
+        <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.subtotal| currency}}</div>
       </div>
-      <div class="flex justify-between mt-1" v-if="cart.discount>0">
-        <div class="text-sm text-left">Bag Discount</div>
-        <div class="ml-2 font-bold text-right">{{cart.discount | currency}}</div>
+      <div class="flex justify-between mt-1" v-if="cart.discount.amount>0">
+        <div class="w-1/2 text-sm text-left">Item discount</div>
+        <div class="ml-2 w-1/2 text-black-400 text-right">{{cart.discount.amount | currency}}</div>
       </div>
-
-      <!-- <div class="flex justify-between mt-1">
-          <div class="text-sm text-left">Order Total</div>
-          <div class="ml-2 text-black-400 text-right">{{cart.subtotal - cart.discount | currency}}</div>
-      </div>-->
-
-      <div class="flex justify-between mt-1">
-        <div class="text-sm text-left">Delivery Charges</div>
+      <div class="flex justify-between mt-1" v-if="cart.shipping">
+        <div class="w-1/2 text-sm text-left">Shipping fee</div>
         <div
-          v-if="cart.delivery"
-          class="ml-2 text-black-400 text-right"
-        >{{cart.delivery.charge| currency}}</div>
-        <div v-else class="ml-2 font-bold text-right">FREE</div>
+          class="ml-2 w-1/2 text-black-400 text-right"
+          v-if="cart.shipping.charge>0"
+        >{{cart.shipping.charge| currency}}</div>
+        <div class="ml-2 w-1/2 text-black-400 text-right" v-else>FREE</div>
+      </div>
+      <div class="flex justify-between mt-1" v-if="cart.tax">
+        <div class="w-1/2 text-sm text-left">Tax (CGST + SGST)</div>
+        <div
+          class="ml-2 w-1/2 text-black-400 text-right text-xs"
+        >{{cart.tax.cgst | currency('₹',2)}} + {{cart.tax.sgst | currency('₹',2)}}</div>
       </div>
     </div>
     <div class="fixed left-0 bottom-0 lg:relative bg-white w-full px-4 pb-2 lg:pr-0">

@@ -1,25 +1,18 @@
 <template>
-  <div class="text-center bg-gray-100 mx-2 flex1">
-    <div class="flex items-center justify-start mx-2">
-      <nuxt-link
-        to="/my"
-        class="flex-1 text-left absolute font-bold"
-      ><i class="fa fa-arrow-left mr-1 text-gray-600" /></nuxt-link>
-      <h1 class="bg-white font-semibold text-xl p-2 flex-1 text-center">
-        Orders
-      </h1>
-    </div>
-    <nuxt-link
-      :to="`/my/orders/${o._id}`"
-      v-for="o in orders"
-      :key="o._id"
-    >
+  <div class="text-center">
+    <Heading title="Orders" />
+    <nuxt-link :to="`/my/orders/${o._id}`" v-for="o in orders" :key="o._id">
       <div class="w-full bg-white shadow rounded hover:shadow-xl my-4">
-        <div class="bg-gray-100 rounded p-3">
+        <div class="rounded p-3">
           <h1>Order # {{ o.orderNo }}</h1>
           <p class="text-gray-800">
-            Date: <span class="text-xs"> {{ o.createdAt | date }}</span>
+            Date:
+            <span class="text-xs">{{ o.createdAt | date }}</span>
           </p>
+          <div class="text-gray-500" v-if="o.delivery">
+            OTP:
+            <span class="text-primary">{{o.delivery.otp}}</span>
+          </div>
         </div>
         <hr />
         <div
@@ -30,15 +23,11 @@
         >
           <div class="flex items-center">
             <div>
-              <img
-                :src="$store.state.settings.CDN_URL + i.img[0]"
-                class="rounded-full bg-blue-500 mr-2 w-12 h-12"
-                alt=""
-              />
+              <img v-lazy="i.img" class="rounded-full mr-2 w-12 h-12" alt />
             </div>
             <div>
               <div class="text-sm font-semibold">{{ i.name }}</div>
-              <div class="text-gray-500 text-xs">
+              <div class="text-xs">
                 {{ i.qty }} * {{ i.rate | currency }} =
                 {{ (i.qty * i.rate) | currency }}
               </div>
@@ -50,7 +39,7 @@
             class="w-12 h-12"
             alt="cart"
           />
-        </div> -->
+          </div>-->
         </div>
       </div>
     </nuxt-link>
@@ -58,6 +47,7 @@
 </template>
 
 <script>
+import Heading from "~/components/Heading";
 export default {
   layout: "account",
   fetch({ store, redirect }) {
@@ -87,6 +77,8 @@ export default {
     }
     return { orders };
   },
-  layout: "account"
+  components: {
+    Heading
+  }
 };
 </script>

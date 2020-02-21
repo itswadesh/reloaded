@@ -3,7 +3,7 @@
     <h2 class="text-xl m-2">{{ title }}</h2>
     <carousel :perPage="2" :paginationEnabled="false">
       <slide v-for="p in products" :key="p._id" class="px-2">
-        <img class="object-contain w-full h-32" v-lazy="p.img" alt="" />
+        <img class="object-cover w-full h-32" v-lazy="p.img" alt />
         <div class="truncate text-center">{{ p.name }}</div>
       </slide>
     </carousel>
