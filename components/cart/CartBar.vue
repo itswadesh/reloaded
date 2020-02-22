@@ -3,7 +3,7 @@
     v-if="cart.qty>0"
     class="fixed bottom-0 primary w-full p-3 flex justify-between rounded-t-lg"
   >
-    <div>{{cart.qty}} item | {{cart.total | currency}}</div>
+    <div>{{cart.qty}} item | {{cart.subtotal | currency}}</div>
     <nuxt-link to="/cart" class="flex border-l pl-2">
       <img src="/carticon.svg" />VIEW CART
     </nuxt-link>

@@ -4,15 +4,8 @@
     <div class="container">
       <!-- <Categories /> -->
       <div class="flex flex-wrap">
-        <div
-          class="w-full"
-          v-for="p in products"
-          :key="p._id"
-        >
-          <ListCard
-            :p="p"
-            class
-          />
+        <div class="w-full" v-for="p in products" :key="p._id">
+          <ListCard :p="p" class />
         </div>
       </div>
     </div>
@@ -64,20 +57,17 @@ export default {
     }
   },
   methods: {
-    async getData(query) {
-      console.log("getData", query);
-      try {
-        // this.loading = true;
-        const products = await this.$axios.$get("api/products", {
-          params: { ...query }
-        });
-        this.productCount = products.count;
-        this.products = products.data;
-      } catch (e) {
-      } finally {
-        // this.loading = false;
-      }
-    }
+    // async getData(query) {
+    //   try {
+    //     const products = await this.$axios.$get("api/foods", {
+    //       params: { ...query }
+    //     });
+    //     this.productCount = products.count;
+    //     this.products = products.data;
+    //   } catch (e) {
+    //   } finally {
+    //   }
+    // }
   },
   components: {
     Heading,

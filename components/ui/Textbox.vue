@@ -1,22 +1,21 @@
 <template>
   <div class="group">
-    <center>
-      <div class="floating-form">
-        <div class="floating-label">
-          <input
-            class="floating-input bg-gray-100 border-b w-full rounded hover:bg-gray-300 focus:outline-none focus:border-pink-500"
-            placeholder=" "
-            v-bind="$attrs"
-            :value="value"
-            @input="$emit('input', $event.target.value)"
-            :type="type"
-            :aria-label="label"
-          />
-          <span class="highlight"></span>
-          <label>{{label}}</label>
-        </div>
+    <div class="floating-form">
+      <div class="floating-label">
+        <input
+          class="floating-input bg-gray-100 border-b w-full rounded hover:bg-gray-300 focus:outline-none focus:border-pink-500"
+          :class="cls"
+          placeholder=" "
+          v-bind="$attrs"
+          :value="value"
+          @input="$emit('input', $event.target.value)"
+          :type="type"
+          :aria-label="label"
+        />
+        <span class="highlight"></span>
+        <label>{{label}}</label>
       </div>
-    </center>
+    </div>
   </div>
 </template>
 
@@ -25,7 +24,8 @@ export default {
   props: {
     label: { type: String },
     type: { type: String, default: "text" },
-    value: { type: String }
+    value: { type: String },
+    cls: { type: String }
   }
 };
 </script>
@@ -66,7 +66,6 @@ input:valid + label {
 /****  floating-Lable style start ****/
 .floating-label {
   position: relative;
-  margin-bottom: 20px;
 }
 .floating-input {
   font-size: 14px;

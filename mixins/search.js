@@ -20,20 +20,21 @@ export default {
     },
   },
   watch: {
-    filterInput: {
-      immediate: false,
-      handler(value, oldValue) {
-        if (!oldValue) return; // Do not trigger on page load
-        clearTimeout(this.typingTimer);
-        let vm = this;
-        this.typingTimer = setTimeout(function () {
-          if (!value || value == "undefined") value = ""; // When clear button clicked
-          let query = { ...vm.$route.query }
-          query.page = 1
-          query.search = value
-          vm.$router.push({ query });
-        }, vm.typingTimeout);
-      }
-    }
+    // filterInput: {
+    //   immediate: false,
+    //   handler(value, oldValue) {
+    //     console.log('xxxxxxxxxxxxxxxxx');
+    //     if (!oldValue) return; // Do not trigger on page load
+    //     clearTimeout(this.typingTimer);
+    //     let vm = this;
+    //     this.typingTimer = setTimeout(function () {
+    //       if (!value || value == "undefined") value = ""; // When clear button clicked
+    //       let query = { ...vm.$route.query }
+    //       query.page = 1
+    //       query.search = value
+    //       vm.$router.push({ query });
+    //     }, vm.typingTimeout);
+    //   }
+    // }
   }
 }

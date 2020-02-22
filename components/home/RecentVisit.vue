@@ -12,7 +12,7 @@ export default {
     return { products: [] };
   },
   async created() {
-    let products = await this.$axios.$get("api/products");
+    let products = await this.$axios.$get("api/foods");
     this.products = products.data;
   },
   components: {
