@@ -5,7 +5,8 @@
       <!-- <Categories /> -->
       <div class="flex flex-wrap">
         <div class="w-full" v-for="p in products" :key="p._id">
-          <ListCard :p="p" class />
+          <ListCardSkeleton v-if="loading" />
+          <ListCard :p="p" />
         </div>
       </div>
     </div>
@@ -17,22 +18,31 @@ import Heading from "~/components/Heading";
 import Banner from "~/components/Banner";
 import Product from "~/components/Product";
 import ListCard from "~/components/ListCard";
+import ListCardSkeleton from "~/components/ListCardSkeleton";
 import Categories from "~/components/Categories";
-import { query, search, infiniteScroll } from "~/mixins";
+import { query, infiniteScroll } from "~/mixins";
 import { TITLE, DESCRIPTION, KEYWORDS, sharingLogo } from "~/config";
 import { constructURL } from "~/lib/";
 export default {
+  data() {
+    return {
+      apiQ: "api/foods",
+      loading: false
+    };
+  },
   layout: "search",
-  mixins: [query, search, infiniteScroll],
+  mixins: [query, infiniteScroll],
   async asyncData({ params, query, $axios }) {
     let products = [],
       fl = {},
       err = null,
-      productCount = 0;
+      productCount = 0,
+      loading = false;
     try {
+      loading = true;
       const q = params.q || null,
         qry = { ...query };
-      if (q) qry.q = q;
+      if (q) qry.search = q;
       const result = await $axios.$get("api/foods", {
         params: { ...qry }
       });
@@ -53,7 +63,9 @@ export default {
         err = e;
       }
       console.log("err...", `${err}`);
-      return { products, productCount, facets: [], fl: {}, err };
+      loading = false;
+      return { products, productCount, loading, facets: [], fl: {}, err };
+    } finally {
     }
   },
   methods: {
@@ -74,7 +86,8 @@ export default {
     Banner,
     Product,
     Categories,
-    ListCard
+    ListCard,
+    ListCardSkeleton
   }
 };
 </script>

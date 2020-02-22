@@ -9,10 +9,9 @@ export default {
       let params = this.$route.query;
       if (this.meta.busy || this.meta.end)
         return
-      this.$store.commit('busy', true);
       try {
+        this.$store.commit('busy', true);
         let { data, count, pageSize, page } = await this.$axios.$get(this.apiQ || this.api, { params })
-        this.$store.commit('busy', false);
         if (data) {
           this.meta.page = this.$route.query.page || 1
           this.count = count
@@ -36,22 +35,22 @@ export default {
     },
   },
   watch: {
-    "$route.query": {
-      immediate: true,
-      handler(value, oldValue) {
-        if (JSON.stringify(value) == JSON.stringify(oldValue)) return;
-        if (value.sort) {
-          if (value.sort.charAt(0) == "-") {
-            this.sortBy = value.sort.substring(1);
-            this.descending = true;
-          } else {
-            this.sortBy = value.sort;
-            this.descending = false;
-          }
-        }
-        this.flush();
-        this.getData();
-      }
-    }
+    // "$route.query": {
+    //   immediate: true,
+    //   handler(value, oldValue) {
+    //     if (JSON.stringify(value) == JSON.stringify(oldValue)) return;
+    //     if (value.sort) {
+    //       if (value.sort.charAt(0) == "-") {
+    //         this.sortBy = value.sort.substring(1);
+    //         this.descending = true;
+    //       } else {
+    //         this.sortBy = value.sort;
+    //         this.descending = false;
+    //       }
+    //     }
+    //     this.flush();
+    //     this.getData();
+    //   }
+    // }
   }
 }

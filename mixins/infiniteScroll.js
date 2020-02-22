@@ -47,13 +47,13 @@ export default {
       this.$router.push(url);
     }
   },
-  watch: {
-    "$route.query": {
-      immediate: true,
-      handler(value, oldValue) {
-        if (JSON.stringify(value) == JSON.stringify(oldValue)) return;
-        this.getData();
-      }
-    }
-  }
+  // watch: {
+  //   "$route.query": {
+  //     immediate: true,
+  //     handler(value, oldValue) {
+  //       if (JSON.stringify(value) == JSON.stringify(oldValue)) return;
+  //       this.getData();
+  //     }
+  //   }
+  // }
 }
