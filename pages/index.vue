@@ -2,7 +2,7 @@
   <div>
     <nuxt-link
       to="/chef"
-      class="block bg-yellow-200 py-1 px-2 mx-auto text-center cursor-pointer hover:text-black"
+      class="block bg-yellow-400 py-1 px-2 mx-auto text-center cursor-pointer hover:text-black rounded-b"
     >Get started as chef in 30 seconds</nuxt-link>
     <Hero />
     <div class="container antialiased min-h-screen">
@@ -10,8 +10,15 @@
       <!-- <BestSellers />
       <RecentVisit />-->
       <div class="flex flex-wrap">
-        <div class="w-1/2" v-for="p in products" :key="p._id">
-          <Product :p="p" class />
+        <div
+          class="w-1/2"
+          v-for="p in products"
+          :key="p._id"
+        >
+          <Product
+            :p="p"
+            class
+          />
         </div>
       </div>
     </div>

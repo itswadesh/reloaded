@@ -26,36 +26,37 @@
         <div class="p-2">
           <Textbox
             label="First Name"
-            class="w-full"
+            class="w-full mb-4"
             name="firstName"
             v-model="a.firstName"
           />
           <Textbox
             label="Last Name"
-            class="w-full"
+            class="w-full mb-4"
             name="lastName"
             v-model="a.lastName"
           />
           <Textbox
+            type="tel"
             label="Pin Code"
-            class="w-full"
+            class="w-full mb-4"
             name="name"
             v-model="a.zip"
           />
           <Textbox
             label="Address"
-            class="w-full"
+            class="w-full mb-4"
             name="name"
             v-model="a.address"
           />
           <Textbox
             label="Landmark"
-            class="w-full"
+            class="w-full mb-4"
             name="name"
             v-model="a.landmark"
           />
 
-          <div class="w-full flex justify-between">
+          <div class="w-full flex justify-between mb-4">
             <Textbox
               label="City"
               class="w-1/2 mr-1"
@@ -70,8 +71,9 @@
             />
           </div>
           <Textbox
+            type="tel"
             label="Phone"
-            class="w-full"
+            class="w-full mb-4"
             name="name"
             v-model="a.phone"
           />

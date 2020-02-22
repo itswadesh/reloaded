@@ -1,8 +1,21 @@
 <template>
   <div class="h-48 w-full">
-    <carousel :perPage="1" :paginationEnabled="false">
-      <slide v-for="(i, ix) in $store.state.settings.banners.slider" :key="ix">
-        <img class="h-48 object-cover w-full" v-lazy="i.img" alt />
+    <carousel
+      :perPage="1"
+      :paginationEnabled="false"
+      autoplay="true"
+      loop="true"
+      autoplayTimeout="5000"
+    >
+      <slide
+        v-for="(i, ix) in $store.state.settings.banners.slider"
+        :key="ix"
+      >
+        <img
+          class="h-48 object-cover w-full"
+          v-lazy="i.img"
+          alt
+        />
       </slide>
     </carousel>
   </div>

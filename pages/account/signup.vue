@@ -78,6 +78,7 @@
                       :class="{'wraper-hide':otp.length>3}"
                     ></div>
                     <input
+                      type="tel"
                       v-model="otp"
                       name="otp"
                       ref="otp"
@@ -104,7 +105,9 @@
                     </div>
                     <span v-else>{{submitText}}</span>
                   </button>
-                  <p class="text-xs mt-2"><nuxt-link to="/account/forgot-password">Forgot Password?</nuxt-link></p>
+                  <p class="text-xs mt-2">
+                    <nuxt-link to="/account/forgot-password">Forgot Password?</nuxt-link>
+                  </p>
                 </div>
               </div>
             </form>

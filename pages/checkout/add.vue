@@ -24,7 +24,7 @@
         @submit.stop.prevent="submit(a)"
       >
         <div class="p-2">
-          <div class="w-full flex justify-between">
+          <div class="w-full flex justify-between my-4">
             <Textbox
               label="First Name"
               class="w-full"
@@ -40,23 +40,24 @@
           </div>
           <Textbox
             label="Address"
-            class="w-full"
+            class="w-full mb-4"
             name="name"
             v-model="a.address"
           />
           <Textbox
+            type="tel"
             label="Pin Code"
-            class="w-full"
+            class="w-full mb-4"
             name="name"
             v-model="a.zip"
           />
           <Textbox
             label="Town"
-            class="w-full"
+            class="w-full mb-4"
             name="name"
             v-model="a.town"
           />
-          <div class="w-full flex justify-between">
+          <div class="w-full flex justify-between mb-4">
             <Textbox
               label="City"
               class="w-1/2 mr-1"
@@ -71,6 +72,7 @@
             />
           </div>
           <Textbox
+            type="tel"
             label="Phone"
             class="w-full"
             name="name"

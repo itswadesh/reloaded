@@ -4,6 +4,7 @@
       <nuxt-link
         to="/search"
         class="category-item"
+        active-class="text-primary"
       >
         <i class="fa fa-search" />
         <span class="text-xs">Discovery</span>
@@ -17,6 +18,7 @@
       <nuxt-link
         to="/my/"
         class="category-item"
+        active-class="text-primary"
       >
         <i class="fa fa-user" />
         <span class="text-xs">Account</span>
@@ -24,6 +26,7 @@
       <nuxt-link
         to="/offers"
         class="category-item"
+        active-class="text-primary"
       >
         <i class="fa fa-tag" />
         <span class="text-xs">Offers</span>
@@ -31,6 +34,7 @@
       <nuxt-link
         to="/cart"
         class="category-item"
+        active-class="text-primary"
       >
         <i class="fa fa-shopping-cart" />
         <span class="text-xs">Cart</span>

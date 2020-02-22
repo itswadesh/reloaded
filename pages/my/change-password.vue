@@ -13,7 +13,14 @@
       <form class="px-0 lg:px-16 py-8">
         <span class="text-sm">Minimum 6 characters</span>
         <div class="mb-4 lg:w-1/2 w-full mt-3">
-         <Textbox v-model="password"                  name="password"                      label="Password"                      ref="password"                      type="password"                      class="w-full"                    />
+          <Textbox
+            v-model="password"
+            name="password"
+            label="Password"
+            ref="password"
+            type="password"
+            class="w-full"
+          />
         </div>
         <div class="w-1/3 lg:w-1/2">
           <button
@@ -32,8 +39,8 @@ import Textbox from "~/components/ui/Textbox";
 
 export default {
   layout: "account",
-  components:{Textbox},
-  methods:{
+  components: { Textbox },
+  methods: {
     async submit() {
       if (!this.password || this.password === "") {
         this.$store.commit("setErr", "Current Password can not be blank");

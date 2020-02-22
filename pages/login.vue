@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 h-screen flex flex-col items-center justify-center">
+  <div class="bg-gray-200  min-h-screen flex flex-col items-center justify-center">
     <div class="lg:w-1/3 w-full px-4">
       <div class="bg-white rounded shadow">
         <div class="text-secondary text-white">
@@ -27,7 +27,7 @@
                 v-model="uid"
                 label="Phone"
                 @keyup="onPhoneChange"
-                class="bg-gray-200"
+                class="bg-gray-200 mb-6"
               />
             </div>
             <div v-if="showOTP">
@@ -293,6 +293,7 @@ export default {
       }
     }
   },
+  layout: "none",
   head() {
     return {
       title: "Login to Litekart",
