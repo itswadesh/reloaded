@@ -39,6 +39,7 @@
     "dotenv": "^8.2.0",
     "node-sass": "^4.13.1",
     "nuxt-edge": "latest",
+    "npm-run-all": "^4.1.2",
     "sass-loader": "^8.0.2",
     "shortcode-tokenizer": "^0.6.1",
     "tailwindcss-animatecss": "^0.2.7",
