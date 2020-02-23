@@ -92,13 +92,14 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-.fit--loader
-	display: flex
-  align-items: center
-  justify-content: center
-  align-content: center
-	width: 50px !important
-	height: 50px !important
-	margin-top: 50% auto
+<style scoped>
+.fit--loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  width: 50px !important;
+  height: 50px !important;
+  margin-top: 50% auto;
+}
 </style>

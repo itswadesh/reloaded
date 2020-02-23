@@ -19,12 +19,12 @@ export default {
     { src: "~/plugins/vue-slider-component", mode: "client" } // Price slider
   ],
   buildModules: ["@nuxtjs/tailwindcss"],
+  // buildModules: ["@nuxtjs/tailwindcss", "@nuxtjs/font-awesome"],
   modules: [
     "@nuxtjs/dotenv",
     // "~/modules/routes",
     "@nuxtjs/robots",
     "@nuxtjs/axios",
-    "@nuxtjs/font-awesome",
     "@nuxtjs/pwa",
     // "@nuxtjs/onesignal",
     "@nuxtjs/toast",

@@ -1,7 +1,10 @@
 <template>
   <div class="bg-white">
     <h1 v-if="!product">Not found</h1>
-    <div v-else class="relative">
+    <div
+      v-else
+      class="relative"
+    >
       <div class="z-10 absolute w-full">
         <button
           @click="$router.go(-1)"
@@ -34,7 +37,10 @@
       <div class="rounded-t-lg z-10 px-4">
         <div class="mt-4 mb-2">
           <div class="flex justify-between items-center text-gray-600 text-sm">
-            <img :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'" class="w-5" />
+            <img
+              :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'"
+              class="w-5"
+            />
             <div>
               <i class="fa fa-cycle" />
               {{product.time}}
@@ -42,9 +48,7 @@
             <div>
               <i class="fa fa-map-marker" /> 27kms
             </div>
-            <div
-              v-if="product.vendor && product.vendor.info"
-            >By {{ product.vendor.info.restaurant }}</div>
+            <div v-if="product.vendor && product.vendor.info">By {{ product.vendor.info.restaurant }}</div>
             <div v-if="product.stock < 5">Only {{ product.stock }} left</div>
           </div>
           <h1 class="font-bold text-xl mt-2">{{ product.name }}</h1>
@@ -68,11 +72,65 @@
           </div>-->
           <h2 class="text-2xl font-bold">{{ product.rate | currency }}</h2>
           <div class="flex justify-around">
-            <CartButtons :product="product" :variant="userSelectedVariant" :notify="true" />
+            <CartButtons
+              :product="product"
+              :variant="userSelectedVariant"
+              :notify="true"
+            />
           </div>
         </div>
         <div class="font-semibold pb-3 text-xs px-5">{{ product.description }}</div>
       </div>
+      <hr />
+      <social-sharing
+        v-if="product.vendor && product.vendor.info"
+        :url="`https://www.litekart.in/features`"
+        :title="product.name"
+        :description="product.vendor.info.restaurant"
+        :quote="product.description"
+        hashtags="misiki, food-delivery, sunabeda"
+        :twitter-user="misiki"
+        inline-template
+      >
+        <div class="flex justify-between items-center cursor-pointer ">
+          <network
+            network="facebook"
+            style="color:#3B5998"
+            class="w-full "
+          >
+            <div class="hover:bg-gray-200 py-2 text-center text-xs">
+              <i class="fa fa-fw fa-facebook" />Facebook
+            </div>
+          </network>
+          <network
+            network="reddit"
+            style="color:#ff4500"
+            class="w-full "
+          >
+            <div class="hover:bg-gray-200 py-2 text-center text-xs">
+              <i class="fa fa-fw fa-reddit" />Reddit
+            </div>
+          </network>
+          <network
+            network="twitter"
+            style="color:#53A8E7"
+            class="w-full "
+          >
+            <div class="hover:bg-gray-200 py-2 text-center text-xs">
+              <i class="fa fa-fw fa-twitter" />Twitter
+            </div>
+          </network>
+          <network
+            network="whatsapp"
+            style="color:#54CC61"
+            class="w-full"
+          >
+            <div class="hover:bg-gray-200 py-2 text-center text-xs">
+              <i class="fa fa-fw fa-whatsapp" />Whatsapp
+            </div>
+          </network>
+        </div>
+      </social-sharing>
       <hr class="mb-4" />
       <div v-if="product.vendor">
         <h3 class="font-bold px-3 text-2xl">About Chef</h3>
@@ -92,7 +150,10 @@
               class="text-lg"
               v-if="!product.vendor.info.public"
             >{{ product.vendor.info.restaurant }}</h2>
-            <h2 class="text-lg" v-else>{{ product.vendor.firstName }} {{ product.vendor.lastName }}</h2>
+            <h2
+              class="text-lg"
+              v-else
+            >{{ product.vendor.firstName }} {{ product.vendor.lastName }}</h2>
             <div class="text-gray-600 text-xs tracking-wide">
               <i class="fa fa-map-marker" />
               {{ product.vendor.city }}
@@ -119,7 +180,10 @@
             </div>
           </div>
         </div>-->
-        <div class="mb-4" v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
+        <div
+          class="mb-4"
+          v-if="product.vendor.info && product.vendor.info.kitchenPhotos"
+        >
           <h3 class="font-bold mb-2 px-3 text-2xl">Kitchen Photos</h3>
           <div class="flex flex-wrap px-2">
             <div
@@ -127,7 +191,10 @@
               v-for="(p, ix) in product.vendor.info.kitchenPhotos"
               :key="ix"
             >
-              <img v-lazy="p" class="object-cover h-24 rounded-lg shadow" />
+              <img
+                v-lazy="p"
+                class="object-cover h-24 rounded-lg shadow"
+              />
             </div>
           </div>
         </div>
@@ -215,10 +282,15 @@ import CartButtons from "~/components/cart/CartButtons";
 import CartBar from "~/components/cart/CartBar";
 import StickyFooter from "~/components/footer/StickyFooter";
 import { mapGetters } from "vuex";
+import { TITLE, DESCRIPTION, KEYWORDS, sharingLogo } from "~/config";
+const host = process.server
+  ? this.$ssrContext.req.headers.host
+  : window.location.host;
 export default {
   components: { CartButtons, StickyFooter, CartBar },
   data() {
     return {
+      host,
       shake: false,
       product: null,
       userSelectedVariant: null
@@ -229,7 +301,7 @@ export default {
       this.product = await this.$axios.$get(
         `/api/foods/slug/${this.$route.params.slug}`
       );
-      this.userSelectedVariant = this.product.variants[0];
+      this.userSelectedVariant = this.product;
     } catch (e) {}
   },
   methods: {
@@ -247,22 +319,156 @@ export default {
       return (this.$store.state.auth || {}).user || null;
     },
     calculateOffPercent() {
-      if (!this.product || !this.product.variants[0]) return 0;
+      if (!this.product || !this.product) return 0;
       let percent =
-        ((this.product.variants[0].mrp - this.product.variants[0].price) *
-          100) /
-        this.product.variants[0].mrp;
+        ((this.product.mrp - this.product.price) * 100) / this.product.mrp;
       return Math.round(percent);
     },
     calculatePrice() {
       let price = 0;
-      if (this.product.variants[0].price < this.product.variants[0].mrp) {
-        price = this.product.variants[0].price;
+      if (this.product.price < this.product.mrp) {
+        price = this.product.price;
       } else {
-        price = this.product.variants[0].mrp;
+        price = this.product.mrp;
       }
       return price;
     }
+  },
+  head() {
+    const host = process.server
+      ? this.$ssrContext.req.headers.host
+      : window.location.host;
+    return {
+      script: [
+        {
+          async: true,
+          defer: true,
+          crossorigin: "anonymous",
+          src:
+            "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=169430647069214&autoLogAppEvents=1"
+        }
+      ],
+      title:
+        (this.product && this.product.metaTitle) ||
+        (this.product && this.product.name) ||
+        TITLE,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            (this.product && this.product.metaDescription) ||
+            (this.product && this.product.description) ||
+            DESCRIPTION
+        },
+        {
+          hid: "keywords",
+          name: "Keywords",
+          property: "keywords",
+          content:
+            (this.product && this.product.metaKeywords) ||
+            (this.product && this.product.keywords) ||
+            KEYWORDS
+        },
+
+        // OpenGraph data
+        {
+          hid: "og:title",
+          name: "og_title",
+          property: "og:title",
+          content:
+            (this.product && this.product.metaTitle) ||
+            (this.product && this.product.name) ||
+            TITLE
+        },
+        {
+          hid: "og:description",
+          name: "Description",
+          property: "og:description",
+          content:
+            (this.product && this.product.metaDescription) ||
+            (this.product && this.product.description) ||
+            DESCRIPTION
+        },
+        // {
+        //   name: "og_url",
+        //   property: "og:url",
+        //   content:
+        //     host + "/" + this.product &&
+        //     this.product.slug + "?id=" + this.product &&
+        //     this.product._id
+        // },
+        {
+          name: "og_image",
+          property: "og:image",
+          content:
+            (this.product &&
+              this.product.img &&
+              this.$store.state.settings.CDN_URL + this.product.img) ||
+            sharingLogo
+        },
+        {
+          property: "og:image:width",
+          content: "600"
+        },
+        {
+          property: "og:image:height",
+          content: "600"
+        },
+        // Twitter
+        {
+          name: "twitter:title",
+          content:
+            (this.product && this.product.metaTitle) ||
+            (this.product && this.product.name) ||
+            TITLE
+        },
+        {
+          name: "twitter:description",
+          content:
+            (this.product && this.product.metaDescription) ||
+            (this.product && this.product.description) ||
+            DESCRIPTION
+        },
+        {
+          name: "twitter:image:src",
+          content:
+            (this.product &&
+              this.product.img &&
+              this.$store.state.settings.CDN_URL + this.product.img) ||
+            sharingLogo
+        },
+        // Google / Schema.org markup:
+        {
+          hid: "product_name",
+          itemprop: "name",
+          content: (this.product && this.product.name) || TITLE
+        },
+        {
+          hid: "product_description",
+          itemprop: "description",
+          content:
+            (this.product && this.product.metaDescription) ||
+            (this.product && this.product.description) ||
+            DESCRIPTION
+        },
+        {
+          hid: "product_image",
+          itemprop: "image",
+          content:
+            (this.product &&
+              this.product.img &&
+              this.$store.state.settings.CDN_URL + this.product.img) ||
+            sharingLogo
+        },
+        {
+          hid: "product_price",
+          name: "product_price",
+          property: "product:price",
+          content: this.product && this.product.price
+        }
+      ]
+    };
   }
 };
 </script>

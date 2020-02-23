@@ -36,17 +36,17 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-.back-to-top
-  width: 150px
-  // padding: 0 20px
-  height: 50px
-  border-radius: 3px
-  @apply font-medium fixed shadow text-sm
-  top: 110px
-  left: calc(50% - 50px)
-  z-index: 9999999999
-
-  .ar-icon
-    margin-left: 10px
+<style scoped>
+.back-to-top {
+  width: 150px;
+  height: 50px;
+  border-radius: 3px;
+  @apply font-medium fixed shadow text-sm;
+  top: 110px;
+  left: calc(50% - 50px);
+  z-index: 9999999999;
+}
+.back-to-top .ar-icon {
+  margin-left: 10px;
+}
 </style>
