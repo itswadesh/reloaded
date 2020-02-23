@@ -89,7 +89,7 @@
           </div>
         </div>
         <nuxt-link
-          to="/search"
+          to="/search/"
           class="block border-b text-red-600 font-semibold text-sm bg-white p-2 text-left rounded"
         >
           Add more items +

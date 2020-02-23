@@ -2,19 +2,13 @@
   <div class="mt-2 shadow-lg w-full bg-gray-100 border-t overflow-x-auto fixed bottom-0 z-10 text-gray-600">
     <div class="flex justify-around items-center">
       <nuxt-link
-        to="/search"
+        to="/search/"
         class="category-item"
         active-class="text-primary"
       >
         <i class="fa fa-search" />
         <span class="text-xs">Discovery</span>
       </nuxt-link>
-      <!-- <a
-        href="/search"
-        class="category-item"
-      >
-        <i class="fa fa-truck" /><span>Cart</span>
-      </a>-->
       <nuxt-link
         to="/my/"
         class="category-item"

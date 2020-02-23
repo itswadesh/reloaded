@@ -13,7 +13,7 @@
           <i class="fa fa-long-arrow-left text-white" />
         </button>
         <nuxt-link
-          to="/search"
+          to="/search/"
           class="bg-black opacity-25 pt-2 mt-1 mr-1 px-auto py-auto text-center absolute rounded-full top-0 right-0 w-10 h-10"
         >
           <i class="fa fa-search text-white" />

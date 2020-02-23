@@ -45,7 +45,10 @@ const actions = {
       const data = await this.$axios.$post("api/cart/add", payload);
       commit("setCart", data);
     } catch (e) {
-      commit("setErr", e, { root: true });
+      if (e.response.status !== 501) {
+        commit("setErr", e, { root: true });
+      }
+      throw e.response
     }
   },
   async applyCoupon({ commit }, payload) {
