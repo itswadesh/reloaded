@@ -3,9 +3,9 @@
     <carousel
       :perPage="1"
       :paginationEnabled="false"
-      autoplay="true"
-      loop="true"
-      autoplayTimeout="5000"
+      :autoplay="true"
+      :loop="true"
+      :autoplayTimeout="5000"
     >
       <slide
         v-for="(i, ix) in $store.state.settings.banners.slider"

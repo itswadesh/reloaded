@@ -2,7 +2,7 @@
   <div>
     <nuxt-link
       to="/chef"
-      class="block bg-yellow-400 py-1 px-2 mx-auto text-center cursor-pointer hover:text-black rounded-b"
+      class="block bg-yellow-400 py-1 px-2 mx-auto text-center cursor-pointer hover:text-black"
     >Get started as chef in 30 seconds</nuxt-link>
     <Hero />
     <div class="container antialiased min-h-screen">

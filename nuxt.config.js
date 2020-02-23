@@ -15,6 +15,7 @@ export default {
     { src: "~/plugins/lazy.js", mode: "client" },
     { src: "~/plugins/carousel.js", mode: "client" },
     { src: "~/plugins/swal.js", mode: "client" },
+    { src: "~/plugins/social.js", mode: "client" },
     { src: "~/plugins/vue-slider-component", mode: "client" } // Price slider
   ],
   buildModules: ["@nuxtjs/tailwindcss"],
@@ -42,6 +43,10 @@ export default {
     "/api/": PROXY,
     "/auth": PROXY,
     "/images": PROXY
+  },
+  generate: {
+    dir: 'dist',
+    fallback: true
   },
   build: {
     postcss: {
