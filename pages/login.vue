@@ -90,7 +90,7 @@
                     class="outline-none pl-4 otp-content w-32 bg-transparent border border-gray-400"
                     maxlength="4"
                     autocomplete="off"
-                    @keyup="onKeyUpEvent(otp.length, $event)"
+                    @keyup="onOTPEnter(otp.length, $event)"
                   />
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default {
         }
       }
     },
-    onKeyUpEvent(index, event) {
+    onOTPEnter(index, event) {
       const eventCode = event.which || event.keyCode;
       if (index == 4) {
         this.submit(); // Submit code
@@ -296,27 +296,25 @@ export default {
   layout: "none",
   head() {
     return {
-      title: "Login to Litekart",
+      title: "Login to Misiki",
       meta: [
         {
           hid: "description",
           name: "description",
-          content:
-            "After this checkout process we will ship the item and it should be delivered within 7 working days"
+          content: "Login to Misiki"
         },
         {
           hid: "og:description",
           name: "Description",
           property: "og:description",
-          content:
-            "After this checkout process we will ship the item and it should be delivered within 7 working days"
+          content: "Login to Misiki"
         },
 
         {
           hid: "og:title",
           name: "og:title",
           property: "og:title",
-          content: "Checkout with the products in your cart"
+          content: "Login to Misiki"
         },
         // Twitter
         {
@@ -325,8 +323,7 @@ export default {
         },
         {
           name: "twitter:description",
-          content:
-            "After this checkout process we will ship the item and it should be delivered within 7 working days"
+          content: "Login to Misiki"
         }
       ]
     };

@@ -9,6 +9,7 @@
           v-bind="$attrs"
           :value="value"
           @input="$emit('input', $event.target.value)"
+          @keyup="$emit('keyup', $event.target.value)"
           :type="type"
           :aria-label="label"
         />
@@ -24,7 +25,7 @@ export default {
   props: {
     label: { type: String },
     type: { type: String, default: "text" },
-    value: { type: String },
+    value: { type: [Number, String] },
     cls: { type: String }
   }
 };
