@@ -18,8 +18,7 @@ export default {
     { src: "~/plugins/social.js", mode: "client" },
     { src: "~/plugins/vue-slider-component", mode: "client" } // Price slider
   ],
-  buildModules: ["@nuxtjs/tailwindcss"],
-  // buildModules: ["@nuxtjs/tailwindcss", "@nuxtjs/font-awesome"],
+  buildModules: ["@nuxtjs/tailwindcss", "@nuxtjs/font-awesome"],
   modules: [
     "@nuxtjs/dotenv",
     // "~/modules/routes",

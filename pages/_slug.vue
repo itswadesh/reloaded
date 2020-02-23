@@ -21,7 +21,7 @@
       </div>
       <div
         v-lazy:background-image="`${product.img}`"
-        class="bg-contain h-48 relative flex justify-center"
+        class="bg-cover h-48 relative flex justify-center"
       >
         <div
           v-if="product.vendor && product.vendor.info"
@@ -84,12 +84,12 @@
       <hr />
       <social-sharing
         v-if="product.vendor && product.vendor.info"
-        :url="`https://www.litekart.in/features`"
+        :url="`https://beta.misiki.in/${product.slug}`"
         :title="product.name"
         :description="product.vendor.info.restaurant"
         :quote="product.description"
         hashtags="misiki, food-delivery, sunabeda"
-        :twitter-user="misiki"
+        twitter-user="misiki"
         inline-template
       >
         <div class="flex justify-between items-center cursor-pointer ">
@@ -339,15 +339,6 @@ export default {
       ? this.$ssrContext.req.headers.host
       : window.location.host;
     return {
-      script: [
-        {
-          async: true,
-          defer: true,
-          crossorigin: "anonymous",
-          src:
-            "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=169430647069214&autoLogAppEvents=1"
-        }
-      ],
       title:
         (this.product && this.product.metaTitle) ||
         (this.product && this.product.name) ||
@@ -403,7 +394,6 @@ export default {
           property: "og:image",
           content:
             (this.product &&
-              this.product.img &&
               this.$store.state.settings.CDN_URL + this.product.img) ||
             sharingLogo
         },
@@ -434,7 +424,6 @@ export default {
           name: "twitter:image:src",
           content:
             (this.product &&
-              this.product.img &&
               this.$store.state.settings.CDN_URL + this.product.img) ||
             sharingLogo
         },
@@ -457,7 +446,6 @@ export default {
           itemprop: "image",
           content:
             (this.product &&
-              this.product.img &&
               this.$store.state.settings.CDN_URL + this.product.img) ||
             sharingLogo
         },
