@@ -40,7 +40,7 @@
     "cross-env": "^7.0.0",
     "dotenv": "^8.2.0",
     "npm-run-all": "^4.1.2",
-    "nuxt-edge": "latest",
+    "nuxt": "2.11.0",
     "postcss-pxtorem": "^4.0.1",
     "shelljs": "^0.8.3",
     "ssh2shell": "^1.9.3",

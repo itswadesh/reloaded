@@ -21,7 +21,10 @@
           type="file"
           name="photos"
           :disabled="isSaving"
-          @change="filesChange($event.target.name, $event.target.files,name); fileCount = $event.target.files.length"
+          @change="
+            filesChange($event.target.name, $event.target.files, name);
+            fileCount = $event.target.files.length;
+          "
           accept="image/*"
           class="input-file"
         />
@@ -33,7 +36,7 @@
         <p v-if="isSuccess">{{ fileCount }} files uploaded successfully...</p>
         <p v-if="isFailed">
           Upload failed. Please
-          <a @click="currentStatus=0">try again</a>
+          <a @click="currentStatus = 0">try again</a>
         </p>
       </div>
     </form>
@@ -96,8 +99,6 @@ export default {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {

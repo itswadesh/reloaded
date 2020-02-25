@@ -1,30 +1,21 @@
 <template>
-  <div
-    class="flex"
-    v-if="product"
-  >
+  <div class="flex" v-if="product">
     <div v-if="!checkCart({ pid: product._id })">
       <button
         class="primary rounded-full w-8 h-8"
         :disabled="product.stock < 1 || loading"
-        @click="addToBag({pid:product._id,qty:1})"
+        @click="addToBag({ pid: product._id, qty: 1 })"
       >
-        <i
-          class="fa fa-plus m-auto align-middle"
-          aria-hidden="true"
-        ></i>
+        <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
       </button>
     </div>
     <div v-else>
       <div class="flex flex-wrap">
         <button
           class="muted rounded-full w-8 h-8"
-          @click="addToBag({pid:product._id,qty:-1})"
+          @click="addToBag({ pid: product._id, qty: -1 })"
         >
-          <i
-            class="fa fa-minus m-auto align-middle"
-            aria-hidden="true"
-          ></i>
+          <i class="fa fa-minus m-auto align-middle" aria-hidden="true"></i>
         </button>
         <div class="px-2 flex items-center text-center">
           <div v-if="!loading">{{ getQty({ pid: product._id }) }}</div>
@@ -38,12 +29,9 @@
         <button
           class="primary rounded-full w-8 h-8"
           :disabled="product.stock < 1 || loading"
-          @click="addToBag({pid:product._id,qty:1})"
+          @click="addToBag({ pid: product._id, qty: 1 })"
         >
-          <i
-            class="fa fa-plus m-auto align-middle"
-            aria-hidden="true"
-          ></i>
+          <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -70,8 +58,6 @@ export default {
           text: e.data,
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
           confirmButtonText: "Yes, replace"
         }).then(async result => {
           if (result.value) {
