@@ -19,9 +19,14 @@
       <div class="flex flex-wrap justify-between items-center my-2">
         <div class="font-bold">{{ p.rate | currency }}</div>
         <div class="text-red-500 text-xs">Only {{ p.stock }} left</div>
-        <img :src="p.type === 'V' ? 'veg.png' : 'non-veg.png'" class="w-5 mr-1 mt-1" />
+        <img
+          :src="p.type === 'V' ? 'veg.png' : 'non-veg.png'"
+          class="w-5 mr-1 mt-1"
+        />
       </div>
-      <div class="border-t py-1 text-xs" v-if="p.vendor">By {{ p.vendor.restaurant }}</div>
+      <div class="border-t py-1 text-xs" v-if="p.vendor">
+        By {{ p.vendor.info.restaurant }}
+      </div>
     </div>
   </div>
 </template>
