@@ -1,0 +1,9 @@
+query productSlug{
+    id
+    name
+    slug
+    img
+    rate
+    stock
+    
+}

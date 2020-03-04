@@ -67,7 +67,7 @@
 <script>
 import Radio from '~/components/ui/Radio'
 const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
-import addresses from '~/gql/product/addresses.gql'
+import addresses from '~/gql/user/addresses.gql'
 export default {
   data() {
     return {

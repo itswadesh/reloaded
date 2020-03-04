@@ -1,4 +1,4 @@
-mutation createAddress(
+mutation addAddress(
   $email: String
    $firstName: String 
     $lastName: String  
@@ -11,7 +11,7 @@ mutation createAddress(
     $zip: String  
      $phone: String
      ){
-  createAddress(
+  addAddress(
     email: $email
     firstName: $firstName
     lastName: $lastName

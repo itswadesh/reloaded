@@ -11,9 +11,8 @@
 </template>
 
 <script>
-import liveOrders from '~/gql/orders/liveOrders.gql'
-import HereMap from '~/components/HereMap'
 import liveOrders from '~/gql/order/liveOrders.gql'
+import HereMap from '~/components/HereMap'
 export default {
   components: {
     HereMap

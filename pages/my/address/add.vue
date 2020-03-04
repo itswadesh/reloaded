@@ -49,7 +49,7 @@
 <script>
 const Textbox = () => import('~/components/ui/Textbox')
 const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
-import address from '~/gql/product/address.gql'
+import address from '~/gql/user/address.gql'
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)

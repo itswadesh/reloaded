@@ -76,7 +76,7 @@ import CartSummaryCheckout from '~/components/checkout/CartSummaryCheckout'
 import Radio from '~/components/ui/Radio'
 import CartItem from '~/components/cart/CartItem'
 const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
-import addresses from '~/gql/product/addresses.gql'
+import addresses from '~/gql/user/addresses.gql'
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)

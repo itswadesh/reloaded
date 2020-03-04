@@ -47,60 +47,60 @@
 </template>
 
 <script>
-const Textbox = () => import("~/components/ui/Textbox");
-const Header = () => import("~/components/Header");
-import updateAddress from "~/gql/user/updateAddress.gql";
-import createAddress from "~/gql/user/createAddress.gql";
-import address from "~/gql/user/address.gql";
+const Textbox = () => import('~/components/ui/Textbox')
+const Header = () => import('~/components/Header')
+import updateAddress from '~/gql/user/updateAddress.gql'
+import addAddress from '~/gql/user/addAddress.gql'
+import address from '~/gql/user/address.gql'
 
 export default {
   data() {
     return {
       a: {}
-    };
+    }
   },
   components: {
     Header,
     Textbox
   },
   async created() {
-    const id = this.$route.params.id;
-    if (id == "add") return;
+    const id = this.$route.params.id
+    if (id == 'add') return
     try {
       this.a = (
         await this.$apollo.query({
           query: address,
           variables: { id },
-          fetchPolicy: "no-cache"
+          fetchPolicy: 'no-cache'
         })
-      ).data.address;
+      ).data.address
     } catch (e) {}
   },
   methods: {
     go(url) {
-      this.$router.push(url);
+      this.$router.push(url)
     },
     async submit(address) {
-      delete address.coords.__typename;
+      delete address.coords.__typename
       try {
         if (address.id)
           await this.$apollo.mutate({
             mutation: updateAddress,
             variables: address,
-            fetchPolicy: "no-cache"
-          });
+            fetchPolicy: 'no-cache'
+          })
         else
           await this.$apollo.mutate({
-            mutation: createAddress,
+            mutation: addAddress,
             variables: address,
-            fetchPolicy: "no-cache"
-          });
-        this.go("/my/address");
+            fetchPolicy: 'no-cache'
+          })
+        this.go('/my/address')
       } catch (e) {}
     }
   },
-  layout: "none"
-};
+  layout: 'none'
+}
 </script>
 
 <style scoped>
