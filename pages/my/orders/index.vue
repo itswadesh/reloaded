@@ -1,18 +1,22 @@
 <template>
-  <div class="text-center">
-    <Heading title="Orders" />
+  <div class="text-center bg-gray-100 mx-2 flex1">
+    <div class="flex items-center justify-start mx-2">
+      <nuxt-link to="/my" class="flex-1 text-left absolute font-bold">
+        <i class="fa fa-arrow-left mr-1 text-gray-600" />
+      </nuxt-link>
+      <h1 class="bg-white font-semibold text-xl p-2 flex-1 text-center">Orders</h1>
+    </div>
+    <div v-if="errors" class="mx-2 text-center">
+      <span v-for="(e,ix) in errors" :key="ix">{{e.message}}</span>
+    </div>
     <nuxt-link :to="`/my/orders/${o._id}`" v-for="o in orders" :key="o._id">
       <div class="w-full bg-white shadow rounded hover:shadow-xl my-4">
-        <div class="rounded p-3">
+        <div class="bg-gray-100 rounded p-3">
           <h1>Order # {{ o.orderNo }}</h1>
           <p class="text-gray-800">
             Date:
             <span class="text-xs">{{ o.createdAt | date }}</span>
           </p>
-          <div class="text-gray-500" v-if="o.delivery">
-            OTP:
-            <span class="text-primary">{{o.delivery.otp}}</span>
-          </div>
         </div>
         <hr />
         <div
@@ -23,11 +27,15 @@
         >
           <div class="flex items-center">
             <div>
-              <img v-lazy="i.img" class="rounded-full mr-2 w-12 h-12" alt />
+              <img
+                :src="$store.state.settings.CDN_URL + i.img[0]"
+                class="rounded-full bg-blue-500 mr-2 w-12 h-12"
+                alt
+              />
             </div>
             <div>
               <div class="text-sm font-semibold">{{ i.name }}</div>
-              <div class="text-xs">
+              <div class="text-gray-500 text-xs">
                 {{ i.qty }} * {{ i.rate | currency }} =
                 {{ (i.qty * i.rate) | currency }}
               </div>
@@ -47,38 +55,31 @@
 </template>
 
 <script>
-import Heading from "~/components/Heading";
 export default {
-  layout: "account",
-  fetch({ store, redirect }) {
-    if (!(store.state.auth || {}).user)
-      return redirect("/login?return=/my/orders");
-  },
+  layout: 'account',
+  middleware: ['isAuth'],
   async asyncData({ params, query, route, redirect, $axios, store }) {
     let orders = [],
-      err = null;
-    if (store.getters["cart/getTotal"] <= 0) {
-      redirect("/");
+      err = null
+    if (store.getters['cart/getTotal'] <= 0) {
+      redirect('/')
     }
     try {
-      const o = await $axios.$get(`api/food-orders/my`);
-      orders = o.data;
-      err = null;
+      const o = await $axios.$get(`api/food-orders/my`)
+      orders = o.data
+      err = null
     } catch (e) {
-      orders = [];
+      orders = []
       if (e && e.response && e.response.data) {
-        err = e.response.data;
+        err = e.response.data
       } else if (e && e.response) {
-        err = e.response;
+        err = e.response
       } else {
-        err = e;
+        err = e
       }
-      console.log("err...", `${err}`);
+      console.log('err...', `${err}`)
     }
-    return { orders };
-  },
-  components: {
-    Heading
+    return { orders }
   }
-};
+}
 </script>
