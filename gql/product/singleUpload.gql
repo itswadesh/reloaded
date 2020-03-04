@@ -1,0 +1,5 @@
+mutation singleUpload($file: Upload!, $folder:String) {
+  singleUpload(file: $file, folder: $folder) {
+    filename
+  }
+}

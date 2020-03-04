@@ -1,42 +1,11 @@
 <template>
-  <div id="wave" v-if="thisLoading">
+  <div class="fixed top-0 mt-12 mx-auto" id="wave" v-if="$apollo.loading">
     <span class="dot olive"></span>
     <span class="dot blue"></span>
     <span class="dot green"></span>
     <span class="dot red"></span>
   </div>
 </template>
-
-<script>
-import { mapGetters } from "vuex";
-import { loadingTimeout } from "~/config";
-export default {
-  data: () => ({
-    thisLoading: false,
-    loadingTimer: 10
-  }),
-  computed: {
-    ...mapGetters(["error", "loading"])
-  },
-  watch: {
-    loading(err) {
-      clearTimeout(this.loadingTimer);
-      let vm = this;
-      this.loadingTimer = setTimeout(function() {
-        vm.thisLoading = vm.loading;
-      }, loadingTimeout);
-    }
-  },
-  methods: {
-    start() {
-      this.thisLoading = true;
-    },
-    finish() {
-      this.thisLoading = false;
-    }
-  }
-};
-</script>
 
 <style lang="css" scoped>
 div#wave .fuchsia {

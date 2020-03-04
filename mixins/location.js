@@ -1,4 +1,5 @@
 import { locationExpiry, cities } from "~/config";
+import getLocation from "~/gql/location/getLocation.gql";
 const GOOGLE_MAPS_KEY = process.env.GOOGLE_MAPS_KEY;
 export default {
   data() {
@@ -14,9 +15,9 @@ export default {
   },
   methods: {
     drawBoundries() {
-      var map = new google.maps.Map(document.getElementById('map'), {
+      var map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 18.8561, lng: 82.7347 },
-        zoom: 12,
+        zoom: 12
       });
 
       var triangleCoords = [
@@ -30,12 +31,13 @@ export default {
       var point = new google.maps.LatLng(18.8561, 82.7347);
       var bermudaTriangle = new google.maps.Polygon({ paths: triangleCoords });
 
-      google.maps.event.addListener(map, 'click', function (e) {
-        console.log(e)
-        var resultColor =
-          google.maps.geometry.poly.containsLocation(point, bermudaTriangle)
-        console.log(resultColor)
-
+      google.maps.event.addListener(map, "click", function (e) {
+        console.log(e);
+        var resultColor = google.maps.geometry.poly.containsLocation(
+          point,
+          bermudaTriangle
+        );
+        console.log(resultColor);
       });
     },
     pinLocation() {
@@ -85,10 +87,20 @@ export default {
           this.$store.commit("busy", true);
           let location = l.coords;
           // const location = (await this.getLocation()).coords; // Location accuracy is too bad shows Anugul
-          let geo = await this.$axios.$get(
-            `/api/geo/location?lat=${location.latitude}&lng=${location.longitude}`
-          );
-          geo.coords = { lat: location.latitude, lng: location.longitude };
+          let g = (
+            await this.$apollo.query({
+              query: getLocation,
+              variables: { lat: location.latitude, lng: location.longitude },
+              fetchPolicy: "no-cache"
+            })
+          ).data.getLocation;
+          const geo = {
+            town: g.town,
+            city: g.city,
+            state: g.state,
+            zip: g.zip,
+            coords: { lat: location.latitude, lng: location.longitude }
+          };
           console.log("Geo...", geo);
           this.$cookies.set("geo", geo, { path: "/", maxAge: locationExpiry });
           return geo;

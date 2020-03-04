@@ -8,22 +8,9 @@
         <center>Please select location</center>
       </h3>
       <div class="flex justify-center mt-6">
-        <select
-          v-model="location"
-          filled
-          label="Select City"
-        >
-          <option
-            selected="true"
-            value="null"
-          >Select Location</option>
-          <option
-            v-for="(c, ix) in cities"
-            :key="ix"
-            :value="c"
-          >
-            {{ c.name }}
-          </option>
+        <select v-model="location" filled label="Select City">
+          <option selected="true" value="null">Select Location</option>
+          <option v-for="(c, ix) in cities" :key="ix" :value="c">{{ c.name }}</option>
         </select>
       </div>
       <div class="flex justify-center mt-6 mb-6">
@@ -31,9 +18,7 @@
           @click="saveLocaion(location)"
           class="primary py-3 px-8 rounded"
           :block="true"
-        >
-          Continue
-        </button>
+        >Continue</button>
       </div>
     </div>
   </div>
@@ -41,6 +26,7 @@
 <script>
 const Header = () => import("~/components/Header");
 import { location } from "~/mixins";
+import { mapActions } from "vuex";
 import { cities } from "~/config";
 export default {
   components: { Header },
@@ -56,16 +42,16 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      updateProfile: "auth/updateProfile"
+    }),
     async saveLocaion(c) {
       try {
-        this.gettingLocation = true;
         this.geo = await this.locateMe(c);
-        const user = await this.$axios.$put("api/users/profile", {
-          address: this.geo
-        });
+        delete this.geo.__typename;
+        return await this.updateProfile({ address: this.geo });
       } catch (e) {
       } finally {
-        this.gettingLocation = false;
         this.$router.push("/");
       }
     },

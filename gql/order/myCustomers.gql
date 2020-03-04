@@ -1,0 +1,38 @@
+query myCustomers(
+    $page: Int
+    $skip: Int
+    $limit: Int
+    $search: String
+    $sort: String
+    $q: String) {
+  myCustomers(
+      page: $page
+      q: $q
+      skip: $skip
+      limit: $limit
+      search: $search
+      sort: $sort
+    ) {
+      data{
+        id
+        orderNo
+        otp
+        amount{
+          qty
+          total
+        }
+        payment_order_id
+        delivery
+        status
+        items{
+          name
+        }
+        address{
+          firstName
+          lastName
+        }
+        createdAt
+        updatedAt
+      }
+  }
+}

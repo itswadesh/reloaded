@@ -1,0 +1,40 @@
+mutation updateProduct(
+  $id: ID!
+  $name: String!
+  $description: String
+  $type: String
+  $rate: Int
+  $stock: Int
+  $img: String
+  $time: String
+) {
+  updateProduct(
+    id: $id
+    name: $name
+    description: $description
+    type: $type
+    rate: $rate
+    stock: $stock
+    img: $img
+    time: $time
+  ) {
+    id
+    name
+    description
+    slug
+    type
+    rate
+    stock
+    img
+    time
+    vendor {
+      id
+      firstName
+      lastName
+      phone
+      info {
+        restaurant
+      }
+    }
+  }
+}

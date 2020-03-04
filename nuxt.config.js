@@ -1,6 +1,6 @@
 import { join } from "path";
 require("dotenv").config();
-const { API_URL, head, HOST } = require("./config");
+const { API_URL, head, HOST, HTTP_ENDPOINT, WS_ENDPOINT } = require("./config");
 const PROXY = process.env.API_URL || API_URL;
 
 export default {
@@ -14,11 +14,14 @@ export default {
     { src: "~/plugins/init.js", mode: "client" },
     { src: "~/plugins/lazy.js", mode: "client" },
     { src: "~/plugins/carousel.js", mode: "client" },
+    { src: "~/plugins/swal.js", mode: "client" },
     { src: "~/plugins/social.js", ssr: false },
+    { src: "~/plugins/scroll.js", ssr: false },
     { src: "~/plugins/vue-slider-component", mode: "client" } // Price slider
   ],
   buildModules: ["@nuxtjs/tailwindcss"],
   modules: [
+    "@nuxtjs/apollo",
     [
       "vue-sweetalert2/nuxt",
       {
@@ -36,6 +39,20 @@ export default {
     "@nuxtjs/toast",
     "cookie-universal-nuxt"
   ],
+  apollo: {
+    // errorHandler: "~/apollo/customErrorHandler.js",
+    clientConfigs: {
+      default: {
+        httpEndpoint: "/graphql",
+        wsEndpoint: process.env.WS_ENDPOINT
+      }
+    },
+    defaultOptions: {
+      query: {
+        fetchPolicy: "no-cache"
+      },
+    },
+  },
   toast: {
     theme: "bubble",
     position: "top-center",
@@ -46,9 +63,10 @@ export default {
     credentials: true
   },
   proxy: {
+    "/graphql": process.env.HTTP_ENDPOINT,
     "/api/": PROXY,
     "/auth": PROXY,
-    "/images": PROXY
+    "/images": process.env.HTTP_ENDPOINT
   },
   generate: {
     dir: "dist",

@@ -1,0 +1,45 @@
+mutation createAddress(
+  $email: String
+   $firstName: String 
+    $lastName: String  
+      $address: String 
+       $town: String 
+         $city: String
+           $country: String
+            $state: String
+                $coords: Geo
+    $zip: String  
+     $phone: String
+     ){
+  createAddress(
+    email: $email
+    firstName: $firstName
+    lastName: $lastName
+    address: $address
+    town: $town
+    city: $city
+    country: $country
+    state: $state
+    coords: $coords
+    zip: $zip
+    phone: $phone
+  ) {
+    id
+    firstName
+    lastName
+    address
+    town
+    city
+    country
+    state
+    coords {
+      lat
+      lng
+    }
+    zip
+    phone
+    active
+    createdAt
+    updatedAt
+  }
+}

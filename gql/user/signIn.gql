@@ -1,0 +1,24 @@
+mutation signIn(  $email: String   $password: String      ){
+  signIn(
+    email: $email
+    password: $password
+  ) {
+    id
+    firstName
+    lastName
+    address
+    town
+    city
+    country
+    state
+    coords {
+      lat
+      lng
+    }
+    zip
+    phone
+    active
+    createdAt
+    updatedAt
+  }
+}

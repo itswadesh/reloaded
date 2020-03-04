@@ -1,7 +1,8 @@
+
 export default {
   data: () => ({
     data: [],
-    count: 0,
+    errors: [],
     meta: {
       page: 1,
       count: 0,
@@ -15,28 +16,41 @@ export default {
       if (this.meta.busy) return
       if (scrolled && this.meta.end) return;
       this.loading = true;
+      this.errors = []
       try {
         this.meta.busy = true;
         let params = this.$route.query;
-        params.page = this.meta.page;
+        params.page = this.meta.page
         params.search = this.$route.params.q
-        let auth = this.$cookies.get("Authorization");
-        // this.$axios.setToken(auth, "Bearer");
-        let result = await this.$axios.$get(this.apiQ, { params });
-        let data = result.data;
+        const { data, count, pageSize, page } = (
+          await this.$apollo.query({
+            query: this.model,
+            variables: params,
+            fetchPolicy: "no-cache"
+          })
+        ).data[this.attr];
         this.data = scrolled ? this.data.concat(data) : data;
-        this.loading = false;
         this.loadmoreSpin = false;
-        this.meta.busy = false;
-        this.meta.count = result.count;
+        this.meta.count = count;
         this.meta.filtered =
           parseInt(data.length) +
-          (parseInt(result.pageSize) - 1) * parseInt(result.page);
-        this.meta.end = data.length < result.pageSize ? true : false;
-      } catch (e) {
-        this.loading = false;
+          (parseInt(pageSize) - 1) * parseInt(page);
+        this.meta.end = data.length < pageSize ? true : false;
+      } catch ({ graphQLErrors, networkError }) {
+        if (graphQLErrors)
+          graphQLErrors.map((err) =>
+            this.errors.push(err)
+            // console.error(
+            //   `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            // )
+          );
+        if (networkError) {
+          this.errors = networkError.result.errors
+          console.error(`[Network error]:`, networkError.result);
+        }
       } finally {
         this.loading = false;
+        this.meta.busy = false;
       }
     },
     async loadMore() {
@@ -47,13 +61,13 @@ export default {
       this.$router.push(url);
     }
   },
-  // watch: {
-  //   "$route.query": {
-  //     immediate: true,
-  //     handler(value, oldValue) {
-  //       if (JSON.stringify(value) == JSON.stringify(oldValue)) return;
-  //       this.getData();
-  //     }
-  //   }
-  // }
+  watch: {
+    "$route.query": {
+      immediate: true,
+      handler(value, oldValue) {
+        if (JSON.stringify(value) == JSON.stringify(oldValue)) return;
+        this.getData();
+      }
+    }
+  }
 }

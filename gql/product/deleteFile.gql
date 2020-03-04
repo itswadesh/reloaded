@@ -1,0 +1,5 @@
+mutation deleteFile($path:String) {
+  deleteFile(path: $path) {
+    filename
+  }
+}

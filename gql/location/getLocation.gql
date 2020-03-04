@@ -1,0 +1,8 @@
+query getLocation($lat: String, $lng: String) {
+  getLocation(lat: $lat, lng: $lng) {
+    town
+    city
+    state
+    zip
+  }
+}
