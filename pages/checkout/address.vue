@@ -2,9 +2,7 @@
   <div>
     <CheckoutHeader selected="address" />
     <div style="max-width: 1000px;margin: 0 auto;">
-      <div
-        class="mx-auto lg:mx-10 p-2 flex justify-between flex-wrap items-start"
-      >
+      <div class="mx-auto lg:mx-10 p-2 flex justify-between flex-wrap items-start">
         <!-- Left sidebar -->
         <div
           class="p-2 mb-2 w-full md:w-1/2 flex flex-wrap justify-between w-full shadow bg-white rounded border"
@@ -13,15 +11,9 @@
           :key="a._id"
         >
           <label class="cursor-pointer w-full flex justify-between">
-            <Radio
-              v-model="selectedAddress"
-              @changed="addressChanged"
-              :value="a._id"
-            />
+            <Radio v-model="selectedAddress" @changed="addressChanged" :value="a._id" />
             <div class="flex-1 ml-2">
-              <div class="font-semibold">
-                {{ a.firstName }} {{ a.lastName }}
-              </div>
+              <div class="font-semibold">{{ a.firstName }} {{ a.lastName }}</div>
               <div class="py-2 text-xs">
                 <div>{{ a.address }}</div>
                 <div>{{ a.phone }}</div>
@@ -36,24 +28,18 @@
               </div>
             </div>
             <div v-if="ix == 0">
-              <div class="rounded-full text-xs bg-gray-200 py-1 px-2">
-                Default
-              </div>
+              <div class="rounded-full text-xs bg-gray-200 py-1 px-2">Default</div>
             </div>
           </label>
           <div class="border-t border-gray-200 flex w-full">
             <button
               @click="del(a)"
               class="tracking-widest w-1/2 text-blue-500 py-1 border-r border-gray-200 mt-1"
-            >
-              Remove
-            </button>
+            >Remove</button>
             <button
               @click="go(`/checkout/add?id=${a._id}`)"
               class="tracking-widest w-1/2 text-blue-500 py-1 mt-1"
-            >
-              Edit
-            </button>
+            >Edit</button>
           </div>
         </div>
         <AddressNewCard />
@@ -70,16 +56,10 @@
           :item="item"
           class="flex my-5 border-b border-dotted pb-2"
         >
-          <img
-            class="rounded w-12 h-12 object-cover mr-2"
-            v-lazy="item.img"
-            alt
-          />
+          <img class="rounded w-12 h-12 object-cover mr-2" v-lazy="item.img" alt />
           <div>
             <div class="text-lg">{{ item.name }}</div>
-            <div class="text-sm text-gray-600">
-              {{ item.rate | currency }} * {{ item.qty }}
-            </div>
+            <div class="text-sm text-gray-600">{{ item.rate | currency }} * {{ item.qty }}</div>
           </div>
         </div>
         <CartSummaryCheckout :selectedAddress="selectedAddress" />
@@ -89,35 +69,36 @@
 </template>
 
 <script>
-import AddressCard from "~/components/checkout/AddressCard";
-import SelectAddress from "~/components/checkout/SelectAddress";
-import AddressNewCard from "~/components/checkout/AddressNewCard";
-import CartSummaryCheckout from "~/components/checkout/CartSummaryCheckout";
-import Radio from "~/components/ui/Radio";
-import CartItem from "~/components/cart/CartItem";
-const CheckoutHeader = () => import("~/components/checkout/CheckoutHeader");
+import AddressCard from '~/components/checkout/AddressCard'
+import SelectAddress from '~/components/checkout/SelectAddress'
+import AddressNewCard from '~/components/checkout/AddressNewCard'
+import CartSummaryCheckout from '~/components/checkout/CartSummaryCheckout'
+import Radio from '~/components/ui/Radio'
+import CartItem from '~/components/cart/CartItem'
+const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
+import addresses from '~/gql/product/addresses.gql'
 export default {
   fetch({ store, redirect }) {
     if (!(store.state.auth || {}).user)
-      return redirect("/login?return=/checkout/address");
+      return redirect('/login?return=/checkout/address')
   },
   data() {
     return {
       office: false,
       a: {},
       addresses: [],
-      selectedAddress: ""
-    };
+      selectedAddress: ''
+    }
   },
   created() {
-    this.getAddress();
+    this.getAddress()
   },
   computed: {
     user() {
-      return (this.$store.state.auth || {}).user || null;
+      return (this.$store.state.auth || {}).user || null
     },
     cart() {
-      return this.$store.state.cart || {};
+      return this.$store.state.cart || {}
     }
   },
   components: {
@@ -131,42 +112,46 @@ export default {
   },
   methods: {
     addressChanged(e) {
-      this.selectedAddress = e;
+      this.selectedAddress = e
     },
     del(a) {
-      let vm = this;
+      let vm = this
       this.$swal({
-        title: "Delete address?",
+        title: 'Delete address?',
         text: "You won't be able to revert this!",
-        icon: "warning",
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: 'Yes, delete it!'
       }).then(result => {
         if (result.value) {
           try {
-            this.$store.commit("busy", true);
-            this.$axios.$delete(`api/addresses/${a._id}`);
-            this.getAddress();
-            this.$store.commit("busy", false);
+            this.$store.commit('busy', true)
+            this.$axios.$delete(`api/addresses/${a._id}`)
+            this.getAddress()
+            this.$store.commit('busy', false)
           } catch (e) {
-            this.$store.commit("busy", false);
+            this.$store.commit('busy', false)
           }
         }
-      });
+      })
     },
     async getAddress() {
       try {
-        const a = await this.$axios.$get("api/addresses/my");
-        this.addresses = a.data;
-        this.selectedAddress = a.data[0] && a.data[0]._id;
+        this.addresses = (
+          await this.$apollo.query({
+            query: addresses,
+            fetchPolicy: 'no-cache'
+          })
+        ).data.addresses
+        this.selectedAddress = a.data[0] && a.data[0]._id
       } catch (e) {}
     },
     go(url) {
-      this.$router.push(url);
+      this.$router.push(url)
     }
   },
-  layout: "none"
-};
+  layout: 'none'
+}
 </script>
 
 <style scoped>

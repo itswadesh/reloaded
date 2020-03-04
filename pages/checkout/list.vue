@@ -14,7 +14,10 @@
               <Radio />
             </div>
             <div class="flex-1 ml-2">
-              <div class="font-semibold">{{a.firstName}} {{a.lastName}} <span v-if="ix===0">(Default)</span></div>
+              <div class="font-semibold">
+                {{a.firstName}} {{a.lastName}}
+                <span v-if="ix===0">(Default)</span>
+              </div>
               <div class="py-2 text-xs">
                 <div>{{a.address}}</div>
                 <div>{{a.phone}}</div>
@@ -33,7 +36,9 @@
             </div>
           </label>
           <div class="border-t border-gray-200 flex w-full">
-            <button class="tracking-widest w-1/2 text-blue-500 py-1 border-r border-gray-200 mt-1">Remove</button>
+            <button
+              class="tracking-widest w-1/2 text-blue-500 py-1 border-r border-gray-200 mt-1"
+            >Remove</button>
             <button
               @click="go('/checkout/add')"
               class="tracking-widest w-1/2 text-blue-500 py-1 mt-1"
@@ -46,10 +51,7 @@
           class="m-1 shadow bg-white pointer my-2 py-2 px-4 rounded flex justify-between lg:w-1/3"
         >
           <div>Add New Address</div>
-          <i
-            class="fa fa-angle-right text-right"
-            aria-hidden="true"
-          ></i>
+          <i class="fa fa-angle-right text-right" aria-hidden="true"></i>
         </nuxt-link>
       </div>
     </div>
@@ -63,18 +65,19 @@
 </template>
 
 <script>
-import Radio from "~/components/ui/Radio";
-const CheckoutHeader = () => import("~/components/checkout/CheckoutHeader");
+import Radio from '~/components/ui/Radio'
+const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
+import addresses from '~/gql/product/addresses.gql'
 export default {
   data() {
     return {
       office: false,
       a: {},
       addresses: []
-    };
+    }
   },
   created() {
-    this.getAddress();
+    this.getAddress()
   },
   components: {
     CheckoutHeader,
@@ -82,15 +85,20 @@ export default {
   },
   methods: {
     async getAddress() {
-      const a = await this.$axios.$get("api/addresses/my");
-      this.addresses = a.data;
+      this.addresses = (
+        await this.$apollo.query({
+          query: addresses,
+          fetchPolicy: 'no-cache'
+        })
+      ).data.addresses
+      this.addresses = a.data
     },
     go(url) {
-      this.$router.push(url);
+      this.$router.push(url)
     }
   },
-  layout: "none"
-};
+  layout: 'none'
+}
 </script>
 
 <style scoped>

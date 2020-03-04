@@ -11,17 +11,35 @@
 </template>
 
 <script>
+import liveOrders from '~/gql/orders/liveOrders.gql'
 import HereMap from '~/components/HereMap'
+import liveOrders from '~/gql/order/liveOrders.gql'
 export default {
   components: {
     HereMap
   },
   middleware: ['isAuth'],
   data() {
-    return {}
+    return { liveOrders: null, errors: [] }
   },
-  mounted() {
+  async mounted() {
     this.route()
+    this.errors = []
+    try {
+      this.$store.commit('busy', true)
+
+      this.liveOrders = (
+        await this.$apollo.query({
+          query: liveOrders,
+          fetchPolicy: 'no-cache'
+        })
+      ).data.liveOrders
+    } catch ({ graphQLErrors, networkError }) {
+      if (graphQLErrors) this.errors = graphQLErrors
+      if (networkError) this.errors = networkError.result.errors
+    } finally {
+      this.$store.commit('busy', false)
+    }
   },
   methods: {
     route() {

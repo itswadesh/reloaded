@@ -7,32 +7,31 @@
       :loop="true"
       :autoplayTimeout="5000"
     >
-      <slide
-        v-for="(i, ix) in $store.state.settings.banners.slider"
-        :key="ix"
-      >
-        <img
-          class="h-48 object-cover w-full"
-          v-lazy="i.img"
-          alt
-        />
+      <slide v-for="(i, ix) in settings.banners.slider" :key="ix">
+        <img class="h-48 object-cover w-full" v-lazy="i.img" alt />
       </slide>
     </carousel>
   </div>
 </template>
 
 <script>
-import { Carousel, Slide } from "vue-carousel";
+import { Carousel, Slide } from 'vue-carousel'
+import settings from '~/gql/settings.gql'
 
 export default {
   data() {
-    return { images: [""] };
+    return {
+      settings: null
+    }
+  },
+  async created() {
+    this.settings = await this.$apollo.query({ query: settings })
   },
   components: {
     Carousel,
     Slide
   }
-};
+}
 </script>
 
 <style></style>

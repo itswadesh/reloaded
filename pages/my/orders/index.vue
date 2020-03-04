@@ -27,11 +27,7 @@
         >
           <div class="flex items-center">
             <div>
-              <img
-                :src="$store.state.settings.CDN_URL + i.img[0]"
-                class="rounded-full bg-blue-500 mr-2 w-12 h-12"
-                alt
-              />
+              <img v-lazy="i.img" class="rounded-full bg-blue-500 mr-2 w-12 h-12" alt />
             </div>
             <div>
               <div class="text-sm font-semibold">{{ i.name }}</div>
@@ -55,6 +51,7 @@
 </template>
 
 <script>
+import orders from '~/gql/order/orders.gql'
 export default {
   layout: 'account',
   middleware: ['isAuth'],
@@ -65,19 +62,17 @@ export default {
       redirect('/')
     }
     try {
-      const o = await $axios.$get(`api/food-orders/my`)
+      const o = await this.$apollo.query({
+        query: orders,
+        fetchPolicy: 'no-cache'
+      })
       orders = o.data
       err = null
-    } catch (e) {
-      orders = []
-      if (e && e.response && e.response.data) {
-        err = e.response.data
-      } else if (e && e.response) {
-        err = e.response
-      } else {
-        err = e
-      }
-      console.log('err...', `${err}`)
+    } catch ({ graphQLErrors, networkError }) {
+      if (graphQLErrors) this.errors = graphQLErrors
+      if (networkError) this.errors = networkError.result.errors
+    } finally {
+      this.$store.commit('busy', false)
     }
     return { orders }
   }

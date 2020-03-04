@@ -1,16 +1,15 @@
 <template>
   <div class="shadow bg-white p-2 rounded">
-    <div
-      class="flex justify-between"
-      v-for="(a,ix) in addresses"
-      :key="a._id"
-    >
+    <div class="flex justify-between" v-for="(a,ix) in addresses" :key="a._id">
       <label class="cursor-pointer w-full flex justify-between">
         <div>
           <Radio />
         </div>
         <div class="flex-1 ml-2">
-          <div class="font-semibold">{{a.firstName}} {{a.lastName}} <span v-if="ix==0">(Default)</span></div>
+          <div class="font-semibold">
+            {{a.firstName}} {{a.lastName}}
+            <span v-if="ix==0">(Default)</span>
+          </div>
           <div class="py-2 text-xs">
             <div>{{a.address}}</div>
             <div>{{a.city}}</div>
@@ -41,28 +40,35 @@
 </template>
 
 <script>
-import Radio from "~/components/ui/Radio";
+import Radio from '~/components/ui/Radio'
+import addresses from '~/gql/user/addresses.gql'
+
 export default {
   components: { Radio },
   data() {
     return {
       office: false,
       addresses: []
-    };
+    }
   },
   created() {
-    this.getAddress();
+    this.getAddress()
   },
   methods: {
     async getAddress() {
-      const a = await this.$axios.$get("api/addresses/my");
-      this.addresses = a.data;
+      const a = (
+        await this.$apollo.query({
+          query: addresses,
+          fetchPolicy: 'no-cache'
+        })
+      ).data.addresses
+      this.addresses = a.data
     },
     go(url) {
-      this.$router.push(url);
+      this.$router.push(url)
     }
   }
-};
+}
 </script>
 
 <style>

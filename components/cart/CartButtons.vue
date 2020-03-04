@@ -11,20 +11,12 @@
     </div>
     <div v-else>
       <div class="flex flex-wrap">
-        <button
-          class="muted rounded-full w-8 h-8"
-          @click="addToBag({ pid: product._id, qty: -1 })"
-        >
+        <button class="muted rounded-full w-8 h-8" @click="addToBag({ pid: product._id, qty: -1 })">
           <i class="fa fa-minus m-auto align-middle" aria-hidden="true"></i>
         </button>
         <div class="px-2 flex items-center text-center">
           <div v-if="!loading">{{ getQty({ pid: product._id }) }}</div>
-          <img
-            alt="..."
-            class="w-3 h-4 align-middle"
-            src="/loading.svg"
-            v-else
-          />
+          <img alt="..." class="w-3 h-4 align-middle" src="/loading.svg" v-else />
         </div>
         <button
           class="primary rounded-full w-8 h-8"
@@ -38,37 +30,37 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 export default {
   props: { product: Object, variant: Object, notify: Boolean },
   data() {
     return {
       loading: false
-    };
+    }
   },
   methods: {
-    ...mapActions({ addToCart: "cart/addToCart" }),
+    ...mapActions({ addToCart: 'cart/addToCart' }),
     async addToBag(obj) {
       try {
-        await this.addToCart(obj);
-        if (!!this.notify && obj.qty > 0) this.toast();
+        await this.addToCart(obj)
+        if (!!this.notify && obj.qty > 0) this.toast()
       } catch (e) {
         this.$swal({
-          title: "Replace cart items?",
+          title: 'Replace cart items?',
           text: e.data,
-          icon: "warning",
+          icon: 'warning',
           showCancelButton: true,
-          confirmButtonText: "Yes, replace"
+          confirmButtonText: 'Yes, replace'
         }).then(async result => {
           if (result.value) {
             try {
-              let o = { ...obj };
-              o.replace = true;
-              await this.addToCart(o);
-              if (!!this.notify && obj.qty > 0) this.toast();
+              let o = { ...obj }
+              o.replace = true
+              await this.addToCart(o)
+              if (!!this.notify && obj.qty > 0) this.toast()
             } catch (e) {}
           }
-        });
+        })
       }
     },
     toast() {
@@ -77,44 +69,44 @@ export default {
           `
       <div class="flex w-full">
         <img class="w-12 h-12 object-cover" src="${this.product &&
-          this.$store.state.settings.CDN_URL + this.product.img}" alt="" />
+          this.product.img}" alt="" />
         <div class="toasted-text items-center">
           <div>${this.product.name &&
-            this.product.name.substr(0, 40) + "..."}</div>
+            this.product.name.substr(0, 40) + '...'}</div>
           <div class="text-gray-600 text-xs">Added to your cart</div>
         </div>
       </div>
       `,
           {
-            containerClass: "sw-toast-container",
-            theme: "outline",
-            position: "top-right",
+            containerClass: 'sw-toast-container',
+            theme: 'outline',
+            position: 'top-right',
             singleton: false,
             action: {
-              text: "View Cart",
+              text: 'View Cart',
               onClick: (e, toastObject) => {
-                this.$router.push("/cart");
-                toastObject.goAway(0);
+                this.$router.push('/cart')
+                toastObject.goAway(0)
               }
             }
           }
         )
-        .goAway(5000);
+        .goAway(5000)
     },
     setErr(e) {
-      this.$store.commit("setErr", e);
+      this.$store.commit('setErr', e)
     }
   },
   computed: {
     ...mapGetters({
-      checkCart: "cart/checkCart",
-      getQty: "cart/getQty"
+      checkCart: 'cart/checkCart',
+      getQty: 'cart/getQty'
     }),
     cart() {
-      return this.$store.state.cart;
+      return this.$store.state.cart
     }
   }
-};
+}
 </script>
 <style scoped>
 .cart-button {
@@ -156,7 +148,7 @@ export default {
   opacity: 1;
 }
 .tooltip .tooltiptext::after {
-  content: " ";
+  content: ' ';
   position: absolute;
   top: 100%;
   left: 50%;

@@ -10,15 +10,8 @@
       <!-- <BestSellers />
       <RecentVisit />-->
       <div class="flex flex-wrap">
-        <div
-          class="w-1/2"
-          v-for="p in products"
-          :key="p._id"
-        >
-          <Product
-            :p="p"
-            class
-          />
+        <div class="w-1/2" v-for="p in products" :key="p._id">
+          <Product :p="p" class />
         </div>
       </div>
     </div>
@@ -29,28 +22,33 @@
 </template>
 
 <script>
-import GeoLocation from "~/components/GeoLocation.vue";
-import Header from "~/components/Header.vue";
-import Footer from "~/components/footer/Footer.vue";
-import Hero from "~/components/Hero.vue";
-import Product from "~/components/Product.vue";
-import Categories from "~/components/Categories.vue";
-import StickyFooter from "~/components/footer/StickyFooter";
-import BestSellers from "~/components/home/BestSellers";
-import RecentVisit from "~/components/home/RecentVisit";
+import GeoLocation from '~/components/GeoLocation.vue'
+import Header from '~/components/Header.vue'
+import Footer from '~/components/footer/Footer.vue'
+import Hero from '~/components/Hero.vue'
+import Product from '~/components/Product.vue'
+import Categories from '~/components/Categories.vue'
+import StickyFooter from '~/components/footer/StickyFooter'
+import BestSellers from '~/components/home/BestSellers'
+import RecentVisit from '~/components/home/RecentVisit'
+import products from '~/gql/product/products.gql'
 
 export default {
   data() {
     return {
       products: []
-    };
+    }
   },
   async created() {
     try {
-      const p = await this.$axios.$get("api/foods");
-      this.products = p.data;
+      this.products = (
+        await this.$apollo.query({
+          query: products,
+          fetchPolicy: 'no-cache'
+        })
+      ).data.products
     } catch (e) {
-      this.products = [];
+      this.products = []
     }
   },
   components: {
@@ -64,5 +62,5 @@ export default {
     BestSellers,
     RecentVisit
   }
-};
+}
 </script>

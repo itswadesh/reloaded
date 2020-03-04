@@ -108,30 +108,31 @@
 
 <script>
 import HereMap from '~/components/HereMap'
+import order from '~/gql/order/order.gql'
 
 export default {
   middleware: ['isAuth'],
-  async asyncData({ params, query, route, redirect, $axios, store }) {
-    let order = null,
-      err = null
-    // if (store.getters["cart/getTotal"] <= 0) {
-    //   redirect("/");
-    // }
-    try {
-      order = await $axios.$get(`api/food-orders/my/${route.params.id}`)
-      err = null
-    } catch (e) {
-      order = null
-      if (e && e.response && e.response.data) {
-        err = e.response.data
-      } else if (e && e.response) {
-        err = e.response
-      } else {
-        err = e
-      }
-      console.log('err...', `${err}`)
+  data() {
+    return {
+      order: null,
+      errors: []
     }
-    return { order }
+  },
+  async mounted() {
+    try {
+      this.errors = []
+      this.order = (
+        await this.$apollo.query({
+          query: order,
+          fetchPolicy: 'no-cache'
+        })
+      ).data.order
+    } catch ({ graphQLErrors, networkError }) {
+      if (graphQLErrors) this.errors = graphQLErrors
+      if (networkError) this.errors = networkError.result.errors
+    } finally {
+      this.$store.commit('busy', false)
+    }
   },
   mounted() {
     this.$refs.map.route('18.732447,82.829516', '18.708187,82.852198')

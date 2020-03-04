@@ -5,20 +5,25 @@
 </template>
 
 <script>
-import Carousel from "./Carousel";
+import Carousel from './Carousel'
+import products from '~/gql/product/products.gql'
 
 export default {
   data() {
-    return { products: [] };
+    return { products: [] }
   },
   async created() {
-    let products = await this.$axios.$get("api/foods");
-    this.products = products.data;
+    this.products = (
+      await this.$apollo.query({
+        query: products,
+        fetchPolicy: 'no-cache'
+      })
+    ).data.products
   },
   components: {
     Carousel
   }
-};
+}
 </script>
 
 <style></style>
