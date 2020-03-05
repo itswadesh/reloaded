@@ -2,8 +2,14 @@
   <div>
     <Heading title="Personal Details" />
     <div class="w-full pb-4 lg:w-1/3 m-auto">
-      <div v-if="errors" class="mx-2 text-center">
-        <span v-for="(e,ix) in errors" :key="ix">{{e.message}}</span>
+      <div
+        v-if="errors"
+        class="mx-2 text-center"
+      >
+        <span
+          v-for="(e,ix) in errors"
+          :key="ix"
+        >{{e.message}}</span>
       </div>
       <form
         class="lg:mx-15 form w-full mb-1"
@@ -11,7 +17,10 @@
         autocomplete="off"
         @submit.stop.prevent="submit(profile)"
       >
-        <div class="p-2" v-if="a">
+        <div
+          class="p-2"
+          v-if="a"
+        >
           <div
             type="tel"
             label="Phone"
@@ -25,22 +34,53 @@
               name="firstName"
               v-model="profile.firstName"
             />
-            <Textbox label="Last Name" class="w-full" name="lastName" v-model="profile.lastName" />
+            <Textbox
+              label="Last Name"
+              class="w-full"
+              name="lastName"
+              v-model="profile.lastName"
+            />
           </div>
-          <Textbox label="Address" class="w-full mb-4" name="name" v-model="a.address" />
-          <Textbox type="tel" label="Pin Code" class="w-full mb-4" name="name" v-model="a.zip" />
-          <Textbox label="Town" class="w-full mb-4" name="name" v-model="a.town" />
+          <Textbox
+            label="Address"
+            class="w-full mb-4"
+            name="name"
+            v-model="a.address"
+          />
+          <Textbox
+            type="tel"
+            label="Pin Code"
+            class="w-full mb-4"
+            name="name"
+            v-model="a.zip"
+          />
+          <Textbox
+            label="Town"
+            class="w-full mb-4"
+            name="name"
+            v-model="a.town"
+          />
           <div class="w-full flex justify-between mb-4">
-            <Textbox label="City" class="w-1/2 mr-1" name="name" v-model="a.city" />
-            <Textbox label="State" class="w-1/2 ml-1" name="name" v-model="a.state" />
+            <Textbox
+              label="City"
+              class="w-1/2 mr-1"
+              name="name"
+              v-model="a.city"
+            />
+            <Textbox
+              label="State"
+              class="w-1/2 ml-1"
+              name="name"
+              v-model="a.state"
+            />
           </div>
 
-          <SingleImageUpload
+          <ImageUpload
             :image="profile.avatar"
             name="avatar"
             folder="avatar"
-            @remove="remove"
-            @save="save"
+            @remove="removeImage"
+            @save="saveImage"
           />
         </div>
         <div class="flex shadow lg:shadow-none fixed lg:relative bottom-0 justify-between w-full">

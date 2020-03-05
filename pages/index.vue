@@ -10,8 +10,15 @@
       <!-- <BestSellers />
       <RecentVisit />-->
       <div class="flex flex-wrap">
-        <div class="w-1/2" v-for="p in products" :key="p._id">
-          <Product :p="p" class />
+        <div
+          class="w-1/2"
+          v-for="p in products"
+          :key="p._id"
+        >
+          <Product
+            :p="p"
+            class
+          />
         </div>
       </div>
     </div>
@@ -41,14 +48,20 @@ export default {
   },
   async created() {
     try {
+      this.$store.commit('busy', true)
       this.products = (
         await this.$apollo.query({
           query: products,
           fetchPolicy: 'no-cache'
         })
       ).data.products
-    } catch (e) {
-      this.products = []
+    } catch ({ graphQLErrors, networkError }) {
+      if (graphQLErrors) this.errors = graphQLErrors
+      if (networkError)
+        this.errors = networkError.result && networkError.result.errors
+    } finally {
+      this.$store.commit('busy', false)
+      this.$router.push('/')
     }
   },
   components: {

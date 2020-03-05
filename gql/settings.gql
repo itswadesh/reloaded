@@ -1,3 +1,11 @@
-query settings {
-    banners
+query Settings {
+  settings {
+    websiteName
+    banners {
+      slider {
+        img
+        link
+      }
+    }
+  }
 }

@@ -1,3 +1,8 @@
+import cart from '~/gql/cart/cart.gql'
+import addToCart from '~/gql/cart/addToCart.gql'
+import checkout from '~/gql/cart/checkout.gql'
+import applyCoupon from '~/gql/cart/applyCoupon.gql'
+
 const state = state => ({
   items: [],
   qty: 0,
@@ -8,118 +13,130 @@ const state = state => ({
   total: 0,
   offer_total: 0,
   showCart: false
-});
+})
 
 // getters
 const getters = {
   showCart(state) {
-    return state.showCart;
+    return state.showCart
   },
   checkCart: state => ({ pid, vid }) => {
     // Returns true when there is item in cart
-    var found = state.items.some(function (el) {
-      return el._id === pid;
-    });
-    return found;
+    var found = state.items.some(function(el) {
+      return el._id === pid
+    })
+    return found
   },
   getQty: state => ({ pid, vid }) => {
     // Gets cart qty of that item
     for (let i of state.items) {
       if (i._id === pid) {
-        return i.qty;
+        return i.qty
       }
     }
   }
-};
+}
 const actions = {
   async fetch({ commit, state, getters }) {
     // This is only to get data from saved cart
     try {
-      const data = await this.$axios.$get("api/cart");
-      commit("setCart", data);
-      return data;
-    } catch (e) { }
+      const data = (
+        await this.app.apolloProvider.defaultClient.query({ query: cart })
+      ).data.cart
+      commit('setCart', data)
+      return data
+    } catch (e) {}
   },
   async addToCart({ commit }, payload) {
     try {
-      const data = await this.$axios.$post("api/cart/add", payload);
-      commit("setCart", data);
+      const data = await this.app.apolloProvider.defaultClient.mutate({
+        mutation: addToCart,
+        variables: payload
+      }).data.addToCart
+      commit('setCart', data)
     } catch (e) {
-      if (e.response.status !== 501) {
-        commit("setErr", e, { root: true });
-      }
-      throw e.response
+      throw e
     }
   },
   async applyCoupon({ commit }, payload) {
-    let data = await this.$axios.$get("api/coupons/apply/" + payload);
-    commit("setCart", data);
+    let data = (
+      await this.app.apolloProvider.defaultClient.mutate({
+        mutation: applyCoupon,
+        variables: payload
+      })
+    ).data.applyCoupon
+    commit('setCart', data)
   },
   async checkout(
     { commit, state, rootState, getters },
     { paymentMethod, address }
   ) {
-    paymentMethod = paymentMethod || "COD";
+    paymentMethod = paymentMethod || 'COD'
     switch (paymentMethod) {
-      case "COD":
+      case 'COD':
         try {
-          commit("busy", true, { root: true });
-          let order = await this.$axios.$post("api/food-orders", {
-            address,
-            paymentMethod
-          });
-          this.$router.push("/success?id=" + order._id);
+          commit('busy', true, { root: true })
+          let order = (
+            await this.app.apolloProvider.defaultClient.mutate({
+              mutation: checkout,
+              variables: {
+                address,
+                paymentMethod
+              }
+            })
+          ).data.checkout
+          this.$router.push('/success?id=' + order._id)
         } catch (err) {
-          commit("setErr", err, { root: true });
+          commit('setErr', err, { root: true })
         } finally {
-          commit("busy", false, { root: true });
+          commit('busy', false, { root: true })
         }
-        break;
-      case "Stripe":
-        commit("setErr", "Stripe not implemented yet. Proceed with COD", {
+        break
+      case 'Stripe':
+        commit('setErr', 'Stripe not implemented yet. Proceed with COD', {
           root: true
-        });
-        break;
+        })
+        break
       default:
         commit(
-          "setErr",
-          "The checkout service " + paymentMethod + " not yet implemented",
+          'setErr',
+          'The checkout service ' + paymentMethod + ' not yet implemented',
           { root: true }
-        );
-        console.log("Unknown checkout service: " + paymentMethod);
-        break;
+        )
+        console.log('Unknown checkout service: ' + paymentMethod)
+        break
     }
   }
-};
+}
 
 const mutations = {
   setPromo(state, data) {
-    state.promo = data.details;
-    state.total = data.amount;
+    state.promo = data.details
+    state.total = data.amount
   },
   setCart(state, data) {
     if (!data) {
-      return;
+      return
     }
-    state.items = data.items || [];
-    state.qty = data.qty;
-    state.discount = data.discount;
-    state.subtotal = data.subtotal;
-    state.total = data.total;
-    state.shipping = data.shipping;
-    state.tax = data.tax;
+    state.items = data.items || []
+    state.qty = data.qty
+    state.discount = data.discount
+    state.subtotal = data.subtotal
+    state.total = data.total
+    state.shipping = data.shipping
+    state.tax = data.tax
   },
   toggleCart(state, payload) {
-    state.showCart = payload;
+    state.showCart = payload
   },
   coupon(state, amount) {
-    state.discount = amount;
+    state.discount = amount
   }
-};
+}
 export default {
   namespaced: true,
   state,
   getters,
   actions,
   mutations
-};
+}

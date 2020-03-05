@@ -1,0 +1,8 @@
+query cart {
+  cart {
+    id
+    slug
+    img
+    name
+  }
+}

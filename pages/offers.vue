@@ -1,6 +1,15 @@
 <template>
   <div>
     <Heading title="Offers" />
+    <div
+      v-if="errors"
+      class="mx-2 text-center"
+    >
+      <span
+        v-for="(e,ix) in errors"
+        :key="ix"
+      >{{e.message}}</span>
+    </div>
     <div class="bg-gray-900 min-h-screen">
       <div class="flex flex-wrap">
         <Coupon
@@ -45,16 +54,18 @@
 import Heading from '~/components/Heading'
 import Coupon from '~/components/Coupon'
 import StickyFooter from '~/components/footer/StickyFooter'
-import coupons from '~/gql/product/coupons.gql'
+import coupons from '~/gql/cart/coupons.gql'
 
 export default {
   components: { Heading, Coupon, StickyFooter },
   data() {
     return {
-      coupons: []
+      coupons: [],
+      errors: []
     }
   },
   async created() {
+    this.errors = []
     try {
       this.$store.commit('busy', true)
       this.coupons = (
@@ -63,7 +74,10 @@ export default {
           fetchPolicy: 'no-cache'
         })
       ).data.coupons
-    } catch (e) {
+    } catch ({ graphQLErrors, networkError }) {
+      if (graphQLErrors) this.errors = graphQLErrors
+      if (networkError)
+        this.errors = networkError.result && networkError.result.errors
     } finally {
       this.$store.commit('busy', false)
     }

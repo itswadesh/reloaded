@@ -1,42 +1,42 @@
-query my(
-    $page: Int
-    $skip: Int
-    $limit: Int
-    $search: String
-    $sort: String
-    $q: String
+query search(
+  $page: Int
+  $skip: Int
+  $limit: Int
+  $search: String
+  $sort: String
+  $q: String
+) {
+  search(
+    page: $page
+    q: $q
+    skip: $skip
+    limit: $limit
+    search: $search
+    sort: $sort
   ) {
-  my(page: $page
-      q: $q
-      skip: $skip
-      limit: $limit
-      search: $search
-      sort: $sort
-    ) 
-  {
-    data{
-    id
-    slug
-    name
-    type
-    rate
-    stock
-    img
-    time
-    vendor {
+    data {
       id
-      firstName
-      lastName
-      phone
-      email
-      info {
-        restaurant
-        kitchenPhotos
+      slug
+      name
+      type
+      rate
+      stock
+      img
+      time
+      vendor {
+        id
+        firstName
+        lastName
+        phone
+        email
+        info {
+          restaurant
+          kitchenPhotos
+        }
       }
     }
+    count
+    pageSize
+    page
   }
-  count
-  pageSize
-  page
-      }
 }

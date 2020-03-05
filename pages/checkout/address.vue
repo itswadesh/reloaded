@@ -11,7 +11,11 @@
           :key="a._id"
         >
           <label class="cursor-pointer w-full flex justify-between">
-            <Radio v-model="selectedAddress" @changed="addressChanged" :value="a._id" />
+            <Radio
+              v-model="selectedAddress"
+              @changed="addressChanged"
+              :value="a._id"
+            />
             <div class="flex-1 ml-2">
               <div class="font-semibold">{{ a.firstName }} {{ a.lastName }}</div>
               <div class="py-2 text-xs">
@@ -56,7 +60,11 @@
           :item="item"
           class="flex my-5 border-b border-dotted pb-2"
         >
-          <img class="rounded w-12 h-12 object-cover mr-2" v-lazy="item.img" alt />
+          <img
+            class="rounded w-12 h-12 object-cover mr-2"
+            v-lazy="item.img"
+            alt
+          />
           <div>
             <div class="text-lg">{{ item.name }}</div>
             <div class="text-sm text-gray-600">{{ item.rate | currency }} * {{ item.qty }}</div>
@@ -126,10 +134,15 @@ export default {
         if (result.value) {
           try {
             this.$store.commit('busy', true)
-            this.$axios.$delete(`api/addresses/${a._id}`)
+            this.$apollo.mutate({
+              mutation: deleteAddress,
+              variables: { id: a.id }
+            })
             this.getAddress()
-            this.$store.commit('busy', false)
-          } catch (e) {
+          } catch ({ graphQLErrors, networkError }) {
+            if (graphQLErrors) this.errors = graphQLErrors
+            if (networkError) this.errors = networkError.result.errors
+          } finally {
             this.$store.commit('busy', false)
           }
         }
@@ -144,7 +157,10 @@ export default {
           })
         ).data.addresses
         this.selectedAddress = a.data[0] && a.data[0]._id
-      } catch (e) {}
+      } catch ({ graphQLErrors, networkError }) {
+        if (graphQLErrors) this.errors = graphQLErrors
+        if (networkError) this.errors = networkError.result.errors
+      }
     },
     go(url) {
       this.$router.push(url)

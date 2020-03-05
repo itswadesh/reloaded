@@ -1,9 +1,21 @@
-query productSlug{
+query productSlug($slug: String!) {
+  productSlug(slug: $slug) {
     id
     name
     slug
     img
     rate
     stock
-    
+    vendor {
+      firstName
+      lastName
+      rating
+      city
+      info {
+        restaurant
+        public
+        kitchenPhotos
+      }
+    }
+  }
 }

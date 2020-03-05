@@ -4,8 +4,14 @@
     <div class="w-full pb-4 lg:w-1/3 m-auto">
       <div>
         <div class="p-3 flex shadow lg:shadow-none items-center justify-between">
-          <nuxt-link class="flex items-center" to="/checkout/address">
-            <i class="fa fa-arrow-left mb-1" aria-hidden="true"></i>
+          <nuxt-link
+            class="flex items-center"
+            to="/checkout/address"
+          >
+            <i
+              class="fa fa-arrow-left mb-1"
+              aria-hidden="true"
+            ></i>
             <div class="font-bold text-gray-700 text-xl ml-3">Add address</div>
           </nuxt-link>
           <div class="text-xs text-gray-600">Step 2 of 3</div>
@@ -19,17 +25,59 @@
       >
         <div class="p-2">
           <div class="w-full flex justify-between my-4">
-            <Textbox label="First Name" class="w-full" name="firstName" v-model="a.firstName" />
-            <Textbox label="Last Name" class="w-full" name="lastName" v-model="a.lastName" />
+            <Textbox
+              label="First Name"
+              class="w-full"
+              name="firstName"
+              v-model="a.firstName"
+            />
+            <Textbox
+              label="Last Name"
+              class="w-full"
+              name="lastName"
+              v-model="a.lastName"
+            />
           </div>
-          <Textbox label="Address" class="w-full mb-4" name="name" v-model="a.address" />
-          <Textbox type="tel" label="Pin Code" class="w-full mb-4" name="name" v-model="a.zip" />
-          <Textbox label="Town" class="w-full mb-4" name="name" v-model="a.town" />
+          <Textbox
+            label="Address"
+            class="w-full mb-4"
+            name="name"
+            v-model="a.address"
+          />
+          <Textbox
+            type="tel"
+            label="Pin Code"
+            class="w-full mb-4"
+            name="name"
+            v-model="a.zip"
+          />
+          <Textbox
+            label="Town"
+            class="w-full mb-4"
+            name="name"
+            v-model="a.town"
+          />
           <div class="w-full flex justify-between mb-4">
-            <Textbox label="City" class="w-1/2 mr-1" name="name" v-model="a.city" />
-            <Textbox label="State" class="w-1/2 ml-1" name="name" v-model="a.state" />
+            <Textbox
+              label="City"
+              class="w-1/2 mr-1"
+              name="name"
+              v-model="a.city"
+            />
+            <Textbox
+              label="State"
+              class="w-1/2 ml-1"
+              name="name"
+              v-model="a.state"
+            />
           </div>
-          <Textbox type="tel" label="Phone" class="w-full" name="name" v-model="a.phone" />
+          <Textbox
+            type="tel"
+            label="Phone"
+            class="w-full"
+            name="name"
+            v-model="a.phone"
+          />
         </div>
         <div class="flex shadow lg:shadow-none fixed lg:relative bottom-0 justify-between w-full">
           <button
@@ -51,6 +99,7 @@
 const Textbox = () => import('~/components/ui/Textbox')
 const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
 import addAddress from '~/gql/user/addAddress.gql'
+import updateAddress from '~/gql/user/updateAddress.gql'
 
 export default {
   // mixins: [location],
@@ -106,9 +155,16 @@ export default {
     async submit(address) {
       this.$store.commit('busy', true)
       try {
-        if (address._id)
-          await this.$axios.$put('api/addresses/' + address._id, address)
-        else await this.$axios.$post('api/addresses', address)
+        if (address.id)
+          await this.$apollo.mutate({
+            mutation: updateAddress,
+            variables: { id: address.id }
+          }).data.address
+        else
+          await this.$apollo.mutate({
+            mutation: addAddress,
+            variables: { id: address.id }
+          }).data.address
         this.$store.commit('busy', false)
         this.go('/checkout/address')
       } catch (e) {

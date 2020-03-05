@@ -72,9 +72,9 @@
   </div>
 </template>
 <script>
-import Heading from "~/components/Heading";
-import HereMap from "~/components/HereMap";
-import StickyFooter from "~/components/footer/StickyFooter";
+import Heading from '~/components/Heading'
+import HereMap from '~/components/HereMap'
+import StickyFooter from '~/components/footer/StickyFooter'
 export default {
   components: { Heading, HereMap, StickyFooter },
   data() {
@@ -83,40 +83,41 @@ export default {
       loading: false,
       index: -1,
       status: [
-        "Waiting for confirmation",
-        "Food is being prerared",
-        "Out for delivery",
-        "Delivered"
+        'Waiting for confirmation',
+        'Food is being prerared',
+        'Out for delivery',
+        'Delivered'
       ]
-    };
+    }
   },
   computed: {},
   methods: {
     async refresh() {
       try {
-        this.loading = true;
-        this.order = await this.$axios.$get(
-          `api/food-orders/${this.$route.query.id}`
-        );
-        this.index = this.status.indexOf(this.order.status);
+        this.loading = true
+        this.order = await this.$apollo.query({
+          query: order,
+          variables: { id: this.$route.query.id }
+        }).data.order
+        this.index = this.status.indexOf(this.order.status)
       } catch (e) {
       } finally {
-        this.loading = false;
+        this.loading = false
       }
     }
   },
   async mounted() {
-    await this.refresh();
+    await this.refresh()
     try {
       this.$refs.map.route(
         `${this.order.delivery.start.lat},${this.order.delivery.start.lng}`,
         `${this.order.delivery.finish.lat},${this.order.delivery.finish.lng}`
-      );
+      )
     } catch (e) {
     } finally {
-      this.loading = false;
+      this.loading = false
     }
     // this.$refs.map.route(`18.732447,82.829516`, `18.708187,82.852198`);
   }
-};
+}
 </script>

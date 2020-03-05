@@ -8,9 +8,20 @@
         <center>Please select location</center>
       </h3>
       <div class="flex justify-center mt-6">
-        <select v-model="location" filled label="Select City">
-          <option selected="true" value="null">Select Location</option>
-          <option v-for="(c, ix) in cities" :key="ix" :value="c">{{ c.name }}</option>
+        <select
+          v-model="location"
+          filled
+          label="Select City"
+        >
+          <option
+            selected="true"
+            value="null"
+          >Select Location</option>
+          <option
+            v-for="(c, ix) in cities"
+            :key="ix"
+            :value="c"
+          >{{ c.name }}</option>
         </select>
       </div>
       <div class="flex justify-center mt-6 mb-6">
@@ -24,13 +35,13 @@
   </div>
 </template>
 <script>
-const Header = () => import("~/components/Header");
-import { location } from "~/mixins";
-import { mapActions } from "vuex";
-import { cities } from "~/config";
+const Header = () => import('~/components/Header')
+import { location } from '~/mixins'
+import { mapActions } from 'vuex'
+import { cities } from '~/config'
 export default {
   components: { Header },
-  layout: "footer",
+  layout: 'footer',
   mixins: [location],
   data() {
     return {
@@ -39,27 +50,31 @@ export default {
       cities: cities,
       geo: null,
       gettingLocation: false
-    };
+    }
   },
   methods: {
     ...mapActions({
-      updateProfile: "auth/updateProfile"
+      updateProfile: 'auth/updateProfile'
     }),
     async saveLocaion(c) {
       try {
-        this.geo = await this.locateMe(c);
-        delete this.geo.__typename;
-        return await this.updateProfile({ address: this.geo });
-      } catch (e) {
+        this.$store.commit('busy', true)
+        this.geo = await this.locateMe(c)
+        delete this.geo.__typename
+        return await this.updateProfile({ address: this.geo })
+      } catch ({ graphQLErrors, networkError }) {
+        if (graphQLErrors) this.errors = graphQLErrors
+        if (networkError) this.errors = networkError.result.errors
       } finally {
-        this.$router.push("/");
+        this.$store.commit('busy', false)
+        this.$router.push('/')
       }
     },
     go(url) {
-      this.$router.push(url);
+      this.$router.push(url)
     }
   }
-};
+}
 </script>
 <style scoped>
 select {
@@ -77,7 +92,7 @@ select::-ms-expand {
   display: none;
 }
 .select::after {
-  content: "\25BC";
+  content: '\25BC';
   position: absolute;
   top: 0;
   right: 0;

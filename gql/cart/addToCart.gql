@@ -1,0 +1,8 @@
+mutation addToCart($qty: Int!, $pid: ID!) {
+  addToCart(qty: $qty, pid: $pid) {
+    items {
+      name
+      slug
+    }
+  }
+}

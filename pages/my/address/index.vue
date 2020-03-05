@@ -1,7 +1,13 @@
 <template>
   <div class="w-full lg:w-2/4 mt-0 lg:mt-10 lg:pr-20 xs:w-full lg:px-10 px-2 headings">
-    <div v-if="errors" class="mx-2 text-center">
-      <span v-for="(e,ix) in errors" :key="ix">{{e.message}}</span>
+    <div
+      v-if="errors"
+      class="mx-2 text-center"
+    >
+      <span
+        v-for="(e,ix) in errors"
+        :key="ix"
+      >{{e.message}}</span>
     </div>
     <div class="text-2xl font-bold py-6 text-center lg:text-left">
       <i
@@ -15,15 +21,19 @@
         :to="`address/add`"
         class="text-center shadow rounded hover:shadow-xl w-full bg-white p-5 mb-5 flex items-center justify-center border border-gray-100"
       >
-        <img src="/rounded-plus.png" alt="+" class="w-10 mr-1" />ADD NEW ADDRESS
+        <img
+          src="/rounded-plus.png"
+          alt="+"
+          class="w-10 mr-1"
+        />ADD NEW ADDRESS
       </nuxt-link>
       <div
         class="shadow rounded hover:shadow-xl w-full bg-white py-3 px-5 mb-5 flex flex-wrap border border-gray-100 relative"
         v-for="a in addresses"
-        :key="a._id"
+        :key="a.id"
       >
         <nuxt-link
-          :to="`address/add?id=${a._id}`"
+          :to="`address/${a.id}`"
           class="border border-gray-300 text-right right-0 absolute px-2 mr-2 rounded text-xs"
         >Edit</nuxt-link>
         <!-- <span class="text-xs bg-gray-200 text-gray-700 p-1">HOME</span> -->

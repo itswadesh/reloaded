@@ -2,8 +2,14 @@
   <div>
     <Banner />
     <div class="container">
-      <div v-if="errors" class="mx-2 text-center">
-        <span v-for="(e,ix) in errors" :key="ix">{{e.message}}</span>
+      <div
+        v-if="errors"
+        class="mx-2 text-center"
+      >
+        <span
+          v-for="(e,ix) in errors"
+          :key="ix"
+        >{{e.message}}</span>
       </div>
       <!-- <Categories /> -->
       <div
@@ -12,8 +18,12 @@
         :infinite-scroll-distance="3"
         :infinite-scroll-immediate-check="true"
       >
-        <div class="w-full" v-for="p in data" :key="p._id">
-          <ListCardSkeleton v-if="loading" />
+        <div
+          class="w-full"
+          v-for="p in data"
+          :key="p._id"
+        >
+          <ListCardSkeleton v-if="$apollo.loading" />
           <ListCard :p="p" />
         </div>
       </div>
@@ -34,6 +44,7 @@ import { constructURL } from '~/lib/'
 import search from '~/gql/product/search.gql'
 
 export default {
+  layout: 'search',
   mixins: [infiniteScroll],
   data() {
     return {
@@ -47,7 +58,6 @@ export default {
     Product,
     Categories,
     ListCard,
-    Loading,
     ListCardSkeleton
   }
 }

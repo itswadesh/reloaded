@@ -1,7 +1,19 @@
 <template>
   <div class="bg-white">
+    <div
+      v-if="errors"
+      class="mx-2 text-center"
+    >
+      <span
+        v-for="(e,ix) in errors"
+        :key="ix"
+      >{{e.message}}</span>
+    </div>
     <h1 v-if="!product">Not found</h1>
-    <div v-else class="relative">
+    <div
+      v-else
+      class="relative"
+    >
       <div class="z-10 absolute w-full">
         <button
           @click="$router.go(-1)"
@@ -34,7 +46,10 @@
       <div class="rounded-t-lg z-10 px-4">
         <div class="mt-4 mb-2">
           <div class="flex justify-between items-center text-gray-600 text-sm">
-            <img :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'" class="w-5" />
+            <img
+              :src="product.type === 'V' ? 'veg.png' : 'non-veg.png'"
+              class="w-5"
+            />
             <div>
               <i class="fa fa-cycle" />
               {{product.time}}
@@ -42,9 +57,7 @@
             <div>
               <i class="fa fa-map-marker" /> 27kms
             </div>
-            <div
-              v-if="product.vendor && product.vendor.info"
-            >By {{ product.vendor.info.restaurant }}</div>
+            <div v-if="product.vendor && product.vendor.info">By {{ product.vendor.info.restaurant }}</div>
             <div v-if="product.stock < 5">Only {{ product.stock }} left</div>
           </div>
           <h1 class="font-bold text-xl mt-2">{{ product.name }}</h1>
@@ -68,7 +81,11 @@
           </div>-->
           <h2 class="text-2xl font-bold">{{ product.rate | currency }}</h2>
           <div class="flex justify-around">
-            <CartButtons :product="product" :variant="userSelectedVariant" :notify="true" />
+            <CartButtons
+              :product="product"
+              :variant="userSelectedVariant"
+              :notify="true"
+            />
           </div>
         </div>
         <div class="font-semibold pb-3 text-xs px-5">{{ product.description }}</div>
@@ -85,22 +102,38 @@
         inline-template
       >
         <div class="flex justify-between items-center cursor-pointer">
-          <network network="facebook" style="color:#3B5998" class="w-full">
+          <network
+            network="facebook"
+            style="color:#3B5998"
+            class="w-full"
+          >
             <div class="hover:bg-gray-200 py-2 text-center text-xs">
               <i class="fa fa-fw fa-facebook" />Facebook
             </div>
           </network>
-          <network network="reddit" style="color:#ff4500" class="w-full">
+          <network
+            network="reddit"
+            style="color:#ff4500"
+            class="w-full"
+          >
             <div class="hover:bg-gray-200 py-2 text-center text-xs">
               <i class="fa fa-fw fa-reddit" />Reddit
             </div>
           </network>
-          <network network="twitter" style="color:#53A8E7" class="w-full">
+          <network
+            network="twitter"
+            style="color:#53A8E7"
+            class="w-full"
+          >
             <div class="hover:bg-gray-200 py-2 text-center text-xs">
               <i class="fa fa-fw fa-twitter" />Twitter
             </div>
           </network>
-          <network network="whatsapp" style="color:#54CC61" class="w-full">
+          <network
+            network="whatsapp"
+            style="color:#54CC61"
+            class="w-full"
+          >
             <div class="hover:bg-gray-200 py-2 text-center text-xs">
               <i class="fa fa-fw fa-whatsapp" />Whatsapp
             </div>
@@ -126,7 +159,10 @@
               class="text-lg"
               v-if="!product.vendor.info.public"
             >{{ product.vendor.info.restaurant }}</h2>
-            <h2 class="text-lg" v-else>{{ product.vendor.firstName }} {{ product.vendor.lastName }}</h2>
+            <h2
+              class="text-lg"
+              v-else
+            >{{ product.vendor.firstName }} {{ product.vendor.lastName }}</h2>
             <div class="text-gray-600 text-xs tracking-wide">
               <i class="fa fa-map-marker" />
               {{ product.vendor.city }}
@@ -153,7 +189,10 @@
             </div>
           </div>
         </div>-->
-        <div class="mb-4" v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
+        <div
+          class="mb-4"
+          v-if="product.vendor.info && product.vendor.info.kitchenPhotos"
+        >
           <h3 class="font-bold mb-2 px-3 text-2xl">Kitchen Photos</h3>
           <div class="flex flex-wrap px-2">
             <div
@@ -161,7 +200,10 @@
               v-for="(p, ix) in product.vendor.info.kitchenPhotos"
               :key="ix"
             >
-              <img v-lazy="p" class="object-cover h-24 rounded-lg shadow" />
+              <img
+                v-lazy="p"
+                class="object-cover h-24 rounded-lg shadow"
+              />
             </div>
           </div>
         </div>
@@ -170,78 +212,6 @@
     <CartBar />
     <!-- <StickyFooter class /> -->
   </div>
-  <!-- <div>
-    <h1 v-if="!product">Not found</h1>
-    <div v-else class="relative">
-      <button
-        class="ml-2 mt-1 px-auto py-auto text-center absolute rounded-full left-0 w-10 h-10"
-      >
-        <i class="fa fa-long-arrow-left text-white" />
-      </button>
-      <button
-        class="mr-2 mt-1 px-auto py-auto text-center absolute rounded-full right-0 w-10 h-10"
-      >
-        <i class="fa fa-search text-white" />
-      </button>
-      <img
-        v-lazy="`${product.img}`"
-        alt
-        class="w-full object-cover h-48 mb-2"
-      />
-      <h1>{{ product.name }}</h1>
-      <div>{{ product.description }}</div>
-      <div>{{ product.type }}</div>
-      <div>{{ product.rate }}</div>
-      <div>{{ product.stock }}</div>
-      <div>{{ product.restaurant }}</div>
-      <div>{{ product.img }}</div>
-      <CartButtons
-        :product="product"
-        :variant="userSelectedVariant"
-        :notify="true"
-      />
-      <div class="items-center text-sm px-3 bg-gray-100 my-3 p-3 lg:my-0">
-        <div class="flex items-center">
-          <span class="mr-4"> SELECT SIZE: </span>
-        </div>
-        <div
-          class="flex flex-wrap py-4 relative px-3"
-          :class="{ 'shake-animation': shake }"
-        >
-          <div v-for="v in product.variants" :key="v._id">
-            <button
-              @click="selectVariant(v)"
-              :class="{
-                'bg-gray-700 text-white':
-                  v.size == (userSelectedVariant && userSelectedVariant.size)
-              }"
-              v-if="v.stock > 0"
-              class="focus:outline:none m-1 rounded-full border border-gray-400 w-12 h-12 hover:border-black hover:font-bold"
-            >
-              <div class="text-xs">{{ v.size }}</div>
-              <div
-                v-if="v.stock < 5"
-                class="text-xs font-semibold absolute w-12 bg-orange-500 text-white rounded"
-              >
-                {{ v.stock }} left
-              </div>
-            </button>
-            <button
-              v-else
-              class="bg-gray-700 text-white focus:outline:none m-1 rounded-full border border-gray-400 w-12 h-12"
-            >
-              <div class="text-xs">{{ v.size }}</div>
-              <div
-                class="text-xs font-semibold absolute w-12 bg-orange-500 text-white rounded"
-              >
-                No stock
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>-->
 </template>
 
 <script>
@@ -261,19 +231,29 @@ export default {
       host,
       shake: false,
       product: null,
-      userSelectedVariant: null
+      userSelectedVariant: null,
+      errors: []
     }
   },
   async created() {
     try {
+      this.errors = []
+      this.$store.commit('busy', false)
       this.product = (
         await this.$apollo.query({
           query: productSlug,
+          variables: { slug: this.$route.params.slug },
           fetchPolicy: 'no-cache'
         })
       ).data.productSlug
       this.userSelectedVariant = this.product
-    } catch (e) {}
+    } catch ({ graphQLErrors, networkError }) {
+      if (graphQLErrors) this.errors = graphQLErrors
+      if (networkError)
+        this.errors = networkError.result && networkError.result.errors
+    } finally {
+      this.$store.commit('busy', false)
+    }
   },
   methods: {
     selectVariant(s) {

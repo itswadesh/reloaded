@@ -1,29 +1,49 @@
 <template>
-  <div class="flex" v-if="product">
-    <div v-if="!checkCart({ pid: product._id })">
+  <div
+    class="flex"
+    v-if="product"
+  >
+    <div v-if="!checkCart({ pid: product.id })">
       <button
         class="primary rounded-full w-8 h-8"
         :disabled="product.stock < 1 || loading"
-        @click="addToBag({ pid: product._id, qty: 1 })"
+        @click="addToBag({ pid: product.id, qty: 1 })"
       >
-        <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
+        <i
+          class="fa fa-plus m-auto align-middle"
+          aria-hidden="true"
+        ></i>
       </button>
     </div>
     <div v-else>
       <div class="flex flex-wrap">
-        <button class="muted rounded-full w-8 h-8" @click="addToBag({ pid: product._id, qty: -1 })">
-          <i class="fa fa-minus m-auto align-middle" aria-hidden="true"></i>
+        <button
+          class="muted rounded-full w-8 h-8"
+          @click="addToBag({ pid: product.id, qty: -1 })"
+        >
+          <i
+            class="fa fa-minus m-auto align-middle"
+            aria-hidden="true"
+          ></i>
         </button>
         <div class="px-2 flex items-center text-center">
-          <div v-if="!loading">{{ getQty({ pid: product._id }) }}</div>
-          <img alt="..." class="w-3 h-4 align-middle" src="/loading.svg" v-else />
+          <div v-if="!loading">{{ getQty({ pid: product.id }) }}</div>
+          <img
+            alt="..."
+            class="w-3 h-4 align-middle"
+            src="/loading.svg"
+            v-else
+          />
         </div>
         <button
           class="primary rounded-full w-8 h-8"
           :disabled="product.stock < 1 || loading"
-          @click="addToBag({ pid: product._id, qty: 1 })"
+          @click="addToBag({ pid: product.id, qty: 1 })"
         >
-          <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
+          <i
+            class="fa fa-plus m-auto align-middle"
+            aria-hidden="true"
+          ></i>
         </button>
       </div>
     </div>
@@ -45,6 +65,9 @@ export default {
         await this.addToCart(obj)
         if (!!this.notify && obj.qty > 0) this.toast()
       } catch (e) {
+        if (e.graphQLErrors) this.errors = e.graphQLErrors
+        if (e.networkError)
+          this.errors = e.networkError.result && e.networkError.result.errors
         this.$swal({
           title: 'Replace cart items?',
           text: e.data,
@@ -61,6 +84,8 @@ export default {
             } catch (e) {}
           }
         })
+      } finally {
+        this.$store.commit('busy', false)
       }
     },
     toast() {
