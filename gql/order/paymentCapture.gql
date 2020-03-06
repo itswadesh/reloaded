@@ -1,0 +1,6 @@
+mutation paymentCapture($id: String!, $oid: String!) {
+  paymentCapture(id: $id, oid: $oid) {
+    id
+    oid
+  }
+}

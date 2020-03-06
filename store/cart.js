@@ -33,8 +33,6 @@ const getters = {
     for (let i of state.items) {
       if (i.pid === pid) {
         return i.qty
-      } else {
-        return 0
       }
     }
   }
@@ -126,9 +124,10 @@ const mutations = {
     state.items = data.items || []
     state.qty = data.qty
     state.discount = data.discount || 0
+    state.tax = data.tax
     state.subtotal = data.subtotal
     state.total = data.total
-    state.offer_total = data.offer_total
+    state.shipping = data.shipping
   },
   toggleCart(state, payload) {
     state.showCart = payload

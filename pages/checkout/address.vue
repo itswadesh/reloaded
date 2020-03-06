@@ -6,15 +6,15 @@
         <!-- Left sidebar -->
         <div
           class="p-2 mb-2 w-full md:w-1/2 flex flex-wrap justify-between w-full shadow bg-white rounded border"
-          :class="{ 'border-green-500': selectedAddress == a._id }"
+          :class="{ 'border-green-500': selectedAddress == a.id }"
           v-for="(a, ix) in addresses"
-          :key="a._id"
+          :key="a.id"
         >
           <label class="cursor-pointer w-full flex justify-between">
             <Radio
               v-model="selectedAddress"
               @changed="addressChanged"
-              :value="a._id"
+              :value="a.id"
             />
             <div class="flex-1 ml-2">
               <div class="font-semibold">{{ a.firstName }} {{ a.lastName }}</div>
@@ -41,7 +41,7 @@
               class="tracking-widest w-1/2 text-blue-500 py-1 border-r border-gray-200 mt-1"
             >Remove</button>
             <button
-              @click="go(`/checkout/add?id=${a._id}`)"
+              @click="go(`/checkout/add?id=${a.id}`)"
               class="tracking-widest w-1/2 text-blue-500 py-1 mt-1"
             >Edit</button>
           </div>
@@ -86,10 +86,7 @@ import CartItem from '~/components/cart/CartItem'
 const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
 import addresses from '~/gql/user/addresses.gql'
 export default {
-  fetch({ store, redirect }) {
-    if (!(store.state.auth || {}).user)
-      return redirect('/login?return=/checkout/address')
-  },
+  middleware: ['isAuth'],
   data() {
     return {
       office: false,
@@ -156,7 +153,7 @@ export default {
             fetchPolicy: 'no-cache'
           })
         ).data.addresses
-        this.selectedAddress = a.data[0] && a.data[0]._id
+        this.selectedAddress = a.data[0] && a.data[0].id
       } catch ({ graphQLErrors, networkError }) {
         if (graphQLErrors) this.errors = graphQLErrors
         if (networkError) this.errors = networkError.result.errors

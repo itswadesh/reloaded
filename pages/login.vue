@@ -134,8 +134,8 @@ export default {
     }
   },
   async mounted() {
-    const isAuthenticated = !!this.$apolloHelpers.getToken()
-    if (isAuthenticated) this.$router.push('/my')
+    // const isAuthenticated = !!this.$apolloHelpers.getToken()
+    // if (isAuthenticated) this.$router.push('/my')
   },
   async created() {
     // let geoCookie = await this.$cookies.get("geo");

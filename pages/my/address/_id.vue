@@ -126,6 +126,7 @@ export default {
     const id = this.$route.params.id
     if (id == 'add') return
     try {
+      this.$store.commit('busy', true)
       this.a = (
         await this.$apollo.query({
           query: address,
@@ -133,7 +134,12 @@ export default {
           fetchPolicy: 'no-cache'
         })
       ).data.address
-    } catch (e) {}
+    } catch ({ graphQLErrors, networkError }) {
+      if (graphQLErrors) this.errors = graphQLErrors
+      if (networkError) this.errors = networkError.result.errors
+    } finally {
+        this.$store.commit('busy', false)
+      }
   },
   methods: {
     go(url) {

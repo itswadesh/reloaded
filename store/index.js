@@ -61,6 +61,7 @@ export const actions = {
         })
       ).data.settings
       await commit('settings', settings)
+      await dispatch('auth/fetch')
       await dispatch('cart/fetch')
     } catch (e) {
       commit(e)

@@ -12,7 +12,7 @@
       >MOVE TO WISHLIST</button>-->
       <button
         class="text-gray-600 rounded pt-3 pr-1"
-        @click="checkAndAddToCart({pid: item._id, qty: -10000})"
+        @click="checkAndAddToCart({pid: item.pid, qty: -10000})"
         :disabled="loading"
       >
         <img
@@ -38,10 +38,7 @@
       >{{item.stock}} left</div>
       <div class="flex justify-between items-center w-full">
         <div class="font-black text-2xl">{{item.rate | currency}}</div>
-        <CartButtons
-          :product="item"
-          :notify="false"
-        />
+        <CartButtons          :product="item"          :notify="false"        />
         <!-- <div
             class="text-gray-400 line-through ml-2 text-xs lg:text-sm"
             v-if="calculateOffPercent(item.mrp, item.price)>0"

@@ -3,11 +3,11 @@
     class="flex"
     v-if="product"
   >
-    <div v-if="!checkCart({ pid: product.id })">
+    <div v-if="!checkCart({ pid: product.pid || product.id })">
       <button
         class="primary rounded-full w-8 h-8"
         :disabled="product.stock < 1 || loading"
-        @click="addToBag({ pid: product.id, qty: 1 })"
+        @click="addToBag({ pid: product.pid || product.id, qty: 1 })"
       >
         <i
           class="fa fa-plus m-auto align-middle"
@@ -19,7 +19,7 @@
       <div class="flex flex-wrap">
         <button
           class="muted rounded-full w-8 h-8"
-          @click="addToBag({ pid: product.id, qty: -1 })"
+          @click="addToBag({ pid: product.pid || product.id, qty: -1 })"
         >
           <i
             class="fa fa-minus m-auto align-middle"
@@ -27,7 +27,7 @@
           ></i>
         </button>
         <div class="px-2 flex items-center text-center">
-          <div v-if="!loading">{{ getItemQty({ pid: product.id }) }}</div>
+          <div v-if="!loading">{{ getItemQty({ pid: product.pid || product.id }) }}</div>
           <img
             alt="..."
             class="w-3 h-4 align-middle"
@@ -38,7 +38,7 @@
         <button
           class="primary rounded-full w-8 h-8"
           :disabled="product.stock < 1 || loading"
-          @click="addToBag({ pid: product.id, qty: 1 })"
+          @click="addToBag({ pid: product.pid || product.id, qty: 1 })"
         >
           <i
             class="fa fa-plus m-auto align-middle"

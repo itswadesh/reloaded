@@ -1,15 +1,28 @@
 mutation applyCoupon($code: String!) {
   applyCoupon(code: $code) {
-    code
-    value
-    type
-    active
-    info
-    msg
-    text
-    terms
-    minimumCartValue
-    maxAmount
-    color
+    items {
+      pid
+      name
+      slug
+      qty
+      rate
+      img
+    }
+    qty
+    subtotal
+    discount {
+      code
+      value
+      text
+    }
+    shipping {
+      charge
+    }
+    total
+    tax {
+      cgst
+      sgst
+      igst
+    }
   }
 }
