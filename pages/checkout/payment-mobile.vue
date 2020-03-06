@@ -1,15 +1,6 @@
 <template>
   <div>
     <CheckoutHeader selected="payment" />
-    <div
-        v-if="errors"
-        class="mx-2 text-center"
-      >
-        <span
-          v-for="(e,ix) in errors"
-          :key="ix"
-        >{{e.message}}</span>
-      </div>
     <div>
       <div
         class="p-3 lg:py-2 lg:px-0 flex shadow lg:shadow-none items-center justify-between lg:w-1/2 m-auto"
@@ -131,94 +122,102 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import Radio from "~/components/ui/Radio";
-const CheckoutHeader = () => import("~/components/checkout/CheckoutHeader");
-import { PAY_KEY } from "~/config";
-import paymentCapture from '~/gql/order/paymentCapture.gql'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
+import Radio from '~/components/ui/Radio'
+const CheckoutHeader = () => import('~/components/checkout/CheckoutHeader')
+import { PAY_KEY } from '~/config'
+import capturePay from '~/gql/order/capturePay.gql'
 import razorpay from '~/gql/order/razorpay.gql'
 import address from '~/gql/user/address.gql'
 
 export default {
   data() {
     return {
-        errors:[],
+      errors: [],
       address: {},
-      paymentMethod: "Online"
-    };
+      paymentMethod: 'Online'
+    }
   },
   async created() {
-      const id = this.$route.query.address
-    this.address = (await this.$apollo.query({query:
-      address, variables: {id}}
-    )).data.address;
-    let razorpayScript = document.createElement("script");
+    const id = this.$route.query.address
+    this.address = (
+      await this.$apollo.query({ query: address, variables: { id } })
+    ).data.address
+    let razorpayScript = document.createElement('script')
     razorpayScript.setAttribute(
-      "src",
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
-    document.head.appendChild(razorpayScript);
+      'src',
+      'https://checkout.razorpay.com/v1/checkout.js'
+    )
+    document.head.appendChild(razorpayScript)
   },
   methods: {
     ...mapActions({
-      applyDiscount: "cart/applyDiscount",
-      checkout: "cart/checkout"
+      applyDiscount: 'cart/applyDiscount',
+      checkout: 'cart/checkout'
     }),
     async submit() {
-        this.errors = []
-      if (this.paymentMethod == "COD") {
-        this.checkout({ paymentMethod: "COD", address: this.address });
-        return;
+      this.errors = []
+      if (this.paymentMethod == 'COD') {
+        this.checkout({ paymentMethod: 'COD', address: this.address })
+        return
       }
-      const vm = this;
-      let rp = {};
+      const vm = this
+      let rp = {}
       try {
-        vm.$store.commit("busy", true, { root: true });
+        vm.$store.commit('busy', true, { root: true })
         delete this.address.__typename
         delete this.address.coords.__typename
-        this.address.zip=+this.address.zip
-        rp = (await this.$apollo.mutate({mutation: razorpay, variables: { address: this.address }})).data.razorpay;
-      } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError) this.errors = networkError.result.errors
-    } finally {
-        vm.$store.commit("busy", false, { root: true });
+        this.address.zip = +this.address.zip
+        rp = (
+          await this.$apollo.mutate({
+            mutation: razorpay,
+            variables: { address: this.address }
+          })
+        ).data.razorpay
+      } catch (e) {
+        vm.$store.commit('setErr', e)
+      } finally {
+        vm.$store.commit('busy', false, { root: true })
       }
       var options = {
         key: PAY_KEY, // Enter the Key ID generated from the Dashboard
-        name: "Misiki LLP",
-        description: "Payment for food",
-        image: "/icon.png",
+        name: 'Misiki LLP',
+        description: 'Payment for food',
+        image: '/icon.png',
         amount: rp.amount,
         order_id: rp.id,
         handler: async function(response) {
           try {
-            const capture = (await vm.$apollo.mutate({mutation:paymentCapture,
-            variables: {
-              id: response.razorpay_payment_id,
-              oid: response.razorpay_order_id
-            }})).data.paymentCapture;
-            vm.$router.push(`/success?id=${capture}`);
-          } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError) this.errors = networkError.result.errors
-            vm.$router.push(`/failure`);
+            const capture = (
+              await vm.$apollo.mutate({
+                mutation: capturePay,
+                variables: {
+                  id: response.razorpay_payment_id,
+                  oid: response.razorpay_order_id
+                }
+              })
+            ).data.capturePay
+            console.log('xxxxxxxxxxxxxxxxx', capture)
+            vm.$router.push(`/success?id=${capture.id}`)
+          } catch (e) {
+            vm.$store.commit('setErr', e)
+            vm.$router.push(`/failure`)
           }
         },
         prefill: {
           name: `${this.user.firstName} ${this.user.lastName}`,
-          email: this.user.email || "support@misiki.in",
+          email: this.user.email || 'support@misiki.in',
           contact: this.user.phone
         },
         notes: {
-          address: "note value"
+          address: 'note value'
         },
         theme: {
-          color: "#F37254"
+          color: '#F37254'
         }
-      };
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
+      }
+      var rzp1 = new Razorpay(options)
+      rzp1.open()
     }
   },
   components: {
@@ -227,14 +226,14 @@ export default {
   },
   computed: {
     cart() {
-      return this.$store.state.cart || {};
+      return this.$store.state.cart || {}
     },
     user() {
-      return (this.$store.state.auth || {}).user || null;
+      return (this.$store.state.auth || {}).user || null
     }
   },
-  layout: "none"
-};
+  layout: 'none'
+}
 </script>
 
 <style></style>

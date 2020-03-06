@@ -144,19 +144,24 @@ export default {
       user: null
     }
   },
-  async created() {
-    try {
-      const res = (
-        await this.$apollo.query({ query: me, fetchPolicy: 'no-cache' })
-      ).data
-      if (res) {
-        this.user = res.me
-      } else {
-        this.user = {}
-      }
-    } catch (e) {
-      this.user = {}
+  computed: {
+    user() {
+      return (this.$store.state.auth || {}).user || {}
     }
+  },
+  async created() {
+    // try {
+    //   const res = (
+    //     await this.$apollo.query({ query: me, fetchPolicy: 'no-cache' })
+    //   ).data
+    //   if (res) {
+    //     this.user = res.me
+    //   } else {
+    //     this.user = {}
+    //   }
+    // } catch (e) {
+    //   this.user = {}
+    // }
   },
   methods: {
     select(i, url) {

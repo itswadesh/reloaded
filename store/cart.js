@@ -23,7 +23,7 @@ const getters = {
   },
   checkCart: state => ({ pid, vid }) => {
     // Returns true when there is item in cart
-    var found = state.items.some(function(el) {
+    var found = state.items.some(function (el) {
       return el.pid === pid
     })
     return found
@@ -60,6 +60,7 @@ const actions = {
       ).data.addToCart
       commit('setCart', data)
     } catch (e) {
+      commit('setErr', e, { root: true })
       throw e
     }
   },
@@ -90,7 +91,7 @@ const actions = {
               }
             })
           ).data.checkout
-          this.$router.push('/success?id=' + order._id)
+          this.$router.push('/success?id=' + order.id)
         } catch (err) {
           commit('setErr', err, { root: true })
         } finally {

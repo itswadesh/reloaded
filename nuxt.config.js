@@ -43,7 +43,7 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: '/graphql',
-        wsEndpoint: process.env.WS_ENDPOINT
+        // wsEndpoint: process.env.WS_ENDPOINT
       }
     },
     defaultOptions: {

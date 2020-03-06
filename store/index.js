@@ -49,11 +49,12 @@ export const mutations = {
     if (e.graphQLErrors) state.errors = e.graphQLErrors
     if (e.networkError)
       state.errors = e.networkError.result && e.networkError.result.errors
-    this.$toast.error(state.errors).goAway(5000)
+    console.log('xxxxxxxxxxxxxxxxx', e);
+    // this.$toast.error(state.errors[0].message).goAway(5000)
   }
 }
 export const actions = {
-  async nuxtClientInit({ state, commit, dispatch }, context) {
+  async fetch({ commit, state, getters }) {
     try {
       const settings = (
         await this.app.apolloProvider.defaultClient.query({
@@ -61,10 +62,12 @@ export const actions = {
         })
       ).data.settings
       await commit('settings', settings)
-      await dispatch('auth/fetch')
-      await dispatch('cart/fetch')
     } catch (e) {
-      commit(e)
     }
+  },
+  async nuxtClientInit({ state, commit, dispatch }, context) {
+    await dispatch('fetch')
+    await dispatch('auth/fetch')
+    await dispatch('cart/fetch')
   }
 }

@@ -44,14 +44,13 @@ export const actions = {
     try {
       const data = (
         await this.app.apolloProvider.defaultClient.query({
-          query: me
+          query: me, fetchPolicy: 'no-cache'
         })
       ).data.me
       commit('setUser', data)
       return data
     } catch (e) {
       commit('clearUser')
-      throw err
     }
   },
   async updateProfile({ commit, rootState }, variables) {
