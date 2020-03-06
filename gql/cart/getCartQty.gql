@@ -1,0 +1,3 @@
+query getCartQty($pid: ID!) {
+  getCartQty(pid: $pid)
+}

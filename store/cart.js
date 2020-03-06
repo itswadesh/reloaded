@@ -4,6 +4,7 @@ import checkout from '~/gql/cart/checkout.gql'
 import applyCoupon from '~/gql/cart/applyCoupon.gql'
 
 const state = state => ({
+  cart: {},
   items: [],
   qty: 0,
   subtotal: 0,
@@ -23,15 +24,17 @@ const getters = {
   checkCart: state => ({ pid, vid }) => {
     // Returns true when there is item in cart
     var found = state.items.some(function(el) {
-      return el._id === pid
+      return el.pid === pid
     })
     return found
   },
-  getQty: state => ({ pid, vid }) => {
+  getItemQty: state => ({ pid, vid }) => {
     // Gets cart qty of that item
     for (let i of state.items) {
-      if (i._id === pid) {
+      if (i.pid === pid) {
         return i.qty
+      } else {
+        return 0
       }
     }
   }
@@ -45,14 +48,18 @@ const actions = {
       ).data.cart
       commit('setCart', data)
       return data
-    } catch (e) {}
+    } catch (e) {
+      console.log('err... ', e)
+    }
   },
   async addToCart({ commit }, payload) {
     try {
-      const data = await this.app.apolloProvider.defaultClient.mutate({
-        mutation: addToCart,
-        variables: payload
-      }).data.addToCart
+      const data = (
+        await this.app.apolloProvider.defaultClient.mutate({
+          mutation: addToCart,
+          variables: payload
+        })
+      ).data.addToCart
       commit('setCart', data)
     } catch (e) {
       throw e
@@ -115,21 +122,18 @@ const mutations = {
     state.total = data.amount
   },
   setCart(state, data) {
-    if (!data) {
-      return
-    }
+    if (!data) return
     state.items = data.items || []
     state.qty = data.qty
-    state.discount = data.discount
+    state.discount = data.discount || 0
     state.subtotal = data.subtotal
     state.total = data.total
-    state.shipping = data.shipping
-    state.tax = data.tax
+    state.offer_total = data.offer_total
   },
   toggleCart(state, payload) {
     state.showCart = payload
   },
-  coupon(state, amount) {
+  applyDiscount(state, amount) {
     state.discount = amount
   }
 }

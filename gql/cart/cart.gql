@@ -1,8 +1,28 @@
 query cart {
   cart {
-    id
-    slug
-    img
-    name
+    items {
+      pid
+      name
+      slug
+      qty
+      rate
+      img
+    }
+    qty
+    subtotal
+    discount {
+      code
+      value
+      text
+    }
+    shipping {
+      charge
+    }
+    total
+    tax {
+      cgst
+      sgst
+      igst
+    }
   }
 }

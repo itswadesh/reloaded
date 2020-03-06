@@ -27,7 +27,7 @@
           ></i>
         </button>
         <div class="px-2 flex items-center text-center">
-          <div v-if="!loading">{{ getQty({ pid: product.id }) }}</div>
+          <div v-if="!loading">{{ getItemQty({ pid: product.id }) }}</div>
           <img
             alt="..."
             class="w-3 h-4 align-middle"
@@ -125,7 +125,7 @@ export default {
   computed: {
     ...mapGetters({
       checkCart: 'cart/checkCart',
-      getQty: 'cart/getQty'
+      getItemQty: 'cart/getItemQty'
     }),
     cart() {
       return this.$store.state.cart
