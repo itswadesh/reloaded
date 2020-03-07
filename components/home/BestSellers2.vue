@@ -1,12 +1,13 @@
 <template>
   <div>
-    <Carousel :products="products" title="Recent Visit" />
+    <Carousel2 :products="products" title="Best Sellers" />
   </div>
 </template>
 
 <script>
-import Carousel from './Carousel2'
-import products from '~/gql/product/products.gql'
+import Carousel from './Carousel'
+import Carousel2 from './Carousel2'
+import bestSellers from '~/gql/product/bestSellers.gql'
 
 export default {
   data() {
@@ -17,10 +18,10 @@ export default {
       this.$store.commit('clearErr')
       this.products = (
         await this.$apollo.query({
-          query: products,
+          query: bestSellers,
           fetchPolicy: 'no-cache'
         })
-      ).data.products
+      ).data.bestSellers
     } catch (e) {
       this.$store.commit('setErr', e)
     } finally {
@@ -28,7 +29,8 @@ export default {
     }
   },
   components: {
-    Carousel
+    Carousel,
+    Carousel2
   }
 }
 </script>

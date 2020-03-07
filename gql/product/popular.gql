@@ -1,0 +1,28 @@
+query popular {
+  popular(page:0) {
+    data {
+      id
+      slug
+      name
+      type
+      rate
+      stock
+      img
+      time
+      vendor {
+        id
+        firstName
+        lastName
+        phone
+        email
+        info {
+          restaurant
+          kitchenPhotos
+        }
+      }
+    }
+    count
+    pageSize
+    page
+  }
+}

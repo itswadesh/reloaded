@@ -1,18 +1,13 @@
 <template>
-  <div
-    class="flex"
-    v-if="product"
-  >
-    <div v-if="!checkCart({ pid: product.pid || product.id })">
+  <div class="flex" v-if="product">
+    <div v-if="product.stock<1" class="flex text-red-500 items-center">Out of stock</div>
+    <div v-else-if="!checkCart({ pid: product.pid || product.id })">
       <button
         class="primary rounded-full w-8 h-8"
         :disabled="product.stock < 1 || loading"
         @click="addToBag({ pid: product.pid || product.id, qty: 1 })"
       >
-        <i
-          class="fa fa-plus m-auto align-middle"
-          aria-hidden="true"
-        ></i>
+        <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
       </button>
     </div>
     <div v-else>
@@ -21,29 +16,18 @@
           class="muted rounded-full w-8 h-8"
           @click="addToBag({ pid: product.pid || product.id, qty: -1 })"
         >
-          <i
-            class="fa fa-minus m-auto align-middle"
-            aria-hidden="true"
-          ></i>
+          <i class="fa fa-minus m-auto align-middle" aria-hidden="true"></i>
         </button>
         <div class="px-2 flex items-center text-center">
           <div v-if="!loading">{{ getItemQty({ pid: product.pid || product.id }) }}</div>
-          <img
-            alt="..."
-            class="w-3 h-4 align-middle"
-            src="/loading.svg"
-            v-else
-          />
+          <img alt="..." class="w-3 h-4 align-middle" src="/loading.svg" v-else />
         </div>
         <button
           class="primary rounded-full w-8 h-8"
           :disabled="product.stock < 1 || loading"
           @click="addToBag({ pid: product.pid || product.id, qty: 1 })"
         >
-          <i
-            class="fa fa-plus m-auto align-middle"
-            aria-hidden="true"
-          ></i>
+          <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -61,11 +45,12 @@ export default {
   methods: {
     ...mapActions({ addToCart: 'cart/addToCart' }),
     async addToBag(obj) {
+      console.log('xxxxxxxxxxxxxxxxx', obj)
       try {
         await this.addToCart(obj)
         if (!!this.notify && obj.qty > 0) this.toast()
       } catch (e) {
-        this.$store.commit('setErr',e)
+        this.$store.commit('setErr', e)
         this.$swal({
           title: 'Replace cart items?',
           text: e.data,

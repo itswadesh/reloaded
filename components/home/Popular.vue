@@ -1,12 +1,13 @@
 <template>
   <div>
-    <Carousel :products="products" title="Recent Visit" />
+    <Carousel :products="products" title="Popular" />
   </div>
 </template>
 
 <script>
+import Product from '~/components/Product.vue'
 import Carousel from './Carousel2'
-import products from '~/gql/product/products.gql'
+import popular from '~/gql/product/popular.gql'
 
 export default {
   data() {
@@ -17,10 +18,10 @@ export default {
       this.$store.commit('clearErr')
       this.products = (
         await this.$apollo.query({
-          query: products,
+          query: popular,
           fetchPolicy: 'no-cache'
         })
-      ).data.products
+      ).data.popular
     } catch (e) {
       this.$store.commit('setErr', e)
     } finally {
@@ -28,7 +29,8 @@ export default {
     }
   },
   components: {
-    Carousel
+    Carousel,
+    Product
   }
 }
 </script>

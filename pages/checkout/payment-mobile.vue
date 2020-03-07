@@ -189,6 +189,8 @@ export default {
         order_id: rp.id,
         handler: async function(response) {
           try {
+            vm.$store.commit('busy', true)
+            vm.$store.commit('clearErr')
             const capture = (
               await vm.$apollo.mutate({
                 mutation: capturePay,
@@ -202,6 +204,8 @@ export default {
           } catch (e) {
             vm.$store.commit('setErr', e)
             vm.$router.push(`/failure`)
+          } finally {
+            vm.$store.commit('busy', false)
           }
         },
         prefill: {

@@ -7,20 +7,14 @@
     <Hero />
     <div class="container antialiased min-h-screen">
       <Categories />
-      <!-- <BestSellers />
-      <RecentVisit />-->
-      <div class="flex flex-wrap">
-        <div
-          class="w-1/2"
-          v-for="p in products"
-          :key="p._id"
-        >
-          <Product
-            :p="p"
-            class
-          />
+      <BestSellers />
+      <Popular />
+      <!-- <RecentVisit /> -->
+      <!-- <div class="flex flex-wrap">
+        <div class="w-1/2" v-for="p in bestSellers" :key="p._id">
+          <Product :p="p" />
         </div>
-      </div>
+      </div>-->
     </div>
     <!-- <Footer /> -->
     <StickyFooter />
@@ -37,6 +31,7 @@ import Product from '~/components/Product.vue'
 import Categories from '~/components/Categories.vue'
 import StickyFooter from '~/components/footer/StickyFooter'
 import BestSellers from '~/components/home/BestSellers'
+import Popular from '~/components/home/Popular'
 import RecentVisit from '~/components/home/RecentVisit'
 import products from '~/gql/product/products.gql'
 
@@ -57,7 +52,7 @@ export default {
         })
       ).data.products
     } catch (e) {
-      this.$store.commit('setErr',e)
+      this.$store.commit('setErr', e)
     } finally {
       this.$store.commit('busy', false)
       this.$router.push('/')
@@ -72,7 +67,8 @@ export default {
     Categories,
     StickyFooter,
     BestSellers,
-    RecentVisit
+    RecentVisit,
+    Popular
   }
 }
 </script>

@@ -46,6 +46,7 @@ img[lazy="loaded"] {
 img[lazy="loading"] {
   filter: blur(10px);
 }
+
 @keyframes zoom {
   0% {
     transform: scale(0);
