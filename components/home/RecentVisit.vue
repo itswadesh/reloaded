@@ -13,6 +13,7 @@ export default {
     return { products: [] }
   },
   async created() {
+    this.$store.commit('clearErr')
     this.products = (
       await this.$apollo.query({
         query: products,

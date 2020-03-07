@@ -169,6 +169,7 @@ export default {
       this.$router.push(url)
     },
     async logout() {
+      this.$store.commit('clearErr')
       await this.$apollo.mutate({ mutation: signOut, fetchPolicy: 'no-cache' })
       this.$router.push('/')
     }

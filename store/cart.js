@@ -23,7 +23,7 @@ const getters = {
   },
   checkCart: state => ({ pid, vid }) => {
     // Returns true when there is item in cart
-    var found = state.items.some(function (el) {
+    var found = state.items.some(function(el) {
       return el.pid === pid
     })
     return found
@@ -41,6 +41,7 @@ const actions = {
   async fetch({ commit, state, getters }) {
     // This is only to get data from saved cart
     try {
+      commit('clearErr')
       const data = (
         await this.app.apolloProvider.defaultClient.query({ query: cart })
       ).data.cart
@@ -52,6 +53,7 @@ const actions = {
   },
   async addToCart({ commit }, payload) {
     try {
+      commit('clearErr')
       const data = (
         await this.app.apolloProvider.defaultClient.mutate({
           mutation: addToCart,
@@ -65,6 +67,7 @@ const actions = {
     }
   },
   async applyCoupon({ commit }, payload) {
+    commit('clearErr')
     let data = (
       await this.app.apolloProvider.defaultClient.mutate({
         mutation: applyCoupon,
@@ -77,6 +80,7 @@ const actions = {
     { commit, state, rootState, getters },
     { paymentMethod, address }
   ) {
+    commit('clearErr')
     paymentMethod = paymentMethod || 'COD'
     switch (paymentMethod) {
       case 'COD':

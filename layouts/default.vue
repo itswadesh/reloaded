@@ -1,11 +1,11 @@
 <template>
-  <div style class="bg-gray-100 antialiased min-h-screen">
+  <div style class="bg-gray-100 antialiased">
     <!-- <Header /> -->
     <Loading />
     <div v-if="$store.state.errors" class="err">
       <span v-for="(e,ix) in $store.state.errors" :key="ix">{{e.message}}</span>
     </div>
-    <div class="mb-12">
+    <div class="mb-32">
       <nuxt />
     </div>
     <Footer />

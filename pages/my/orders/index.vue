@@ -73,21 +73,20 @@ export default {
   layout: 'account',
   middleware: ['isAuth'],
   async asyncData({ params, query, route, redirect, store }) {
-    let orders = [],
-      err = null
+     let err = null
     if (store.getters['cart/getTotal'] <= 0) {
       redirect('/')
     }
     try {
+      this.$store.commit('clearErr')
       const o = await this.$apollo.query({
         query: orders,
         fetchPolicy: 'no-cache'
       })
       orders = o.data
       err = null
-    } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError) this.errors = networkError.result.errors
+    } catch (e) {
+      this.$store.commit('setErr',e)
     } finally {
       this.$store.commit('busy', false)
     }

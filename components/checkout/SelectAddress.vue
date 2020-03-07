@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     async getAddress() {
+      this.$store.commit('clearErr')
       const a = (
         await this.$apollo.query({
           query: addresses,

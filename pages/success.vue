@@ -97,6 +97,7 @@ export default {
     async refresh() {
       try {
         this.loading = true
+        this.$store.commit('clearErr')
         this.order = (await this.$apollo.query({
           query: order,
           variables: { id: this.$route.query.id }

@@ -131,6 +131,7 @@ export default {
         if (result.value) {
           try {
             this.$store.commit('busy', true)
+            this.$store.commit('clearErr')
             this.$apollo.mutate({
               mutation: deleteAddress,
               variables: { id: a.id }
@@ -147,6 +148,7 @@ export default {
     },
     async getAddress() {
       try {
+        this.$store.commit('clearErr')
         this.addresses = (
           await this.$apollo.query({
             query: addresses,

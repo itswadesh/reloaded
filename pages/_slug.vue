@@ -239,6 +239,7 @@ export default {
     try {
       this.errors = []
       this.$store.commit('busy', false)
+      this.$store.commit('clearErr')
       this.product = (
         await this.$apollo.query({
           query: productSlug,

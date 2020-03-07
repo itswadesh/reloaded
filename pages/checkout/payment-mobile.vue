@@ -156,7 +156,7 @@ export default {
       checkout: 'cart/checkout'
     }),
     async submit() {
-      this.errors = []
+      this.$store.commit('clearErr')
       if (this.paymentMethod == 'COD') {
         this.checkout({ paymentMethod: 'COD', address: this.address })
         return
@@ -167,6 +167,8 @@ export default {
         vm.$store.commit('busy', true, { root: true })
         delete this.address.__typename
         delete this.address.coords.__typename
+        delete this.address.createdAt
+        delete this.address.updatedAt
         this.address.zip = +this.address.zip
         rp = (
           await this.$apollo.mutate({

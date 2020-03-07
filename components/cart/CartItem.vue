@@ -84,6 +84,7 @@ export default {
     },
     async saveToWishlist(item) {
       try {
+        this.$store.commit('clearErr')
         this.loading = true
         let data = (
           await this.$apollo.mutate({

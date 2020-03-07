@@ -21,6 +21,7 @@ export default {
         let params = this.$route.query
         params.page = this.meta.page
         params.search = this.$route.params.q
+        this.$store.commit('clearErr')
         const { data, count, pageSize, page } = (
           await this.$apollo.query({
             query: this.model,

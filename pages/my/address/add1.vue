@@ -111,6 +111,7 @@ export default {
   },
   async created() {
     try {
+      this.$store.commit('clearErr')
       this.address = (
         await this.$apollo.query({
           query: address,

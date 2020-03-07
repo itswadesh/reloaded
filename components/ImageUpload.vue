@@ -101,6 +101,7 @@ export default {
   methods: {
     async uploadPhoto({ target }) {
       try {
+        this.$store.commit('clearErr')
         let images = (
           await this.$apollo.mutate({
             mutation: fileUpload,
@@ -144,6 +145,7 @@ export default {
       });
     },
     async deleteConfirmed(image) {
+      this.$store.commit('clearErr')
       this.img = "";
       await this.$apollo.mutate({
         mutation: deleteFile,

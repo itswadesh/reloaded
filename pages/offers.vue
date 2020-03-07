@@ -68,6 +68,7 @@ export default {
     this.errors = []
     try {
       this.$store.commit('busy', true)
+      this.$store.commit('clearErr')
       this.coupons = (
         await this.$apollo.query({
           query: coupons,

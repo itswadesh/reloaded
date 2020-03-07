@@ -114,22 +114,20 @@ export default {
   middleware: ['isAuth'],
   data() {
     return {
-      order: null,
-      errors: []
+      order: null
     }
   },
   async mounted() {
     try {
-      this.errors = []
+      this.$store.commit('clearErr')
       this.order = (
         await this.$apollo.query({
           query: order,
           fetchPolicy: 'no-cache'
         })
       ).data.order
-    } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError) this.errors = networkError.result.errors
+    } catch (e) {
+      this.$store.commit('setErr',e)
     } finally {
       this.$store.commit('busy', false)
     }

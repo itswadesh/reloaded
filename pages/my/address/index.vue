@@ -82,6 +82,7 @@ export default {
       this.errors = []
       try {
         this.$store.commit('busy', true)
+        this.$store.commit('clearErr')
         const res = (
           await this.$apollo.query({
             query: addresses,
@@ -104,6 +105,7 @@ export default {
         confirmButtonText: 'Yes, Delete!'
       }).then(async result => {
         if (result.value) {
+          this.$store.commit('clearErr')
           await this.$apollo.mutate({
             mutation: gql`
               mutation deleteAddress($id: ID!) {

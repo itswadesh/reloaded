@@ -49,6 +49,7 @@ export default {
   async created() {
     try {
       this.$store.commit('busy', true)
+      this.$store.commit('clearErr')
       this.products = (
         await this.$apollo.query({
           query: products,

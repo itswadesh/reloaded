@@ -192,6 +192,7 @@ export default {
       if (!this.showOTP) {
         // When clicked 1st time
         try {
+          this.$store.commit('clearErr')
           const res = (
             await this.$apollo.mutate({
               mutation: getOtp,
@@ -211,6 +212,7 @@ export default {
       } else {
         try {
           this.loading = true
+          this.$store.commit('clearErr')
           await this.$apollo.mutate({
             mutation: verifyOtp,
             variables: { phone, otp }
@@ -231,6 +233,7 @@ export default {
       if (!this.showOTP) {
         // When clicked 1st time
         try {
+          this.$store.commit('clearErr')
           const otp = await this.$apollo.mutate({
             mutation: signIn,
             variables: { email: this.uid, password: this.password },

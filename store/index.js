@@ -1,9 +1,7 @@
-import cartQ from '~/gql/cart/cart.gql'
 import settingQ from '~/gql/settings.gql'
 
 import Vue from 'vue'
 import Vuex from 'vuex'
-import cart from './cart'
 Vue.use(Vuex)
 const cookieparser = process.server ? require('cookieparser') : undefined
 
@@ -39,8 +37,8 @@ export const mutations = {
   info(state, msg) {
     this.$toast.info(msg).goAway(5000)
   },
-  clearError(state) {
-    state.error = {}
+  clearErr(state) {
+    state.errors = []
   },
   setGuest(state, guestId) {
     state.guestId = guestId
@@ -49,21 +47,22 @@ export const mutations = {
     if (e.graphQLErrors) state.errors = e.graphQLErrors
     if (e.networkError)
       state.errors = e.networkError.result && e.networkError.result.errors
-    console.log('xxxxxxxxxxxxxxxxx', e);
-    // this.$toast.error(state.errors[0].message).goAway(5000)
+    console.log('xxxxxxxxxxxxxxxxx', e)
+    if (state.errors && state.errors[0])
+      this.$toast.error(state.errors[0].message).goAway(5000)
   }
 }
 export const actions = {
   async fetch({ commit, state, getters }) {
     try {
+      commit('clearErr')
       const settings = (
         await this.app.apolloProvider.defaultClient.query({
           query: settingQ
         })
       ).data.settings
       await commit('settings', settings)
-    } catch (e) {
-    }
+    } catch (e) {}
   },
   async nuxtClientInit({ state, commit, dispatch }, context) {
     await dispatch('fetch')

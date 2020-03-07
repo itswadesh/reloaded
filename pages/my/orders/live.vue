@@ -23,7 +23,6 @@ export default {
   },
   async mounted() {
     this.route()
-    this.errors = []
     try {
       this.$store.commit('busy', true)
 
@@ -33,9 +32,8 @@ export default {
           fetchPolicy: 'no-cache'
         })
       ).data.liveOrders
-    } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError) this.errors = networkError.result.errors
+    } catch (e) {
+      this.$store.commit('setErr',e)
     } finally {
       this.$store.commit('busy', false)
     }
