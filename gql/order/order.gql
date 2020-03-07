@@ -1,4 +1,34 @@
-query order{
+query order($id: ID!) {
+  order(id: $id) {
     orderNo
-    otp
+    amount {
+      qty
+      subtotal
+      tax
+      discount
+      total
+      shipping
+    }
+    address {
+      firstName
+      lastName
+      address
+      coords {
+        lat
+        lng
+      }
+    }
+    vendor {
+      restaurant
+    }
+    items {
+      pid
+      name
+      img
+      slug
+      rate
+      qty
+    }
+    status
+  }
 }

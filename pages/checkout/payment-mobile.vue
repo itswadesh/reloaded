@@ -197,7 +197,6 @@ export default {
                 }
               })
             ).data.capturePay
-            console.log('xxxxxxxxxxxxxxxxx', capture)
             vm.$router.push(`/success?id=${capture.id}`)
           } catch (e) {
             vm.$store.commit('setErr', e)

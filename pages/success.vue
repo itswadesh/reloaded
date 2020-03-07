@@ -75,6 +75,8 @@
 import Heading from '~/components/Heading'
 import HereMap from '~/components/HereMap'
 import StickyFooter from '~/components/footer/StickyFooter'
+import order from '~/gql/order/order.gql'
+
 export default {
   components: { Heading, HereMap, StickyFooter },
   data() {
@@ -95,12 +97,13 @@ export default {
     async refresh() {
       try {
         this.loading = true
-        this.order = await this.$apollo.query({
+        this.order = (await this.$apollo.query({
           query: order,
           variables: { id: this.$route.query.id }
-        }).data.order
+        })).data.order
         this.index = this.status.indexOf(this.order.status)
       } catch (e) {
+        this.$store.commit('setErr',e)
       } finally {
         this.loading = false
       }

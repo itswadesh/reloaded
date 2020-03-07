@@ -1,5 +1,6 @@
 mutation capturePay($id: String!, $oid: String!) {
   capturePay(payment_id: $id, oid: $oid) {
+    id
     uid {
       firstName
       lastName
@@ -7,6 +8,10 @@ mutation capturePay($id: String!, $oid: String!) {
     orderNo
     amount {
       total
+      subtotal
+      shipping
+      qty
+      tax
     }
     address {
       firstName
@@ -14,24 +19,25 @@ mutation capturePay($id: String!, $oid: String!) {
       address
     }
     vendor {
-      info {
-        restaurant
-      }
+      restaurant
     }
-    cartId {
-      items {
-        slug
-      }
+    items {
+      pid
+      name
+      slug
+      qty
+      img
+      rate
     }
     status
-    delivery{
+    delivery {
       otp
     }
     comment
     cancellationReason
     cancellationComment
     returnComment
-    payment{
+    payment {
       id
     }
     reviewed
