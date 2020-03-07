@@ -94,7 +94,7 @@ export default {
         ).data.addToWishlist
         this.$store.commit('success', 'Added to your wishlist')
       } catch (err) {
-        this.$store.commit('setErr', err, { root: true })
+        this.$store.commit('setErr', err)
       } finally {
         this.loading = false
       }

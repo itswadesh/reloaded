@@ -90,7 +90,6 @@ export default {
   data() {
     return {
       office: false,
-      a: {},
       addresses: [],
       selectedAddress: ''
     }
@@ -137,9 +136,8 @@ export default {
               variables: { id: a.id }
             })
             this.getAddress()
-          } catch ({ graphQLErrors, networkError }) {
-            if (graphQLErrors) this.errors = graphQLErrors
-            if (networkError) this.errors = networkError.result.errors
+          } catch (e) {
+           this.$store.commit('setErr',e)
           } finally {
             this.$store.commit('busy', false)
           }
@@ -155,10 +153,11 @@ export default {
             fetchPolicy: 'no-cache'
           })
         ).data.addresses
-        this.selectedAddress = a.data[0] && a.data[0].id
-      } catch ({ graphQLErrors, networkError }) {
-        if (graphQLErrors) this.errors = graphQLErrors
-        if (networkError) this.errors = networkError.result.errors
+        this.selectedAddress = this.addresses && this.addresses[0].id
+      } catch (e) {
+       this.$store.commit('setErr',e)
+      }finally{
+        this.$store.commit('busy', false)
       }
     },
     go(url) {

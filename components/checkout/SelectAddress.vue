@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     async getAddress() {
+      try{
       this.$store.commit('clearErr')
       const a = (
         await this.$apollo.query({
@@ -64,6 +65,11 @@ export default {
         })
       ).data.addresses
       this.addresses = a.data
+      }catch(e){
+        this.$store.commit('setErr', e)
+      }finally{
+        this.$store.commit('busy', false)
+      }
     },
     go(url) {
       this.$router.push(url)

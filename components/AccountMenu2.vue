@@ -141,7 +141,6 @@ export default {
   data() {
     return {
       selected: 0,
-      user: null
     }
   },
   computed: {

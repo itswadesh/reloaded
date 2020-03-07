@@ -1,14 +1,6 @@
 <template>
   <div class="bg-white">
-    <div
-      v-if="errors"
-      class="mx-2 text-center"
-    >
-      <span
-        v-for="(e,ix) in errors"
-        :key="ix"
-      >{{e.message}}</span>
-    </div>
+    
     <h1 v-if="!product">Not found</h1>
     <div
       v-else
@@ -232,12 +224,10 @@ export default {
       shake: false,
       product: null,
       userSelectedVariant: null,
-      errors: []
     }
   },
   async created() {
     try {
-      this.errors = []
       this.$store.commit('busy', false)
       this.$store.commit('clearErr')
       this.product = (
@@ -248,10 +238,8 @@ export default {
         })
       ).data.productSlug
       this.userSelectedVariant = this.product
-    } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError)
-        this.errors = networkError.result && networkError.result.errors
+    } catch (e) {
+     this.$store.commit('setErr',e)
     } finally {
       this.$store.commit('busy', false)
     }

@@ -1,7 +1,6 @@
 export default {
   data: () => ({
     data: [],
-    errors: [],
     meta: {
       page: 1,
       count: 0,
@@ -15,7 +14,6 @@ export default {
       if (this.meta.busy) return
       if (scrolled && this.meta.end) return
       this.loading = true
-      this.errors = []
       try {
         this.meta.busy = true
         let params = this.$route.query
@@ -35,18 +33,8 @@ export default {
         this.meta.filtered =
           parseInt(data.length) + (parseInt(pageSize) - 1) * parseInt(page)
         this.meta.end = data.length < pageSize ? true : false
-      } catch ({ graphQLErrors, networkError }) {
-        if (graphQLErrors)
-          graphQLErrors.map(
-            err => this.errors.push(err)
-            // console.error(
-            //   `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-            // )
-          )
-        if (networkError) {
-          this.errors = networkError.result && networkError.result.errors
-          console.error(`[Network error]:`, networkError.result)
-        }
+      } catch (e) {
+        this.$store.commit('setErr', e)
       } finally {
         this.loading = false
         this.meta.busy = false

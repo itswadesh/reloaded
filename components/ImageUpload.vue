@@ -118,7 +118,7 @@ export default {
         }
       } catch (e) {
         console.log("err... ", e);
-        this.error = e.graphQLErrors;
+        this.$store.commit('setErr', e)
       }
     },
     imgPath(i) {
@@ -145,6 +145,7 @@ export default {
       });
     },
     async deleteConfirmed(image) {
+      try{
       this.$store.commit('clearErr')
       this.img = "";
       await this.$apollo.mutate({
@@ -153,10 +154,13 @@ export default {
         fetchPolicy: "no-cache"
       });
       this.$emit("remove", this.name);
-    },
-    err(e) {
-      this.$store.commit("setErr", e.response.data);
+    }catch(e){
+      this.$store.commit("setErr", e);
+    }finally{
+this.$store.commit('busy', false)
     }
+    },
+    
   }
 };
 </script>

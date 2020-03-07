@@ -47,6 +47,8 @@ export default {
       ).data.products
     } catch (e) {
       this.products = []
+    }finally{
+      this.$store.commit('busy', false)
     }
   },
   components: {

@@ -1,14 +1,6 @@
 <template>
   <div class="w-full lg:w-2/4 mt-0 lg:mt-10 lg:pr-20 xs:w-full lg:px-10 px-2 headings">
-    <div
-      v-if="errors"
-      class="mx-2 text-center"
-    >
-      <span
-        v-for="(e,ix) in errors"
-        :key="ix"
-      >{{e.message}}</span>
-    </div>
+   
     <div class="text-2xl font-bold py-6 text-center lg:text-left">
       <i
         class="fa fa-arrow-left mr-2 block lg:invisible"
@@ -70,8 +62,7 @@ export default {
   middleware: ['isAuth'],
   data() {
     return {
-      addresses: [],
-      errors: []
+      addresses: []
     }
   },
   async created() {
@@ -79,7 +70,6 @@ export default {
   },
   methods: {
     async getAddresses() {
-      this.errors = []
       try {
         this.$store.commit('busy', true)
         this.$store.commit('clearErr')
@@ -90,9 +80,8 @@ export default {
           })
         ).data
         this.addresses = res.addresses
-      } catch ({ graphQLErrors, networkError }) {
-        if (graphQLErrors) this.errors = graphQLErrors
-        if (networkError) this.errors = networkError.result.errors
+      } catch (e) {
+        this.$store.commit('setErr',e)
       } finally {
         this.$store.commit('busy', false)
       }

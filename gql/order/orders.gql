@@ -1,4 +1,35 @@
-query orders{
+query orders {
+  orders {
     orderNo
-    otp
+    createdAt
+    amount {
+      qty
+      subtotal
+      tax
+      discount
+      total
+      shipping
+    }
+    address {
+      firstName
+      lastName
+      address
+      coords {
+        lat
+        lng
+      }
+    }
+    vendor {
+      restaurant
+    }
+    items {
+      pid
+      name
+      img
+      slug
+      rate
+      qty
+    }
+    status
+  }
 }

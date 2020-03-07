@@ -39,11 +39,13 @@ export const mutations = {
   },
   clearErr(state) {
     state.errors = []
+    state.loading = true
   },
   setGuest(state, guestId) {
     state.guestId = guestId
   },
   setErr(state, e) {
+    state.loading = false
     if (e.graphQLErrors) state.errors = e.graphQLErrors
     if (e.networkError)
       state.errors = e.networkError.result && e.networkError.result.errors
@@ -56,13 +58,18 @@ export const actions = {
   async fetch({ commit, state, getters }) {
     try {
       commit('clearErr')
+      commit('busy', true)
       const settings = (
         await this.app.apolloProvider.defaultClient.query({
           query: settingQ
         })
       ).data.settings
       await commit('settings', settings)
-    } catch (e) {}
+    } catch (e) {
+      commit('setErr', e)
+    } finally {
+      commit('busy', false)
+    }
   },
   async nuxtClientInit({ state, commit, dispatch }, context) {
     await dispatch('fetch')

@@ -118,7 +118,12 @@ export default {
           fetchPolicy: 'no-cache'
         })
       ).data.address
-    } catch (e) {}
+    } catch (e) {
+       this.$store.commit('setErr',e)
+    }
+    finally{
+      this.$store.commit('busy', false)
+    }
   },
   methods: {
     go(url) {

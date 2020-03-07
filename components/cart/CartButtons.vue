@@ -65,9 +65,7 @@ export default {
         await this.addToCart(obj)
         if (!!this.notify && obj.qty > 0) this.toast()
       } catch (e) {
-        if (e.graphQLErrors) this.errors = e.graphQLErrors
-        if (e.networkError)
-          this.errors = e.networkError.result && e.networkError.result.errors
+        this.$store.commit('setErr',e)
         this.$swal({
           title: 'Replace cart items?',
           text: e.data,

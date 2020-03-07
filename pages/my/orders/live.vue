@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="errors" class="mx-2 text-center">
-      <span v-for="(e,ix) in errors" :key="ix">{{e.message}}</span>
-    </div>
+    
     <div style="padding: 10px 0">
       <button type="button" v-on:click="route()">Route</button>
     </div>
@@ -19,7 +17,7 @@ export default {
   },
   middleware: ['isAuth'],
   data() {
-    return { liveOrders: null, errors: [] }
+    return { liveOrders: null }
   },
   async mounted() {
     this.route()

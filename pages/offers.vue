@@ -1,15 +1,7 @@
 <template>
   <div>
     <Heading title="Offers" />
-    <div
-      v-if="errors"
-      class="mx-2 text-center"
-    >
-      <span
-        v-for="(e,ix) in errors"
-        :key="ix"
-      >{{e.message}}</span>
-    </div>
+    
     <div class="bg-gray-900 min-h-screen">
       <div class="flex flex-wrap">
         <Coupon
@@ -60,12 +52,10 @@ export default {
   components: { Heading, Coupon, StickyFooter },
   data() {
     return {
-      coupons: [],
-      errors: []
+      coupons: []
     }
   },
   async created() {
-    this.errors = []
     try {
       this.$store.commit('busy', true)
       this.$store.commit('clearErr')
@@ -75,10 +65,8 @@ export default {
           fetchPolicy: 'no-cache'
         })
       ).data.coupons
-    } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError)
-        this.errors = networkError.result && networkError.result.errors
+    } catch (e) {
+      this.$store.commit('setErr',e)
     } finally {
       this.$store.commit('busy', false)
     }

@@ -42,15 +42,20 @@ export const actions = {
   async fetch({ commit, state, getters }) {
     // This is only to get data from saved cart
     try {
+      commit('clearErr', null, { root: true })
+      commit('busy', true, { root: true })
       const data = (
         await this.app.apolloProvider.defaultClient.query({
-          query: me, fetchPolicy: 'no-cache'
+          query: me,
+          fetchPolicy: 'no-cache'
         })
       ).data.me
       commit('setUser', data)
       return data
     } catch (e) {
-      commit('clearUser')
+      commit('setErr', e, { root: true })
+    } finally {
+      commit('busy', false, { root: true })
     }
   },
   async updateProfile({ commit, rootState }, variables) {

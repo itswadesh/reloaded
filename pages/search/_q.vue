@@ -2,15 +2,6 @@
   <div>
     <Banner />
     <div class="container">
-      <div
-        v-if="errors"
-        class="mx-2 text-center"
-      >
-        <span
-          v-for="(e,ix) in errors"
-          :key="ix"
-        >{{e.message}}</span>
-      </div>
       <!-- <Categories /> -->
       <div
         class="flex flex-wrap"

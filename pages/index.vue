@@ -56,10 +56,8 @@ export default {
           fetchPolicy: 'no-cache'
         })
       ).data.products
-    } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError)
-        this.errors = networkError.result && networkError.result.errors
+    } catch (e) {
+      this.$store.commit('setErr',e)
     } finally {
       this.$store.commit('busy', false)
       this.$router.push('/')

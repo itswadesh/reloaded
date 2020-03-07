@@ -1,9 +1,6 @@
 <template>
   <div class="text-center bg-gray-100">
     <div class="flex items-center justify-start mx-2">
-      <div v-if="errors" class="mx-2 text-center">
-        <span v-for="(e,ix) in errors" :key="ix">{{e.message}}</span>
-      </div>
       <nuxt-link to="/my/orders" class="flex-1 text-left absolute font-bold">
         <i class="fa fa-arrow-left mr-1 text-gray-600" />
       </nuxt-link>

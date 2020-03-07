@@ -9,4 +9,9 @@
 </template>
 
 <script>
+import Loading from '~/components/ui/Loading'
+
+export default {
+  components: { Loading }
+}
 </script>

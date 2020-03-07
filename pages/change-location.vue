@@ -62,9 +62,8 @@ export default {
         this.geo = await this.locateMe(c)
         delete this.geo.__typename
         return await this.updateProfile({ address: this.geo })
-      } catch ({ graphQLErrors, networkError }) {
-        if (graphQLErrors) this.errors = graphQLErrors
-        if (networkError) this.errors = networkError.result.errors
+      } catch (e) {
+        this.$store.commit('setErr',e)
       } finally {
         this.$store.commit('busy', false)
         this.$router.push('/')

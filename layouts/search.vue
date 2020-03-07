@@ -4,7 +4,7 @@
     <Search class="my-2 mx-1" />
     <div class="mt-16 mb-12">
       <div v-if="$store.state.errors" class="mx-2 text-center">
-        <span v-for="(e,ix) in errors" :key="ix">{{e.message}}</span>
+        <span v-for="(e,ix) in $store.state.errors" :key="ix">{{e.message}}</span>
       </div>
       <nuxt />
     </div>
@@ -17,7 +17,6 @@ import { BackToTopDark } from '~/components/ui'
 import Search from '~/components/Search'
 import StickyFooter from '~/components/footer/StickyFooter'
 import Loading from '~/components/ui/Loading'
-
 export default {
   components: { Search, StickyFooter, BackToTopDark, Loading }
 }

@@ -12,7 +12,6 @@ export default {
       params.page = this.meta.page
       params.search = this.$route.params.q
       if (this.meta.busy || this.meta.end) return
-      this.errors = []
       try {
         this.$store.commit('busy', true)
         this.$store.commit('clearErr')
@@ -31,18 +30,8 @@ export default {
           this.noOfPages = Math.ceil(count / pageSize)
           this.data = data
         }
-      } catch ({ graphQLErrors, networkError }) {
-        if (graphQLErrors)
-          graphQLErrors.map(
-            err => this.errors.push(err)
-            // console.error(
-            //   `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-            // )
-          )
-        if (networkError) {
-          this.errors = networkError.result.errors
-          console.error(`[Network error]:`, networkError.result)
-        }
+      } catch (e) {
+        this.$store.commit('setErr', e)
       } finally {
         this.$store.commit('busy', false)
       }

@@ -2,15 +2,7 @@
   <div>
     <CheckoutHeader selected="address" />
     <div class="w-full pb-4 lg:w-1/3 m-auto">
-    <div
-        v-if="errors"
-        class="mx-2 text-center"
-      >
-        <span
-          v-for="(e,ix) in errors"
-          :key="ix"
-        >{{e.message}}</span>
-      </div>
+   
       <div>
         <div class="p-3 flex shadow lg:shadow-none items-center justify-between">
           <nuxt-link
@@ -117,8 +109,7 @@ export default {
   middleware: ['isAuth'],
   data() {
     return {
-      address: null,
-      errors:[]
+      address: null
     }
   },
   components: {
@@ -144,9 +135,8 @@ export default {
             fetchPolicy: 'no-cache'
           })
         ).data.address
-      } catch ({ graphQLErrors, networkError }) {
-      if (graphQLErrors) this.errors = graphQLErrors
-      if (networkError) this.errors = networkError.result.errors
+      } catch (e) {
+      this.$store.commit('setErr',e)
     } finally {
         this.$store.commit('busy', false)
       }
@@ -168,7 +158,6 @@ export default {
     },
     async submit(address) {
       if (address.coords) delete address.coords.__typename
-      this.errors = []
       try {
         this.$store.commit('busy', true)
         this.$store.commit('clearErr')
@@ -185,9 +174,8 @@ export default {
             fetchPolicy: 'no-cache'
           })
         this.go('/checkout/address')
-      } catch ({ graphQLErrors, networkError }) {
-        if (graphQLErrors) this.errors = graphQLErrors
-        if (networkError) this.errors = networkError.result.errors
+      } catch (e) {
+     this.$store.commit('setErr',e)
       } finally {
         this.$store.commit('busy', false)
       }

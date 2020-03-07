@@ -133,7 +133,6 @@ import address from '~/gql/user/address.gql'
 export default {
   data() {
     return {
-      errors: [],
       address: {},
       paymentMethod: 'Online'
     }

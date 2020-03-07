@@ -9,15 +9,6 @@
       </nuxt-link>
       <h1 class="bg-white font-semibold text-xl p-2 flex-1 text-center">Orders</h1>
     </div>
-    <div
-      v-if="errors"
-      class="mx-2 text-center"
-    >
-      <span
-        v-for="(e,ix) in errors"
-        :key="ix"
-      >{{e.message}}</span>
-    </div>
     <nuxt-link
       :to="`/my/orders/${o._id}`"
       v-for="o in orders"
@@ -72,25 +63,24 @@ import orders from '~/gql/order/orders.gql'
 export default {
   layout: 'account',
   middleware: ['isAuth'],
-  async asyncData({ params, query, route, redirect, store }) {
-     let err = null
-    if (store.getters['cart/getTotal'] <= 0) {
-      redirect('/')
+  data(){
+    return{
+      orders:[]
     }
+  },
+  async created() {
     try {
       this.$store.commit('clearErr')
-      const o = await this.$apollo.query({
+      this.$store.commit('busy', true)
+      this.orders = (await this.$apollo.query({
         query: orders,
         fetchPolicy: 'no-cache'
-      })
-      orders = o.data
-      err = null
+      })).data.orders
     } catch (e) {
       this.$store.commit('setErr',e)
     } finally {
       this.$store.commit('busy', false)
     }
-    return { orders }
   }
 }
 </script>

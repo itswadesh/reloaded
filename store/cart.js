@@ -41,7 +41,7 @@ const actions = {
   async fetch({ commit, state, getters }) {
     // This is only to get data from saved cart
     try {
-      commit('clearErr')
+      commit('clearErr', null, { root: true })
       const data = (
         await this.app.apolloProvider.defaultClient.query({ query: cart })
       ).data.cart
@@ -49,11 +49,12 @@ const actions = {
       return data
     } catch (e) {
       console.log('err... ', e)
+      commit('setErr', e, { root: true })
     }
   },
   async addToCart({ commit }, payload) {
     try {
-      commit('clearErr')
+      commit('clearErr', null, { root: true })
       const data = (
         await this.app.apolloProvider.defaultClient.mutate({
           mutation: addToCart,
@@ -67,20 +68,27 @@ const actions = {
     }
   },
   async applyCoupon({ commit }, payload) {
-    commit('clearErr')
-    let data = (
-      await this.app.apolloProvider.defaultClient.mutate({
-        mutation: applyCoupon,
-        variables: payload
-      })
-    ).data.applyCoupon
-    commit('setCart', data)
+    try {
+      commit('clearErr', null, { root: true })
+      commit('busy', true, { root: true })
+      let data = (
+        await this.app.apolloProvider.defaultClient.mutate({
+          mutation: applyCoupon,
+          variables: payload
+        })
+      ).data.applyCoupon
+      commit('setCart', data)
+    } catch (err) {
+      commit('setErr', err, { root: true })
+    } finally {
+      commit('busy', false, { root: true })
+    }
   },
   async checkout(
     { commit, state, rootState, getters },
     { paymentMethod, address }
   ) {
-    commit('clearErr')
+    commit('clearErr', null, { root: true })
     paymentMethod = paymentMethod || 'COD'
     switch (paymentMethod) {
       case 'COD':

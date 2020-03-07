@@ -24,7 +24,7 @@
             Total {{ cart.total | currency }}
           </span>
         </div>
-        <button @click="go(-1)" class="flex-1 text-left mr-2 font-bold">
+        <button @click="$router.push('/search')" class="flex-1 text-left mr-2 font-bold">
           <i class="fa fa-long-arrow-left mr-1 text-gray-600" />
         </button>
       </div>

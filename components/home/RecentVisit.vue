@@ -13,6 +13,7 @@ export default {
     return { products: [] }
   },
   async created() {
+    try{
     this.$store.commit('clearErr')
     this.products = (
       await this.$apollo.query({
@@ -20,6 +21,11 @@ export default {
         fetchPolicy: 'no-cache'
       })
     ).data.products
+    }catch(e){
+      this.$store.commit("setErr", e);
+    }finally{
+      this.$store.commit('busy', false)
+    }
   },
   components: {
     Carousel
