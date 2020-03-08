@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <div class="height">
-      <img v-lazy="$store.state.settings.CDN_URL+d.img+'?tr=w-300,h-200'" class="backgroundimg" />
+      <img v-lazy="d.img+'?tr=w-300,h-200'" class="backgroundimg" />
     </div>
     <div class="fx">
       <div></div>
