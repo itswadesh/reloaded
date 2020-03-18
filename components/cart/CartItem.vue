@@ -1,6 +1,8 @@
 <template>
   <div class="mx-4 flex justify-between py-5 border-b border-gray-300 w-full relative">
-    <img class="rounded-lg shadow w-20 h-20 object-cover" v-lazy="item.img" alt />
+    <nuxt-link class :to="`/${item.slug}`">
+      <img class="rounded-lg shadow w-20 h-20 object-cover" v-lazy="item.img" alt />
+    </nuxt-link>
     <div class="flex flex-wrap justify-between text-right flex text-xs absolute right-0 top-0">
       <!-- <button
         class="mr-1 focus:outline-none text-primary rounded p-1"
@@ -8,7 +10,7 @@
       >MOVE TO WISHLIST</button>-->
       <button
         class="text-gray-600 rounded pt-3 pr-1"
-        @click="checkAndAddToCart({pid: item.pid, vid:item.vid, qty: -10000})"
+        @click="checkAndAddToCart({pid: item.pid, qty: -10000})"
         :disabled="loading"
       >
         <img src="/loading.svg" class="w-3 h-3 rotateOutDownLeft" v-if="loading" alt />

@@ -1,6 +1,6 @@
 import { locationExpiry, cities } from '~/config'
 import getLocation from '~/gql/location/getLocation.gql'
-const GOOGLE_MAPS_KEY = process.env.GOOGLE_MAPS_KEY
+const { GOOGLE_MAPS_KEY } = process.env
 export default {
   data() {
     return {}
@@ -31,7 +31,7 @@ export default {
       var point = new google.maps.LatLng(18.8561, 82.7347)
       var bermudaTriangle = new google.maps.Polygon({ paths: triangleCoords })
 
-      google.maps.event.addListener(map, 'click', function(e) {
+      google.maps.event.addListener(map, 'click', function (e) {
         console.log(e)
         var resultColor = google.maps.geometry.poly.containsLocation(
           point,

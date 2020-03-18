@@ -11,6 +11,7 @@ query productSlug($slug: String!) {
       lastName
       rating
       city
+      avatar
       info {
         restaurant
         public

@@ -135,6 +135,15 @@ const mutations = {
     state.promo = data.details
     state.total = data.amount
   },
+  clear(state, data) {
+    state.items = []
+    state.qty = 0
+    state.subtotal = 0
+    state.total = 0
+    state.discount = {}
+    state.tax = {}
+    state.shipping = {}
+  },
   setCart(state, data) {
     if (!data) return
     state.items = data.items || []

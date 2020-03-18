@@ -9,6 +9,7 @@ query bestSellers {
         name
         slug
         price
+        updatedAt
         restaurant
         time
         type
@@ -25,6 +26,7 @@ query bestSellers {
         name
         slug
         price
+        updatedAt
         restaurant
         time
         type
@@ -41,6 +43,7 @@ query bestSellers {
         name
         slug
         price
+        updatedAt
         restaurant
         time
         type
@@ -57,6 +60,7 @@ query bestSellers {
         name
         slug
         price
+        updatedAt
         restaurant
         time
         type
@@ -73,6 +77,7 @@ query bestSellers {
         name
         slug
         price
+        updatedAt
         restaurant
         time
         type

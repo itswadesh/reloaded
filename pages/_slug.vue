@@ -113,7 +113,7 @@
         <div class="flex bg-gray-100 rounded-lg p-6 mb-6">
           <img
             v-if="product.vendor.avatar"
-            class="h-24 w-24 rounded-full mx-0 mr-6"
+            class="h-24 w-24 object-cover rounded-full mx-0 mr-6"
             v-lazy="product.vendor.avatar"
           />
           <img

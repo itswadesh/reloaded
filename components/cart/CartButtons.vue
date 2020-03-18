@@ -5,7 +5,7 @@
       <button
         class="primary rounded-full w-8 h-8"
         :disabled="product.stock < 1 || loading"
-        @click="addToBag({ pid: product.pid || product.id, vid:variant.id, qty: 1 })"
+        @click="addToBag({ pid: product.pid || product.id, qty: 1 })"
       >
         <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
       </button>
@@ -14,18 +14,18 @@
       <div class="flex flex-wrap">
         <button
           class="muted rounded-full w-8 h-8"
-          @click="addToBag({ pid: product.pid || product.id, vid:variant.vid, qty: -1 })"
+          @click="addToBag({ pid: product.pid || product.id, qty: -1 })"
         >
           <i class="fa fa-minus m-auto align-middle" aria-hidden="true"></i>
         </button>
         <div class="px-2 flex items-center text-center">
-          <div v-if="!loading">{{ getItemQty({ pid: product.pid || product.id, vid:variant.vid }) }}</div>
+          <div v-if="!loading">{{ getItemQty({ pid: product.pid || product.id }) }}</div>
           <img alt="..." class="w-3 h-4 align-middle" src="/loading.svg" v-else />
         </div>
         <button
           class="primary rounded-full w-8 h-8"
           :disabled="product.stock < 1 || loading"
-          @click="addToBag({ pid: product.pid || product.id, vid:variant.vid, qty: 1 })"
+          @click="addToBag({ pid: product.pid || product.id, qty: 1 })"
         >
           <i class="fa fa-plus m-auto align-middle" aria-hidden="true"></i>
         </button>
@@ -45,7 +45,6 @@ export default {
   methods: {
     ...mapActions({ addToCart: 'cart/addToCart' }),
     async addToBag(obj) {
-      console.log('xxxxxxxxxxxxxxxxx', obj)
       try {
         await this.addToCart(obj)
         if (!!this.notify && obj.qty > 0) this.toast()

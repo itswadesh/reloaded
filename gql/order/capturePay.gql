@@ -1,7 +1,7 @@
 mutation capturePay($id: String!, $oid: String!) {
   capturePay(payment_id: $id, oid: $oid) {
     id
-    uid {
+    user {
       firstName
       lastName
     }
