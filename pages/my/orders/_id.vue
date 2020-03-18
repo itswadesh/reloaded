@@ -54,7 +54,9 @@
                 :to="`/restaurant/${i.vendor_id}`"
                 class="text-sm text-gray-500 mr-2"
               >{{ i.vendor_name }}</nuxt-link>
-              <div class="text-sm font-semibold text-gray-800">{{ i.rate | currency }} * {{ i.qty }}</div>
+              <div
+                class="text-sm font-semibold text-gray-800"
+              >{{ i.price | currency }} * {{ i.qty }}</div>
             </div>
           </div>
         </div>
@@ -124,7 +126,7 @@ export default {
         })
       ).data.order
     } catch (e) {
-      this.$store.commit('setErr',e)
+      this.$store.commit('setErr', e)
     } finally {
       this.$store.commit('busy', false)
     }

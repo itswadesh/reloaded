@@ -17,7 +17,7 @@
       </nuxt-link>
       <p>{{ p.description }}</p>
       <div class="flex flex-wrap justify-between items-center my-2">
-        <div class="font-bold">{{ p.rate | currency }}</div>
+        <div class="font-bold">{{ p.price | currency }}</div>
         <div v-if="p.stock<1" class="text-red-500 text-xs">Out of stock</div>
         <div v-else class="text-red-500 text-xs">Only {{ p.stock }} left</div>
         <img :src="p.type === 'V' ? 'veg.png' : 'non-veg.png'" class="w-5 mr-1 mt-1" />

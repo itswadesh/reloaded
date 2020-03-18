@@ -5,7 +5,7 @@ query popular {
       slug
       name
       type
-      rate
+      price
       stock
       img
       time

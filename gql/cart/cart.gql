@@ -5,7 +5,7 @@ query cart {
       name
       slug
       qty
-      rate
+      price
       img
     }
     qty

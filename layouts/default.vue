@@ -1,9 +1,18 @@
 <template>
-  <div style class="bg-gray-100 antialiased">
+  <div
+    style
+    class="bg-gray-100 antialiased"
+  >
     <!-- <Header /> -->
     <Loading />
-    <div v-if="$store.state.errors" class="err">
-      <span v-for="(e,ix) in $store.state.errors" :key="ix">{{e.message}}</span>
+    <div
+      v-if="$store.state.errors"
+      class="err"
+    >
+      <span
+        v-for="(e,ix) in $store.state.errors"
+        :key="ix"
+      >{{e.message}}</span>
     </div>
     <div class="mb-32">
       <nuxt />
@@ -19,6 +28,11 @@ import Footer from '~/components/footer/Footer'
 import Loading from '~/components/ui/Loading'
 
 export default {
+  data() {
+    return {
+      showMenu: false
+    }
+  },
   components: { Header, Footer, BackToTopDark, Loading }
 }
 </script>

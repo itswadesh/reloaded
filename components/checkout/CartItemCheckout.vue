@@ -31,12 +31,12 @@
             <div class="inline-block relative">Size: {{item.variant.size}}</div>
 
             <div class="flex justify-between">
-              <CartButtons :product="{_id:item.product._id}" :variant="{_id:item.variant._id}" />
+              <CartButtons :product="{_id:item.product._id}" :variant="{_id:item.variant.id}" />
               <div>
                 <button class="p-4 focus:outline-none">MOVE TO WISHLIST</button>
                 <button
                   class="text-gray-600 font-medium text-2xl right-0 bg-gray-200 rounded px-3 py-1"
-                  @click="checkAndAddToCart({pid: item.product._id, vid: item.variant._id, qty: -10000})"
+                  @click="checkAndAddToCart({pid: item.product.id, vid: item.variant.id, qty: -10000})"
                   :disabled="loading"
                 >
                   <img src="/loading.svg" v-if="loading" alt="..." />

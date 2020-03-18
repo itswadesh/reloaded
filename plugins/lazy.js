@@ -15,7 +15,7 @@ export default ({ store, app: { } }) => {
     },
     filter: {
       progressive(listener, options) {
-        const CDN = 'https://ik.imagekit.io/misiki/images';
+        const CDN = '';
         listener.el.setAttribute("lazy-progressive", "true");
         listener.loading = CDN + listener.src + "?tr=w-3,h-2";
         listener.src = CDN + listener.src;

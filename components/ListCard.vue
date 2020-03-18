@@ -36,7 +36,7 @@
             <i class="fa fa-map-marker"></i>
             {{ p.vendor.info.restaurant }}
           </div>
-          <div class="font-black text-xl text-gray-700">{{ p.rate | currency }}</div>
+          <div class="font-black text-xl text-gray-700">{{ p.price | currency }}</div>
         </div>
         <div class="flex justify-between items-center">
           <div class="flex items-center">

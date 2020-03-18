@@ -16,7 +16,7 @@
     <div class="restroname">{{d.name}}</div>
     <div class="card-container">
       <div class="a-contain">
-        <div style="font-weight:600;min-width: 3rem;">{{d.rate | currency}}</div>
+        <div style="font-weight:600;min-width: 3rem;">{{d.price | currency}}</div>
         <div class="f-pink">
           Sold out on
           <br />

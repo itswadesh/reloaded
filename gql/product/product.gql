@@ -5,7 +5,7 @@ query Product($id: ID!) {
     name
     description
     type
-    rate
+    price
     stock
     img
     time

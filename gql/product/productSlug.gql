@@ -4,7 +4,7 @@ query productSlug($slug: String!) {
     name
     slug
     img
-    rate
+    price
     stock
     vendor {
       firstName

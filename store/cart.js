@@ -23,7 +23,7 @@ const getters = {
   },
   checkCart: state => ({ pid, vid }) => {
     // Returns true when there is item in cart
-    var found = state.items.some(function(el) {
+    var found = state.items.some(function (el) {
       return el.pid === pid
     })
     return found
@@ -43,7 +43,10 @@ const actions = {
     try {
       commit('clearErr', null, { root: true })
       const data = (
-        await this.app.apolloProvider.defaultClient.query({ query: cart })
+        await this.app.apolloProvider.defaultClient.query({
+          query: cart,
+          fetchPolicy: 'no-cache'
+        })
       ).data.cart
       commit('setCart', data)
       return data

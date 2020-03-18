@@ -27,7 +27,7 @@ query orders {
       name
       img
       slug
-      rate
+      price
       qty
     }
     status

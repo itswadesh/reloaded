@@ -27,7 +27,7 @@ mutation capturePay($id: String!, $oid: String!) {
       slug
       qty
       img
-      rate
+      price
     }
     status
     delivery {

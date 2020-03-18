@@ -26,7 +26,7 @@ query order($id: ID!) {
       name
       img
       slug
-      rate
+      price
       qty
     }
     status

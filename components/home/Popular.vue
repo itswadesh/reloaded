@@ -21,7 +21,7 @@ export default {
           query: popular,
           fetchPolicy: 'no-cache'
         })
-      ).data.popular
+      ).data.popular.data
     } catch (e) {
       this.$store.commit('setErr', e)
     } finally {

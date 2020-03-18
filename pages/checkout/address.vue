@@ -11,11 +11,7 @@
           :key="a.id"
         >
           <label class="cursor-pointer w-full flex justify-between">
-            <Radio
-              v-model="selectedAddress"
-              @changed="addressChanged"
-              :value="a.id"
-            />
+            <Radio v-model="selectedAddress" @changed="addressChanged" :value="a.id" />
             <div class="flex-1 ml-2">
               <div class="font-semibold">{{ a.firstName }} {{ a.lastName }}</div>
               <div class="py-2 text-xs">
@@ -60,14 +56,10 @@
           :item="item"
           class="flex my-5 border-b border-dotted pb-2"
         >
-          <img
-            class="rounded w-12 h-12 object-cover mr-2"
-            v-lazy="item.img"
-            alt
-          />
+          <img class="rounded w-12 h-12 object-cover mr-2" v-lazy="item.img" alt />
           <div>
             <div class="text-lg">{{ item.name }}</div>
-            <div class="text-sm text-gray-600">{{ item.rate | currency }} * {{ item.qty }}</div>
+            <div class="text-sm text-gray-600">{{ item.price | currency }} * {{ item.qty }}</div>
           </div>
         </div>
         <CartSummaryCheckout :selectedAddress="selectedAddress" />
@@ -137,7 +129,7 @@ export default {
             })
             this.getAddress()
           } catch (e) {
-           this.$store.commit('setErr',e)
+            this.$store.commit('setErr', e)
           } finally {
             this.$store.commit('busy', false)
           }
@@ -155,8 +147,8 @@ export default {
         ).data.addresses
         this.selectedAddress = this.addresses && this.addresses[0].id
       } catch (e) {
-       this.$store.commit('setErr',e)
-      }finally{
+        this.$store.commit('setErr', e)
+      } finally {
         this.$store.commit('busy', false)
       }
     },

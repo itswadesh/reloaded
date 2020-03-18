@@ -5,7 +5,7 @@ mutation addToCart($qty: Int!, $pid: ID!, $replace: Boolean) {
       name
       slug
       qty
-      rate
+      price
       img
     }
     qty

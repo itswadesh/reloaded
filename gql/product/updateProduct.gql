@@ -3,7 +3,7 @@ mutation updateProduct(
   $name: String!
   $description: String
   $type: String
-  $rate: Int
+  $price: Int
   $stock: Int
   $img: String
   $time: String
@@ -13,7 +13,7 @@ mutation updateProduct(
     name: $name
     description: $description
     type: $type
-    rate: $rate
+    price: $price
     stock: $stock
     img: $img
     time: $time
@@ -23,7 +23,7 @@ mutation updateProduct(
     description
     slug
     type
-    rate
+    price
     stock
     img
     time

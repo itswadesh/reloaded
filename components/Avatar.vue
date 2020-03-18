@@ -1,54 +1,45 @@
 <template>
-  <div class="mt-4 bg-gray-100 mx-auto relative">
+  <div class="mt-4 mx-auto relative">
     <div v-if="$apollo.loading">Loading...</div>
-    <div
-      v-if="img"
-      v-lazy:background-image="`${img}`"
-      class="bg-cover bg-no-repeat h-64 relative"
-    >
-      <button
-        v-if="!multi"
-        type="button"
-        @click="removeImage(img)"
-        class="absolute right-0 top-0 w-8 h-8 rounded-full bg-gray-300 cursor-pointer hover:bg-gray-200"
-      >
-        <i class="fa fa-close" />
-      </button>
+    <div class="flex justify-center">
+      <span class="text-center h-20 w-20 p-2 text-gray-600 rounded-full bg-gray-200 inline-block">
+        <div
+          class="flex"
+          v-if="img"
+        >
+          <button
+            type="button"
+            @click="removeImage(img)"
+            class="absolute ml-12 top-0 w-8 h-8 rounded-full border cursor-pointer hover:bg-gray-200"
+          >
+            <i class="fa fa-close" />
+          </button>
+          <img
+            v-lazy="img"
+            alt
+            class="w-16 h-16 object-cover rounded-full"
+          />
+        </div>
+        <form
+          enctype="multipart/form-data"
+          novalidate
+          v-else
+        >
+          <div class="dropbox">
+            <input
+              multiple
+              type="file"
+              name="photos"
+              :disabled="isSaving"
+              @change="uploadPhoto"
+              accept="image/*"
+              class="input-file"
+            />
+            <p v-if="isInitial">+</p>
+          </div>
+        </form>
+      </span>
     </div>
-    <form
-      enctype="multipart/form-data"
-      novalidate
-      v-else
-    >
-      <div class="dropbox">
-        <input
-          multiple
-          type="file"
-          name="photos"
-          :disabled="isSaving"
-          @change="uploadPhoto"
-          accept="image/*"
-          class="input-file"
-        />
-        <p v-if="isInitial">
-          Drag {{name}} here to upload
-          <br />or click to browse
-        </p>
-        <p v-if="isSaving">Uploading {{ fileCount }} files...</p>
-        <p v-if="isSuccess">{{ fileCount }} files uploaded successfully...</p>
-        <p v-if="isFailed">
-          Upload failed. Please
-          <a @click="currentStatus=0">try again</a>
-        </p>
-      </div>
-    </form>
-    <!-- <div>
-      <h2 v-if="data">Good: {{data.goodField}}</h2>
-      <pre v-if="error">Bad: 
-        {{error}}
-        <span v-for="(e,ix) in error" :key="ix">{{e.message}}</span>
-      </pre>
-    </div> -->
   </div>
 </template>
 
@@ -63,10 +54,8 @@ export default {
   // name required for removing
   props: {
     image: { required: false, default: '' },
-    name: { type: String, required: false, default: 'banner' },
-    folder: { type: String, required: false, default: 'img' },
-    crunch: { type: Boolean, required: false, default: false },
-    multi: { type: Boolean, required: false, default: false }
+    name: { required: false, default: 'avatar' },
+    folder: { required: false, default: 'avatar' }
   },
   watch: {
     image() {
@@ -165,36 +154,14 @@ export default {
 </script>
 
 <style scoped>
-.dropbox {
-  outline: 2px dashed grey;
-  /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px;
-  /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
 .input-file {
   opacity: 0;
-  /* invisible but it's there! */
   width: 100%;
-  height: 200px;
   position: absolute;
   cursor: pointer;
 }
 
 .dropbox:hover {
   background: lightblue;
-  /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
 }
 </style>

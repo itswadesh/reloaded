@@ -1,6 +1,14 @@
 <template>
   <div class="w-full lg:w-2/4 mt-0 lg:mt-10 lg:pr-20 xs:w-full lg:px-10 px-2 headings">
-   
+    <div
+      v-if="$store.state.errors"
+      class="err"
+    >
+      <span
+        v-for="(e,ix) in $store.state.errors"
+        :key="ix"
+      >{{e.message}}</span>
+    </div>
     <div class="text-2xl font-bold py-6 text-center lg:text-left">
       <i
         class="fa fa-arrow-left mr-2 block lg:invisible"
@@ -81,7 +89,7 @@ export default {
         ).data
         this.addresses = res.addresses
       } catch (e) {
-        this.$store.commit('setErr',e)
+        this.$store.commit('setErr', e)
       } finally {
         this.$store.commit('busy', false)
       }

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 const cookieparser = process.server ? require('cookieparser') : undefined
 
 export const state = () => ({
+  showMenu: false,
   categories: [],
   settings: null,
   loading: false,
@@ -19,6 +20,9 @@ export const getters = {
   }
 }
 export const mutations = {
+  showMenu(state, payload) {
+    state.showMenu = payload
+  },
   categories(state, payload) {
     state.categories = payload
   },
@@ -49,9 +53,9 @@ export const mutations = {
     if (e.graphQLErrors) state.errors = e.graphQLErrors
     if (e.networkError)
       state.errors = e.networkError.result && e.networkError.result.errors
-    console.log('xxxxxxxxxxxxxxxxx', e)
-    if (state.errors && state.errors[0])
-      this.$toast.error(state.errors[0].message).goAway(5000)
+    console.log('err at store...', e.toString())
+    // if (state.errors && state.errors[0])
+    //   this.$toast.error(state.errors[0].message).goAway(5000)
   }
 }
 export const actions = {

@@ -4,7 +4,7 @@ query Products {
     slug
     name
     type
-    rate
+    price
     stock
     img
     time

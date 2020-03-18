@@ -5,7 +5,7 @@ mutation applyCoupon($code: String!) {
       name
       slug
       qty
-      rate
+      price
       img
     }
     qty

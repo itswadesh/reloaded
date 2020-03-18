@@ -1,7 +1,7 @@
 import { join } from 'path'
 require('dotenv').config()
 const { API_URL, head, HOST, HTTP_ENDPOINT, WS_ENDPOINT } = require('./config')
-const PROXY = process.env.API_URL || API_URL
+const PROXY = process.env.HTTP_ENDPOINT || API_URL
 
 export default {
   mode: 'spa',
@@ -59,8 +59,7 @@ export default {
   },
   proxy: {
     '/graphql': process.env.HTTP_ENDPOINT,
-    '/api/': PROXY,
-    '/auth': PROXY,
+    '/auth': process.env.HTTP_ENDPOINT,
     '/images': process.env.HTTP_ENDPOINT
   },
   generate: {
