@@ -50,22 +50,6 @@ export default {
         if (!!this.notify && obj.qty > 0) this.toast()
       } catch (e) {
         this.$store.commit('setErr', e)
-        this.$swal({
-          title: 'Replace cart items?',
-          text: e.data,
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, replace'
-        }).then(async result => {
-          if (result.value) {
-            try {
-              let o = { ...obj }
-              o.replace = true
-              await this.addToCart(o)
-              if (!!this.notify && obj.qty > 0) this.toast()
-            } catch (e) {}
-          }
-        })
       } finally {
         this.$store.commit('busy', false)
       }

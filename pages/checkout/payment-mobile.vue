@@ -162,9 +162,11 @@ export default {
           }
         },
         prefill: {
-          name: `${this.user.firstName} ${this.user.lastName}`,
-          email: this.user.email || 'support@misiki.in',
-          contact: this.user.phone
+          name: `${this.user && this.user.firstName} ${this.user &&
+            this.user.lastName}`,
+          phone: this.user && this.user.phone,
+          email: (this.user && this.user.email) || 'support@misiki.in',
+          contact: this.user && this.user.phone
         },
         notes: {
           address: 'note value'

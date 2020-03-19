@@ -16,7 +16,6 @@
         <h2 class="text-xs font-bold tracking-wide">{{ p.name }}</h2>
       </nuxt-link>
       <p>{{ p.description }}</p>
-      {{p.stock}}
       <div class="flex flex-wrap justify-between items-center my-2">
         <div class="font-bold">{{ p.price | currency }}</div>
         <div v-if="p.stock<1" class="text-red-500 text-xs">Out of stock</div>
