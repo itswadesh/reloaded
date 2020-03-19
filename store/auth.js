@@ -69,6 +69,7 @@ export const actions = {
       ).data.register
       if (data) {
         commit('setUser', {
+          phone: data.phone,
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
@@ -100,6 +101,7 @@ export const actions = {
       ).data.login
       if (data) {
         commit('setUser', {
+          phone: data.phone,
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
