@@ -6,7 +6,7 @@
       </nuxt-link>
       <h1 class="bg-white font-semibold text-xl p-2 flex-1 text-center">Orders</h1>
     </div>
-    <nuxt-link :to="`/my/orders/${o._id}`" v-for="o in orders" :key="o._id">
+    <nuxt-link :to="`/my/orders/${o.id}`" v-for="o in orders.data" :key="o.id">
       <div class="w-full bg-white shadow rounded hover:shadow-xl my-4">
         <div class="bg-gray-100 rounded p-3">
           <h1>Order # {{ o.orderNo }}</h1>
@@ -14,6 +14,7 @@
             Date:
             <span class="text-xs">{{ o.createdAt | date }}</span>
           </p>
+          <div>Total: {{o.amount.total | currency}}</div>
         </div>
         <hr />
         <div

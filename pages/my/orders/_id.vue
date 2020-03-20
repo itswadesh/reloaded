@@ -74,9 +74,9 @@
           <div>Tax & fees</div>
           <div>{{ order.amount.tax | currency }}</div>
         </div>
-        <div class="price-breakup">
-          <div>Offer</div>
-          <div>{{ order.amount.offer | currency }}</div>
+        <div class="price-breakup" v-if="order.amount.discount">
+          <div>Discount</div>
+          <div>{{ order.amount.discount | currency }}</div>
         </div>
         <div class="price-breakup">
           <div>Delivery</div>
@@ -99,7 +99,7 @@
         </div>
       </div>
       <div>
-        <HereMap ref="map" lat="18.732447" lng="82.829516" width="100" height="300px" />
+        <!-- <HereMap ref="map" lat="18.732447" lng="82.829516" width="100" height="300px" /> -->
       </div>
     </div>
   </div>
@@ -116,12 +116,14 @@ export default {
       order: null
     }
   },
-  async mounted() {
+  async created() {
     try {
+      const id = this.$route.params.id
       this.$store.commit('clearErr')
       this.order = (
         await this.$apollo.query({
           query: order,
+          variables: { id },
           fetchPolicy: 'no-cache'
         })
       ).data.order
@@ -132,7 +134,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.map.route('18.732447,82.829516', '18.708187,82.852198')
+    // this.$refs.map.route('18.732447,82.829516', '18.708187,82.852198')
   },
   components: {
     HereMap

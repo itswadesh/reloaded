@@ -1,6 +1,11 @@
 query order($id: ID!) {
   order(id: $id) {
     orderNo
+    payment{
+      method
+      amount
+      status
+    }
     amount {
       qty
       subtotal
