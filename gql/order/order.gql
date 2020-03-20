@@ -1,0 +1,39 @@
+query order($id: ID!) {
+  order(id: $id) {
+    orderNo
+    payment{
+      method
+      amount
+      status
+    }
+    amount {
+      qty
+      subtotal
+      tax
+      discount
+      total
+      shipping
+    }
+    address {
+      firstName
+      lastName
+      address
+      coords {
+        lat
+        lng
+      }
+    }
+    vendor {
+      restaurant
+    }
+    items {
+      pid
+      name
+      img
+      slug
+      price
+      qty
+    }
+    status
+  }
+}

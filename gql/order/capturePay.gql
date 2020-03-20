@@ -1,0 +1,45 @@
+mutation capturePay($id: String!, $oid: String!) {
+  capturePay(payment_id: $id, oid: $oid) {
+    id
+    user {
+      firstName
+      lastName
+    }
+    orderNo
+    amount {
+      total
+      subtotal
+      shipping
+      qty
+      tax
+    }
+    address {
+      firstName
+      lastName
+      address
+    }
+    vendor {
+      restaurant
+    }
+    items {
+      pid
+      name
+      slug
+      qty
+      img
+      price
+    }
+    status
+    delivery {
+      otp
+    }
+    comment
+    cancellationReason
+    cancellationComment
+    returnComment
+    payment {
+      id
+    }
+    reviewed
+  }
+}

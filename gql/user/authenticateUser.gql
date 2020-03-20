@@ -1,0 +1,12 @@
+# mutation authenticateUser($email:String!,$password:String!){
+#     authenticateUser(email: $email, password: $password) {
+#         token
+#         id
+#     }
+# }
+
+mutation SignIn {
+  signIn(email: "alex@gmail.com", password: "Secret12") {
+    id
+  }
+}

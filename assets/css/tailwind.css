@@ -36,6 +36,9 @@ select:-webkit-autofill:focus {
 .page-leave-to {
   opacity: 0;
 }
+.err{
+  @apply px-2 text-center bg-red-200
+}
 img[lazy="loaded"] {
   animation-name: zoom;
   animation-duration: 0.8s;
@@ -43,6 +46,7 @@ img[lazy="loaded"] {
 img[lazy="loading"] {
   filter: blur(10px);
 }
+
 @keyframes zoom {
   0% {
     transform: scale(0);

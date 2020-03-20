@@ -3,6 +3,9 @@
     style="min-height:71.8vh"
     class="antialiased "
   >
+  <div v-if="$store.state.errors" class="err">
+      <span v-for="(e,ix) in $store.state.errors" :key="ix">{{e.message}}</span>
+    </div>
     <support-header />
     <nuxt />
     <new-footer />

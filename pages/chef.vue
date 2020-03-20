@@ -80,9 +80,7 @@ export default {
     Heading,
     Textbox
   },
-  fetch({ store, redirect }) {
-    if (!(store.state.auth || {}).user) return redirect("/login?return=/chef");
-  },
+  middleware: ['isAuth'],
   async asyncData({ store }) {
     let profile = { address: {} };
     let userDetails = await store.dispatch("auth/fetch");

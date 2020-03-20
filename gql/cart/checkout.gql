@@ -1,0 +1,16 @@
+mutation checkout($address: String, $paymentMethod: String) {
+  checkout(address: $address, paymentMethod: $paymentMethod) {
+    id
+    orderNo
+    otp
+    qty
+    amount
+    payment_order_id
+    delivery
+    status
+    items
+    address
+    createdAt
+    updatedAt
+  }
+}

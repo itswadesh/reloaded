@@ -1,6 +1,7 @@
 <template>
   <div>
     <Heading title="Offers" />
+    
     <div class="bg-gray-900 min-h-screen">
       <div class="flex flex-wrap">
         <Coupon
@@ -42,27 +43,35 @@
 </template>
 
 <script>
-import Heading from "~/components/Heading";
-import Coupon from "~/components/Coupon";
-import StickyFooter from "~/components/footer/StickyFooter";
+import Heading from '~/components/Heading'
+import Coupon from '~/components/Coupon'
+import StickyFooter from '~/components/footer/StickyFooter'
+import coupons from '~/gql/cart/coupons.gql'
 
 export default {
   components: { Heading, Coupon, StickyFooter },
   data() {
     return {
       coupons: []
-    };
+    }
   },
   async created() {
     try {
-      this.$store.commit("busy", true);
-      this.coupons = await this.$axios.$get("api/coupons");
+      this.$store.commit('busy', true)
+      this.$store.commit('clearErr')
+      this.coupons = (
+        await this.$apollo.query({
+          query: coupons,
+          fetchPolicy: 'no-cache'
+        })
+      ).data.coupons
     } catch (e) {
+      this.$store.commit('setErr',e)
     } finally {
-      this.$store.commit("busy", false);
+      this.$store.commit('busy', false)
     }
   }
-};
+}
 </script>
 
 <style></style>

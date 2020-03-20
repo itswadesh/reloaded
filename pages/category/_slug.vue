@@ -20,27 +20,35 @@
 </template>
 
 <script>
-import Header from "~/components/Header";
-import Heading from "~/components/Heading";
-import Footer from "~/components/footer/Footer";
-import Banner from "~/components/Banner";
-import Product from "~/components/Product";
-import ListCard from "~/components/ListCard";
-import Categories from "~/components/Categories";
-import StickyFooter from "~/components/footer/StickyFooter";
+import Header from '~/components/Header'
+import Heading from '~/components/Heading'
+import Footer from '~/components/footer/Footer'
+import Banner from '~/components/Banner'
+import Product from '~/components/Product'
+import ListCard from '~/components/ListCard'
+import Categories from '~/components/Categories'
+import StickyFooter from '~/components/footer/StickyFooter'
+import products from '~/gql/product/products.gql'
 
 export default {
   data() {
     return {
       products: []
-    };
+    }
   },
   async created() {
     try {
-      const p = await this.$axios.$get("api/foods");
-      this.products = p.data;
+      this.$store.commit('clearErr')
+      this.products = (
+        await this.$apollo.query({
+          query: products,
+          fetchPolicy: 'no-cache'
+        })
+      ).data.products
     } catch (e) {
-      this.products = [];
+      this.products = []
+    }finally{
+      this.$store.commit('busy', false)
     }
   },
   components: {
@@ -53,5 +61,5 @@ export default {
     ListCard,
     StickyFooter
   }
-};
+}
 </script>

@@ -1,136 +1,83 @@
-import Vue from "vue";
-import Vuex from "vuex";
-Vue.use(Vuex);
-const cookieparser = process.server ? require("cookieparser") : undefined;
+import settingQ from '~/gql/settings.gql'
+
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+const cookieparser = process.server ? require('cookieparser') : undefined
 
 export const state = () => ({
+  showMenu: false,
   categories: [],
-  settings: {},
+  settings: null,
   loading: false,
   error: {},
+  errors: [],
   isError: null // Only required to inform App.vue that an error is there hence initiate the snackbar
-});
+})
 export const getters = {
   loading(state) {
-    return state.loading;
+    return state.loading
   }
-};
+}
 export const mutations = {
+  showMenu(state, payload) {
+    state.showMenu = payload
+  },
   categories(state, payload) {
-    state.categories = payload;
+    state.categories = payload
   },
   settings(state, payload) {
-    state.settings = payload;
+    state.settings = payload
   },
   busy(state, payload) {
-    state.loading = payload;
+    state.loading = payload
   },
   success(state, msg) {
-    this.$toast.success(msg).goAway(2000);
+    this.$toast.success(msg).goAway(2000)
   },
   warning(state, msg) {
-    this.$toast.warning(msg).goAway(5000);
+    this.$toast.warning(msg).goAway(5000)
   },
   info(state, msg) {
-    this.$toast.info(msg).goAway(5000);
+    this.$toast.info(msg).goAway(5000)
   },
-  clearError(state) {
-    state.error = {};
+  clearErr(state) {
+    state.errors = []
+    state.loading = true
   },
   setGuest(state, guestId) {
-    state.guestId = guestId;
+    state.guestId = guestId
   },
-  setErr(state, err) {
-    if (err && err.response && err.response.data) {
-      err = err.response.data;
-    } else if (err && err.response) {
-      err = err.response;
-    }
-    if (this.$toast)
-      // On server it will be undefined. Hence required
-      this.$toast.error(err).goAway(5000);
+  setErr(state, e) {
+    state.loading = false
+    if (e.graphQLErrors) state.errors = e.graphQLErrors
+    if (e.networkError)
+      state.errors = e.networkError.result && e.networkError.result.errors
+    console.log('err at store...', e.toString())
+    // if (state.errors && state.errors[0])
+    //   this.$toast.error(state.errors[0].message).goAway(5000)
   }
-};
+}
 export const actions = {
-  // async nuxtServerInit({ state, commit, dispatch }, { req }) {
-  //   commit("setGuest", this.$cookies.get("guest")); // Required only at server
-  //   // Categories
-  //   // try {
-  //   //   let categories = await this.$axios.$get("api/categories/megamenu");
-  //   //   commit("categories", categories.data);
-  //   // } catch (err) {
-  //   //   commit("setErr", err);
-  //   // }
-  //   // Settings
-  //   try {
-  //     let settings = await this.$axios.$get("settings");
-  //     commit("settings", settings);
-  //   } catch (err) {
-  //     commit("setErr", err);
-  //   }
-  //   // Authorization
-  //   let token = null;
-  //   if (req.headers.cookie) {
-  //     const parsed = cookieparser.parse(req.headers.cookie);
-  //     try {
-  //       token = parsed.Authorization;
-  //     } catch (err) {
-  //       // No valid cookie found
-  //     }
-  //   }
-  //   commit("auth/setToken", token);
-  //   // let auth = this.$cookies.get('Authorization')
-  //   if (token) {
-  //     this.$axios.setToken(token, "Bearer");
-  //     try {
-  //       await dispatch("auth/fetch");
-  //     } catch (error) {
-  //       this.$axios.setToken(null);
-  //     }
-  //   } else {
-  //     this.$axios.setToken(null);
-  //   }
-  //   try {
-  //     await dispatch("cart/fetch");
-  //   } catch (e) { }
-  // },
+  async fetch({ commit, state, getters }) {
+    try {
+      commit('clearErr')
+      commit('busy', true)
+      const settings = (
+        await this.app.apolloProvider.defaultClient.query({
+          query: settingQ
+        })
+      ).data.settings
+      await commit('settings', settings)
+    } catch (e) {
+      commit('setErr', e)
+    } finally {
+      commit('busy', false)
+    }
+  },
   async nuxtClientInit({ state, commit, dispatch }, context) {
-
-    // Authorization
-    let token = this.$cookies.get("Authorization")
-    commit("auth/setToken", token);
-    if (token) {
-      this.$axios.setToken(token, "Bearer");
-      try {
-        await dispatch("auth/fetch");
-      } catch (error) {
-        this.$axios.setToken(null);
-      }
-    } else {
-      this.$axios.setToken(null);
-    }
-
-    commit("setGuest", this.$cookies.get("guest")); // Required only at server
-
-    // Categories
-    try {
-      let categories = await this.$axios.$get("api/categories/megamenu");
-      commit("categories", categories.data);
-    } catch (err) {
-      commit("setErr", err);
-    }
-
-    // Settings
-    try {
-      let settings = await this.$axios.$get("api/settings");
-      commit("settings", settings);
-    } catch (err) {
-      commit("setErr", err);
-    }
-
-    try {
-      await dispatch("cart/fetch");
-    } catch (e) { }
-
+    await dispatch('fetch')
+    await dispatch('auth/fetch')
+    await dispatch('cart/fetch')
   }
-};
+}

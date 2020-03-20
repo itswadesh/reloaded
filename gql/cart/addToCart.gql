@@ -1,0 +1,28 @@
+mutation addToCart($qty: Int!, $pid: ID!, $replace: Boolean) {
+  addToCart(qty: $qty, pid: $pid, replace: $replace) {
+    items {
+      pid
+      name
+      slug
+      qty
+      price
+      img
+    }
+    qty
+    subtotal
+    discount {
+      code
+      value
+      text
+    }
+    shipping {
+      charge
+    }
+    total
+    tax {
+      cgst
+      sgst
+      igst
+    }
+  }
+}

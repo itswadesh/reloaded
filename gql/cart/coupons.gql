@@ -1,0 +1,12 @@
+query coupons {
+  coupons {
+    type
+    code
+    value
+    info
+    msg
+    text
+    terms
+    color
+  }
+}

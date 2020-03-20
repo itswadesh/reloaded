@@ -1,0 +1,47 @@
+mutation razorpay($address: AddressInput!) {
+  razorpay(address: $address) {
+    id
+  }
+}
+# mutation razorpay(
+#   $id: ID
+#   $email: String
+#   $firstName: String
+#   $lastName: String
+#   $address: String
+#   $town: String
+#   $city: String
+#   $country: String
+#   $state: String
+#   $coords: Geo
+#   $zip: Int
+#   $phone: String
+# ) {
+#   razorpay(
+#     id: $id
+#     email: $email
+#     firstName: $firstName
+#     lastName: $lastName
+#     address: $address
+#     town: $town
+#     city: $city
+#     country: $country
+#     state: $state
+#     coords: $coords
+#     zip: $zip
+#     phone: $phone
+#   ) {
+#     id
+#     email
+#     firstName
+#     lastName
+#     address
+#     town
+#     city
+#     country
+#     state
+#     coords
+#     zip
+#     phone
+#   }
+# }

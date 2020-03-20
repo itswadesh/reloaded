@@ -2,8 +2,8 @@ const shell = require('shelljs');
 require('dotenv').config();
 
 // Start Config
-const PM2_NAME = 'lwww'
-const REMOTE_DIR = '/var/www/misikiv2/www'
+const PM2_NAME = 'mbeta'
+const REMOTE_DIR = '/var/www/misiki/beta'
 const REMOTE_HOST = '139.59.42.129'
 const REMOTE_USER = 'root'
 const PRIVATE_KEY = process.env.LIVE_KEY

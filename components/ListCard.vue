@@ -26,17 +26,17 @@
             class="object-cover rounded-full h-8 w-8 absolute top-0 right-0 mt-2 mr-2"
           />
         </nuxt-link>
-        <nuxt-link :to="`/${p.slug}`" class="font-bold tracking-wide">{{
+        <nuxt-link :to="`/${p.slug}`" class="font-bold tracking-wide">
+          {{
           p.name
-        }}</nuxt-link>
+          }}
+        </nuxt-link>
         <div class="flex justify-between">
           <div class="text-gray-500 tracking-widest text-sm">
             <i class="fa fa-map-marker"></i>
             {{ p.vendor.info.restaurant }}
           </div>
-          <div class="font-black text-xl text-gray-700">
-            {{ p.rate | currency }}
-          </div>
+          <div class="font-black text-xl text-gray-700">{{ p.price | currency }}</div>
         </div>
         <div class="flex justify-between items-center">
           <div class="flex items-center">
@@ -45,9 +45,7 @@
             <!-- <span class="font-medium text-sm text-black mx-1">4.6</!-->
             <!-- <div class="font-medium text-sm text-gray-500">(rating/review)</div> -->
           </div>
-          <div class="bg-orange-500 rounded-full text-white text-xs px-3">
-            Free Delivery
-          </div>
+          <div class="bg-orange-500 rounded-full text-white text-xs px-3">Free Delivery</div>
         </div>
       </div>
     </div>
@@ -55,12 +53,12 @@
 </template>
 
 <script>
-import Ratingcircle from "./Ratingcircle";
+import Ratingcircle from './Ratingcircle'
 export default {
-  props: ["p"],
+  props: ['p'],
   methods: {},
   components: { Ratingcircle }
-};
+}
 </script>
 
 <style></style>

@@ -1,0 +1,89 @@
+query bestSellers {
+  bestSellers {
+    t {
+      count
+      amount
+      _id {
+        date
+        img
+        name
+        slug
+        price
+        updatedAt
+        restaurant
+        time
+        type
+        ratings
+        reviews
+      }
+    }
+    t1 {
+      count
+      amount
+      _id {
+        date
+        img
+        name
+        slug
+        price
+        updatedAt
+        restaurant
+        time
+        type
+        ratings
+        reviews
+      }
+    }
+    t2 {
+      count
+      amount
+      _id {
+        date
+        img
+        name
+        slug
+        price
+        updatedAt
+        restaurant
+        time
+        type
+        ratings
+        reviews
+      }
+    }
+    t3 {
+      count
+      amount
+      _id {
+        date
+        img
+        name
+        slug
+        price
+        updatedAt
+        restaurant
+        time
+        type
+        ratings
+        reviews
+      }
+    }
+    t4 {
+      count
+      amount
+      _id {
+        date
+        img
+        name
+        slug
+        price
+        updatedAt
+        restaurant
+        time
+        type
+        ratings
+        reviews
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@
   <div>
     <!-- https://codepen.io/adamwathan/pen/KKKqKLB -->
     <div
+      v-if="user"
       class="text-center lg:w-1/5 lg:mt-10 bg-white shadow leading-loose w-full p-10 border-b border-gray-200"
     >
       <span
@@ -9,7 +10,7 @@
       >{{user.firstName | first}}</span>
       <br />
       <span class="text-lg">{{user.firstName}}</span>
-      <span class="text-sm text-gray-500">{{user.email}}</span>
+      <span class="text-sm text-gray-500">{{user.phone}}</span>
     </div>
     <div class="antialiased bg-gray-200 min-h-screen p-8">
       <div class="flex justify-center">
@@ -134,28 +135,45 @@
 </template>
 
 <script>
+import signOut from '~/gql/user/signOut.gql'
+import me from '~/gql/user/me.gql'
 export default {
   data() {
     return {
-      selected: 0
-    };
+      selected: 0,
+    }
   },
   computed: {
     user() {
-      return (this.$store.state.auth || {}).user || {};
+      return (this.$store.state.auth || {}).user || {}
     }
+  },
+  async created() {
+    // try {
+    //   const res = (
+    //     await this.$apollo.query({ query: me, fetchPolicy: 'no-cache' })
+    //   ).data
+    //   if (res) {
+    //     this.user = res.me
+    //   } else {
+    //     this.user = {}
+    //   }
+    // } catch (e) {
+    //   this.user = {}
+    // }
   },
   methods: {
     select(i, url) {
-      this.selected = i;
-      this.$router.push(url);
+      this.selected = i
+      this.$router.push(url)
     },
     async logout() {
-      await this.$store.dispatch("auth/logout");
-      this.$router.push("/");
+      this.$store.commit('clearErr')
+      await this.$apollo.mutate({ mutation: signOut, fetchPolicy: 'no-cache' })
+      this.$router.push('/')
     }
   }
-};
+}
 </script>
 
 <style scoped>

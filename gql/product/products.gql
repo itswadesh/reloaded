@@ -1,0 +1,23 @@
+query Products {
+  products {
+    id
+    slug
+    name
+    type
+    price
+    stock
+    img
+    time
+    vendor {
+      id
+      firstName
+      lastName
+      phone
+      email
+      info {
+        restaurant
+        kitchenPhotos
+      }
+    }
+  }
+}

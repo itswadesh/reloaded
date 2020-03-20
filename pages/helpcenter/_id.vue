@@ -47,7 +47,7 @@ export default {
             },
             {
               question: "Does Litekart deliver internationally?",
-              answer: "Not , we are not shipping outside Pakistan.",
+              answer: "Not , we are not shipping outside India.",
               active: false
             },
             {

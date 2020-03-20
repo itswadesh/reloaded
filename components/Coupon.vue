@@ -1,5 +1,8 @@
 <template>
-  <div class="ticket rounded-lg w-full lg:w-1/3 text-white my-2 mx-2" :class="color">
+  <div
+    class="ticket rounded-lg w-full lg:w-1/3 text-white my-2 mx-2"
+    :class="color"
+  >
     <div class="ml-8 mt-2 mb-2 flex items-center">
       <div class="w-2/3">
         <h2 class="text-4xl font-bold">{{ code }}</h2>
@@ -20,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex'
 export default {
   props: {
     color: String,
@@ -29,13 +32,13 @@ export default {
     terms: String
   },
   methods: {
-    ...mapActions({ applyCoupon: "cart/applyCoupon" }),
+    ...mapActions({ applyCoupon: 'cart/applyCoupon' }),
     applyOffer(code) {
-      this.applyCoupon(code);
-      this.$router.push("/cart");
+      this.applyCoupon({ code })
+      this.$router.push('/cart')
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -64,7 +67,7 @@ export default {
 }
 .ticket:before,
 .ticket:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 1.9em;
   top: calc(1.9em - 1px);

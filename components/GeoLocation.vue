@@ -5,7 +5,6 @@
     <div v-if="gettingLocation">
       <i>Getting your location...</i>
     </div>
-
     <div
       v-if="geo"
       class="mb-16 align-middle text-center"

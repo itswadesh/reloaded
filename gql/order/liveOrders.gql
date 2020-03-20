@@ -1,0 +1,4 @@
+query liveOrders{
+    orderNo
+    otp
+}

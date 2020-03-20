@@ -3,7 +3,7 @@
     <div class="floating-form">
       <div class="floating-label">
         <input
-          class="floating-input bg-gray-100 border-b w-full rounded hover:bg-gray-300 focus:outline-none focus:border-pink-500"
+          class="floating-input bg-gray-100 w-full rounded hover:cursor-pointer focus:outline-none shadow rounded"
           :class="cls"
           placeholder=" "
           v-bind="$attrs"
@@ -24,11 +24,11 @@
 export default {
   props: {
     label: { type: String },
-    type: { type: String, default: "text" },
+    type: { type: String, default: 'text' },
     value: { type: [Number, String] },
     cls: { type: String }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -79,11 +79,6 @@ input:valid + label {
   border: none;
 }
 
-.floating-input:focus {
-  outline: none;
-  border-bottom: 2px solid #da1c5f;
-}
-
 label {
   color: #999;
   font-size: 16px;
@@ -101,13 +96,13 @@ label {
 .floating-input:not(:placeholder-shown) ~ label {
   top: -1px;
   font-size: 14px;
-  color: #fb6340;
+  color: #02baf2;
 }
 
 .floating-select:focus ~ label,
-.floating-select:not([value=""]):valid ~ label {
+.floating-select:not([value='']):valid ~ label {
   top: -18px;
   font-size: 14px;
-  color: #fb6340;
+  color: #02baf2;
 }
 </style>

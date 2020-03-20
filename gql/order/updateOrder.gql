@@ -1,0 +1,16 @@
+mutation updateOrder($id:ID!,$status:String) {
+  updateOrder(id:$id) {
+    id
+    orderNo
+    otp
+    qty
+    amount
+    payment_order_id
+    delivery
+    status
+    items
+    address
+    createdAt
+    updatedAt
+  }
+}

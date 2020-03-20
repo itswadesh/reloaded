@@ -1,0 +1,41 @@
+query orders {
+  orders {
+    count
+    page
+    pageSize
+    data {
+      id
+      orderNo
+      createdAt
+      amount {
+        qty
+        subtotal
+        tax
+        discount
+        total
+        shipping
+      }
+      address {
+        firstName
+        lastName
+        address
+        coords {
+          lat
+          lng
+        }
+      }
+      vendor {
+        restaurant
+      }
+      items {
+        pid
+        name
+        img
+        slug
+        price
+        qty
+      }
+      status
+    }
+  }
+}

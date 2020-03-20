@@ -1,0 +1,6 @@
+mutation verifyOtp($phone:String!, $otp:String!){
+  verifyOtp(phone: $phone, otp: $otp) {
+    id
+    phone
+  }
+}
