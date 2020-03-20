@@ -32,9 +32,10 @@ export default {
     '@nuxtjs/dotenv',
     // "~/modules/routes",
     '@nuxtjs/robots',
+    '@nuxtjs/axios',
     '@nuxtjs/font-awesome',
     '@nuxtjs/pwa',
-    // "@nuxtjs/onesignal",
+    // "@nuxtjs/onesignal",4
     '@nuxtjs/toast',
     'cookie-universal-nuxt'
   ],
@@ -43,7 +44,7 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: '/graphql',
-        // wsEndpoint: process.env.WS_ENDPOINT
+        wsEndpoint: process.env.WS_ENDPOINT
       }
     },
     defaultOptions: {
@@ -56,6 +57,10 @@ export default {
     theme: 'bubble',
     position: 'top-center',
     singleton: true
+  },
+  axios: {
+    proxy: true,
+    credentials: true
   },
   proxy: {
     '/graphql': process.env.HTTP_ENDPOINT,
