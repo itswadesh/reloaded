@@ -1,8 +1,7 @@
 import { join } from 'path'
 require('dotenv').config()
-const { API_URL, head, HOST, HTTP_ENDPOINT, WS_ENDPOINT } = require('./config')
-const PROXY = process.env.HTTP_ENDPOINT || API_URL
-
+const { head } = require('./config')
+const { HTTP_ENDPOINT, WS_ENDPOINT } = process.env
 export default {
   mode: 'spa',
   head,
@@ -14,14 +13,13 @@ export default {
     { src: '~/plugins/lazy.js', mode: 'client' },
     { src: '~/plugins/carousel.js', mode: 'client' },
     { src: '~/plugins/swal.js', mode: 'client' },
-    { src: '~/plugins/social.js', ssr: false },
-    { src: '~/plugins/scroll.js', ssr: false },
+    { src: '~/plugins/social.js', mode: "client" },
+    { src: '~/plugins/scroll.js', mode: "client" },
     { src: '~/plugins/vue-slider-component', mode: 'client' } // Price slider
   ],
   buildModules: ['@nuxtjs/tailwindcss'],
   modules: [
     '@nuxtjs/apollo',
-    '@nuxtjs/proxy',
     [
       'vue-sweetalert2/nuxt',
       {
@@ -32,7 +30,7 @@ export default {
     '@nuxtjs/dotenv',
     // "~/modules/routes",
     '@nuxtjs/robots',
-    '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/font-awesome',
     '@nuxtjs/pwa',
     // "@nuxtjs/onesignal",4
@@ -44,7 +42,7 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: '/graphql',
-        wsEndpoint: process.env.WS_ENDPOINT
+        wsEndpoint: WS_ENDPOINT
       }
     },
     defaultOptions: {
@@ -58,14 +56,10 @@ export default {
     position: 'top-center',
     singleton: true
   },
-  axios: {
-    proxy: true,
-    credentials: true
-  },
   proxy: {
-    '/graphql': process.env.HTTP_ENDPOINT,
-    '/auth': process.env.HTTP_ENDPOINT,
-    '/images': process.env.HTTP_ENDPOINT
+    '/graphql': HTTP_ENDPOINT,
+    '/auth': HTTP_ENDPOINT,
+    '/images': HTTP_ENDPOINT
   },
   generate: {
     dir: 'dist',
