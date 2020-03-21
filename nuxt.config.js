@@ -1,6 +1,6 @@
 import { join } from 'path'
 require('dotenv').config()
-const { head } = require('./config')
+const { head } = require("./config")
 const { HTTP_ENDPOINT, WS_ENDPOINT } = process.env
 export default {
   mode: 'spa',

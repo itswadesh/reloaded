@@ -18,3 +18,5 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
+
+now secrets add http_endpoint https://apiv2.misiki.in

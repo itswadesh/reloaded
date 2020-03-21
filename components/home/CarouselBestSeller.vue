@@ -13,7 +13,7 @@
 
 <script>
 import { Carousel, Slide } from 'vue-carousel'
-import Product from '~/components/ProductBestSeller.vue'
+import Product from '~/components/ProductBestseller.vue'
 
 export default {
   props: ['title', 'products'],

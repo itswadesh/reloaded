@@ -1,0 +1,17 @@
+{
+    "name": "misiki-reloaded",
+    "version": 2,
+    "build": {
+        "env": {
+            "HTTP_ENDPOINT": "@http_endpoint",
+            "WS_ENDPOINT": "@http_endpoint"
+        }
+    },
+    "builds": [
+        {
+            "src": "nuxt.config.js",
+            "use": "@nuxtjs/now-builder",
+            "config": {}
+        }
+    ]
+}
