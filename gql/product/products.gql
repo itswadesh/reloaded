@@ -1,23 +1,40 @@
-query Products {
-  products {
-    id
-    slug
-    name
-    type
-    price
-    stock
-    img
-    time
-    vendor {
+query products(
+  $page: Int
+  $skip: Int
+  $limit: Int
+  $search: String
+  $sort: String
+) {
+  products(
+    page: $page
+    skip: $skip
+    limit: $limit
+    search: $search
+    sort: $sort
+  ) {
+    data {
       id
-      firstName
-      lastName
-      phone
-      email
-      info {
-        restaurant
-        kitchenPhotos
+      slug
+      name
+      type
+      price
+      stock
+      img
+      time
+      vendor {
+        id
+        firstName
+        lastName
+        phone
+        email
+        info {
+          restaurant
+          kitchenPhotos
+        }
       }
     }
+    count
+    pageSize
+    page
   }
 }

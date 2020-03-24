@@ -1,0 +1,26 @@
+mutation saveBanner(
+  $id: String!
+  $link: String
+  $heading: String
+  $img: String!
+  $type: String
+  $active: Boolean
+) {
+  saveBanner(
+    id: $id
+    link: $link
+    heading: $heading
+    img: $img
+    type: $type
+    active: $active
+  ) {
+    id
+    link
+    heading
+    img
+    type
+    active
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,36 @@
+mutation saveReview(
+  $id: ID!
+  $product: ID
+  $variant: ID
+  $user: ID
+  $rating: Int
+  $message: String
+  $active: Boolean
+) {
+  saveReview(
+    id: $id
+    product: $product
+    variant: $variant
+    user: $user
+    rating: $rating
+    message: $message
+    active: $active
+  ) {
+    id
+    product{
+        id
+        name
+        slug
+        img
+        type
+      }
+      user{
+        firstName
+        lastName
+        phone
+      }
+    rating
+    message
+    active
+  }
+}

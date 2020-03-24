@@ -1,0 +1,25 @@
+query reviews($page: Int, $search: String, $limit: Int, $sort: String) {
+  reviews(page: $page, search: $search, limit: $limit, sort: $sort) {
+    count
+    page
+    pageSize
+    data {
+      id
+      product{
+        id
+        name
+        slug
+        img
+        type
+      }
+      user{
+        firstName
+        lastName
+        phone
+      }
+      rating
+      message
+      active
+    }
+  }
+}

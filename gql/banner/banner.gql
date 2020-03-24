@@ -1,0 +1,12 @@
+query banner($id: ID!) {
+  banner(id: $id) {
+    id
+    link
+    heading
+    img
+    type
+    active
+    createdAt
+    updatedAt
+  }
+}

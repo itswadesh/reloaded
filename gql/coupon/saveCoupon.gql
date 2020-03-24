@@ -1,0 +1,50 @@
+mutation saveCoupon(
+  $id: ID!
+  $code: String!
+  $value: Float!
+  $type: String
+  $info: String
+  $msg: String
+  $text: String
+  $terms: String
+  $color: String
+  $minimumCartValue: Float
+  $maxAmount: Float
+  $from: String
+  $to: String
+  $active: Boolean
+) {
+  saveCoupon(
+    id: $id
+    code: $code
+    value: $value
+    type: $type
+    info: $info
+    msg: $msg
+    text: $text
+    terms: $terms
+    color: $color
+    minimumCartValue: $minimumCartValue
+    maxAmount: $maxAmount
+    from: $from
+    to: $to
+    active: $active
+  ) {
+    id
+    code
+    value
+    type
+    info
+    msg
+    text
+    terms
+    color
+    minimumCartValue
+    maxAmount
+    from
+    to
+    active
+    createdAt
+    updatedAt
+  }
+}
