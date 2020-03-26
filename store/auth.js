@@ -1,6 +1,8 @@
 import { tokenExpiry, userRoles } from '~/config'
 import updateProfile from '~/gql/user/updateProfile.gql'
 import me from '~/gql/user/me.gql'
+import signOut from '~/gql/user/signOut.gql'
+import verifyOtp from '~/gql/user/verifyOtp.gql'
 
 export const state = () => ({
   user: null,
@@ -54,6 +56,38 @@ export const actions = {
       return data
     } catch (e) {
       // commit('setErr', e, { root: true })
+    } finally {
+      commit('busy', false, { root: true })
+    }
+  },
+  async verifyOtp({ commit, rootState }, variables) {
+    try {
+      commit('clearErr', null, { root: true })
+      commit('busy', true, { root: true })
+      const data = (await this.app.apolloProvider.defaultClient.mutate({
+        mutation: verifyOtp, variables, fetchPolicy: 'no-cache'
+      })).data.verifyOtp
+      commit('setUser', data)
+      this.app.router.push('/my')
+      return
+    } catch (e) {
+      commit('setErr', e, { root: true })
+    } finally {
+      commit('busy', false, { root: true })
+    }
+  },
+  async logout({ commit, rootState }, variables) {
+    try {
+      commit('clearErr', null, { root: true })
+      const logout = (await this.app.apolloProvider.defaultClient.mutate({ mutation: signOut, fetchPolicy: 'no-cache' })).data.signOut
+      if (logout) {
+        commit('clearUser')
+        this.app.router.push('/')
+      }
+      else
+        commit('setErr', 'Logout error', { root: true })
+    }
+    catch (e) {
     } finally {
       commit('busy', false, { root: true })
     }

@@ -1,17 +1,12 @@
 import me from '~/gql/user/me.gql'
-export default async function({ app, error, store }) {
+export default async function ({ app, error, store, redirect }) {
   const client = app.apolloProvider.defaultClient
   try {
     store.commit('clearErr')
     store.commit('busy', true)
-    const res = await client.query({ query: me })
-    if (!res) {
-      error({ statusCode: 403, message: 'You are not allowed to see this' })
-      app.router.push('/login')
-    }
+    const res = (await client.query({ query: me, fetchPolicy: 'no-cache' })).data.me
   } catch (e) {
-    error({ statusCode: 403, message: e.toString() })
-    app.router.push('/login')
+    redirect('/login')
   } finally {
     store.commit('busy', false)
   }

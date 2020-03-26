@@ -24,9 +24,6 @@ query orders {
           lng
         }
       }
-      vendor {
-        restaurant
-      }
       items {
         pid
         name
@@ -34,8 +31,11 @@ query orders {
         slug
         price
         qty
+        status
+        vendor {
+          restaurant
+        }
       }
-      status
     }
   }
 }

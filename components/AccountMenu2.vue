@@ -135,16 +135,15 @@
 </template>
 
 <script>
-import signOut from '~/gql/user/signOut.gql'
-import me from '~/gql/user/me.gql'
 export default {
   data() {
     return {
-      selected: 0,
+      selected: 0
     }
   },
   computed: {
     user() {
+      console.log('xxxxxxxxxxxxxxxxx', this.$store.state.auth.user)
       return (this.$store.state.auth || {}).user || {}
     }
   },
@@ -168,9 +167,7 @@ export default {
       this.$router.push(url)
     },
     async logout() {
-      this.$store.commit('clearErr')
-      await this.$apollo.mutate({ mutation: signOut, fetchPolicy: 'no-cache' })
-      this.$router.push('/')
+      this.$store.dispatch('auth/logout')
     }
   }
 }

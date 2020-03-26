@@ -1,17 +1,19 @@
-export const API_URL = 'https://apiv2.misiki.in'
-export const tokenExpiry = 60 * 60 * 60 * 365 // Login validity (1 year)
-export const locationExpiry = 60 * 60 * 60 * 365 * 5 // Location validity (5 years)
-export const typingTimeout = 0 // After this delay the search api will be fired
-export const loadingTimeout = 500 // Loading indicator will be shown after this delay
-export const userRoles = ['user', 'vendor', 'manager', 'admin'] // This should be in ascending order of authority. e.g. In this case user will not have access to any other role, where as admin will have the role of user+vendor+manager+admin
-export const currency = { symbol: '₹', code: 'INR' }
-export const TITLE = 'Online Shopping for Fashion in India'
-export const DESCRIPTION =
-  'litekart.in offer Online Women Shopping in India. Huge Collection of Jewellery, Handbags, Clutches, Sunglasses, Clothing, Nightwear & More!'
-export const KEYWORDS =
-  "litekart.in,litekart Accessories,Affordable Luxury,India's Best Women's Online Shopping,Online Jewellery,litekart, online shopping, online jewelry, jewellery, handbags, clutches, sunglasses, ethnic jewellery, nightwear, lingrie, clothing, bracelets, rings, sets, necklace, pendants, earrings, online jewellery in lahore, online shopping in India, litekart online shopping, litekart jewelry"
-export const HOST = 'https://www.misiki.in'
-export const sharingLogo = 'https://www.frontendfun.com/logo.svg'
+const ONE_HOUR = 1000 * 60 * 60
+const FIVE_YEARS = ONE_HOUR * 24 * 365 * 5
+export const LOCAL_HTTP_ENDPOINT = 'http://localhost:6600'
+export const LOCAL_WS_ENDPOINT = 'ws://localhost:6600'
+export const REMOTE_HTTP_ENDPOINT = 'https://apiv2.misiki.in'
+export const REMOTE_WS_ENDPOINT = 'wss://apiv2.misiki.in'
+export const locationExpiry = FIVE_YEARS // Location validity (5 years)
+export const typingTimeout = 0; // After this delay the search api will be fired
+export const loadingTimeout = 500; // Loading indicator will be shown after this delay
+export const userRoles = ["user", "vendor", "manager", "admin"]; // This should be in ascending order of authority. e.g. In this case user will not have access to any other role, where as admin will have the role of user+vendor+manager+admin
+export const currency = { symbol: "₹", code: "INR" };
+export const TITLE = "Misiki Delivery Boy Login";
+export const DESCRIPTION = "Login for Misiki delivery";
+export const KEYWORDS = "misiki, misiki.in, sunabeda, berhempur";
+export const HOST = "https://www.misiki.in";
+export const sharingLogo = "https://www.frontendfun.com/logo.svg";
 export const cities = [
   {
     name: 'Sunabeda',

@@ -112,7 +112,6 @@
 import Textbox from '~/components/ui/Textbox'
 import { location } from '~/mixins'
 import getOtp from '../gql/user/getOtp.gql'
-import verifyOtp from '../gql/user/verifyOtp.gql'
 import signIn from '../gql/user/signIn.gql'
 export default {
   mixins: [location],
@@ -212,18 +211,12 @@ export default {
       } else {
         try {
           this.loading = true
-          this.$store.commit('clearErr')
-          await this.$apollo.mutate({
-            mutation: verifyOtp,
-            variables: { phone, otp }
-          })
+          this.$store.dispatch('auth/verifyOtp', { phone, otp })
           let geoCookie = this.$cookies.get('geo')
           if (!geoCookie && process.client) {
             this.$router.push('/change-location')
           }
-          this.$router.push('/my')
         } catch (e) {
-          this.$store.commit('setErr', e.response.data)
         } finally {
           this.loading = false
         }
