@@ -3,7 +3,6 @@ import updateProfile from '~/gql/user/updateProfile.gql'
 import me from '~/gql/user/me.gql'
 import signOut from '~/gql/user/signOut.gql'
 import verifyOtp from '~/gql/user/verifyOtp.gql'
-
 export const state = () => ({
   user: null,
   guest: false, // Only used to enter inside /checkout
@@ -68,8 +67,7 @@ export const actions = {
         mutation: verifyOtp, variables, fetchPolicy: 'no-cache'
       })).data.verifyOtp
       commit('setUser', data)
-      this.app.router.push('/my')
-      return
+      return this.app.router.push('/my')
     } catch (e) {
       commit('setErr', e, { root: true })
     } finally {

@@ -14,6 +14,7 @@ mutation addToCart($qty: Int!, $pid: ID!, $replace: Boolean) {
       code
       value
       text
+      amount
     }
     shipping {
       charge

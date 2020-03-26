@@ -2,6 +2,7 @@ import cart from '~/gql/cart/cart.gql'
 import addToCart from '~/gql/cart/addToCart.gql'
 import checkout from '~/gql/cart/checkout.gql'
 import applyCoupon from '~/gql/cart/applyCoupon.gql'
+import removeCoupon from '~/gql/cart/removeCoupon.gql'
 
 const state = state => ({
   cart: {},
@@ -68,6 +69,23 @@ const actions = {
     } catch (e) {
       commit('setErr', e, { root: true })
       throw e
+    }
+  },
+  async removeCoupon({ commit }, payload) {
+    try {
+      commit('clearErr', null, { root: true })
+      commit('busy', true, { root: true })
+      let data = (
+        await this.app.apolloProvider.defaultClient.mutate({
+          mutation: removeCoupon,
+          variables: payload
+        })
+      ).data.removeCoupon
+      commit('setCart', data)
+    } catch (err) {
+      commit('setErr', err, { root: true })
+    } finally {
+      commit('busy', false, { root: true })
     }
   },
   async applyCoupon({ commit }, payload) {

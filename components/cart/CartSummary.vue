@@ -54,7 +54,6 @@
         <div class="w-1/2 text-lg font-bold text-left">Total</div>
         <div class="ml-2 w-1/2 font-bold text-black-400 text-right">{{cart.total | currency}}</div>
       </div>
-
       <slot />
     </div>
   </div>
@@ -65,7 +64,7 @@ export default {
   props: {
     cart: { type: Object }
   }
-};
+}
 </script>
 
 <style>

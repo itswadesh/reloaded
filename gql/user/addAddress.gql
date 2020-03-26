@@ -7,7 +7,6 @@ mutation addAddress(
   $city: String
   $country: String
   $state: String
-  $coords: Geo
   $zip: Int
   $phone: String
 ) {
@@ -20,7 +19,6 @@ mutation addAddress(
     city: $city
     country: $country
     state: $state
-    coords: $coords
     zip: $zip
     phone: $phone
   ) {

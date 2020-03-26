@@ -51,7 +51,7 @@
         {{cart.discount.code}}
         <button
           v-if="cart.discount.code"
-          @click="applyCoupon(0)"
+          @click="removeCoupon"
           class="text-sm text-gray-500 focus:outline-none hover:text-gray-600 cursor-pointer"
         >REMOVE</button>
         <nuxt-link
@@ -69,35 +69,38 @@
 </template>
 
 <script>
-import StickyFooter from "~/components/footer/StickyFooter";
-import EmptyCart from "~/components/cart/EmptyCart";
-import CartSummary from "~/components/cart/CartSummary";
-import CartBanners from "~/components/cart/CartBanners";
-import CartItemSkeleton from "~/components/cart/CartItemSkeleton";
-import CartItem from "~/components/cart/CartItem";
-import Button from "~/components/ui/Button";
-import { mapGetters, mapActions } from "vuex";
+import StickyFooter from '~/components/footer/StickyFooter'
+import EmptyCart from '~/components/cart/EmptyCart'
+import CartSummary from '~/components/cart/CartSummary'
+import CartBanners from '~/components/cart/CartBanners'
+import CartItemSkeleton from '~/components/cart/CartItemSkeleton'
+import CartItem from '~/components/cart/CartItem'
+import Button from '~/components/ui/Button'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data() {
-    return {};
+    return {}
   },
   computed: {
     user() {
-      return (this.$store.state.auth || {}).user || null;
+      return (this.$store.state.auth || {}).user || null
     },
     cart() {
-      return this.$store.state.cart || {};
+      return this.$store.state.cart || {}
     },
     ...mapGetters({
-      checkCart: "cart/checkCart",
-      showCart: "cart/showCart"
+      checkCart: 'cart/checkCart',
+      showCart: 'cart/showCart'
     })
   },
   methods: {
-    ...mapActions({ applyCoupon: "cart/applyCoupon" }),
+    ...mapActions({
+      applyCoupon: 'cart/applyCoupon',
+      removeCoupon: 'cart/removeCoupon'
+    }),
     go(url) {
-      this.$router.go(-1);
+      this.$router.go(-1)
     }
   },
   components: {
@@ -108,5 +111,5 @@ export default {
     Button,
     StickyFooter
   }
-};
+}
 </script>

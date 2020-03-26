@@ -1,5 +1,5 @@
-query cart {
-  cart {
+mutation removeCoupon {
+  removeCoupon {
     items {
       pid
       name

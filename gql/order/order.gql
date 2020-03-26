@@ -23,9 +23,6 @@ query order($id: ID!) {
         lng
       }
     }
-    vendor {
-      restaurant
-    }
     items {
       pid
       name
@@ -33,7 +30,10 @@ query order($id: ID!) {
       slug
       price
       qty
+      vendor {
+        restaurant
+      }
+      status
     }
-    status
   }
 }

@@ -18,9 +18,6 @@ mutation capturePay($id: String!, $oid: String!) {
       lastName
       address
     }
-    vendor {
-      restaurant
-    }
     items {
       pid
       name
@@ -28,10 +25,10 @@ mutation capturePay($id: String!, $oid: String!) {
       qty
       img
       price
-    }
-    status
-    delivery {
-      otp
+      status
+      vendor {
+        restaurant
+      }
     }
     comment
     cancellationReason

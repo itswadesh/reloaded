@@ -80,7 +80,7 @@ export default {
             variables: { id: this.$route.query.id }
           })
         ).data.order
-        this.index = this.status.indexOf(this.order.status)
+        this.index = this.status.indexOf(this.order.items[0].status)
       } catch (e) {
         this.$store.commit('setErr', e)
       } finally {

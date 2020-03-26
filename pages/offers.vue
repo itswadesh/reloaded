@@ -1,11 +1,11 @@
 <template>
   <div>
     <Heading title="Offers" />
-    
+
     <div class="bg-gray-900 min-h-screen">
       <div class="flex flex-wrap">
         <Coupon
-          v-for="c in coupons"
+          v-for="c in coupons.data"
           :key="c._id"
           :color="c.color"
           :code="c.code"
@@ -66,7 +66,7 @@ export default {
         })
       ).data.coupons
     } catch (e) {
-      this.$store.commit('setErr',e)
+      this.$store.commit('setErr', e)
     } finally {
       this.$store.commit('busy', false)
     }

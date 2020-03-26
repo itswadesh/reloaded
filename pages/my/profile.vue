@@ -2,17 +2,20 @@
   <div>
     <Heading title="Personal Details" />
     <div class="w-full pb-4 lg:w-1/3 m-auto">
-      
       <form
         class="lg:mx-15 form w-full mb-1"
         novalidate
         autocomplete="off"
         @submit.stop.prevent="submit(profile)"
       >
-        <div
-          class="p-2"
-          v-if="a"
-        >
+        <div class="p-2" v-if="a">
+          <Avatar
+            :image="profile.avatar"
+            name="avatar"
+            folder="avatar"
+            @remove="removeImage"
+            @save="saveImage"
+          />
           <div
             type="tel"
             label="Phone"
@@ -22,58 +25,24 @@
           <div class="w-full flex justify-between mb-4">
             <Textbox
               label="First Name"
-              class="w-full"
+              class="w-1/2 mr-1"
               name="firstName"
               v-model="profile.firstName"
             />
             <Textbox
               label="Last Name"
-              class="w-full"
+              class="w-1/2 ml-1"
               name="lastName"
               v-model="profile.lastName"
             />
           </div>
-          <Textbox
-            label="Address"
-            class="w-full mb-4"
-            name="name"
-            v-model="a.address"
-          />
-          <Textbox
-            type="tel"
-            label="Pin Code"
-            class="w-full mb-4"
-            name="name"
-            v-model="a.zip"
-          />
-          <Textbox
-            label="Town"
-            class="w-full mb-4"
-            name="name"
-            v-model="a.town"
-          />
+          <Textbox label="Address" class="w-full mb-4" name="name" v-model="a.address" />
+          <Textbox type="tel" label="Pin Code" class="w-full mb-4" name="name" v-model="a.zip" />
+          <Textbox label="Town" class="w-full mb-4" name="name" v-model="a.town" />
           <div class="w-full flex justify-between mb-4">
-            <Textbox
-              label="City"
-              class="w-1/2 mr-1"
-              name="name"
-              v-model="a.city"
-            />
-            <Textbox
-              label="State"
-              class="w-1/2 ml-1"
-              name="name"
-              v-model="a.state"
-            />
+            <Textbox label="City" class="w-1/2 mr-1" name="name" v-model="a.city" />
+            <Textbox label="State" class="w-1/2 ml-1" name="name" v-model="a.state" />
           </div>
-
-          <ImageUpload
-            :image="profile.avatar"
-            name="avatar"
-            folder="avatar"
-            @remove="removeImage"
-            @save="saveImage"
-          />
         </div>
         <div class="flex shadow lg:shadow-none fixed lg:relative bottom-0 justify-between w-full">
           <button
@@ -98,7 +67,7 @@ const Heading = () => import('~/components/Heading')
 const Textbox = () => import('~/components/ui/Textbox')
 const Checkbox = () => import('~/components/ui/Checkbox')
 const GeoLocation = () => import('~/components/GeoLocation')
-const ImageUpload = () => import('~/components/ImageUpload')
+const Avatar = () => import('~/components/Avatar')
 import me from '~/gql/user/me.gql'
 
 import { location } from '~/mixins'
@@ -118,7 +87,7 @@ export default {
     Textbox,
     Checkbox,
     GeoLocation,
-    ImageUpload
+    Avatar
   },
   computed: {
     // user() {
@@ -150,7 +119,7 @@ export default {
       // this.profile.public = this.profile.info.public || false;
       // this.profile.restaurant = this.profile.info.restaurant;
     } catch (e) {
-     this.$store.commit('setErr',e)
+      this.$store.commit('setErr', e)
     } finally {
       this.$store.commit('busy', false)
     }
@@ -186,7 +155,7 @@ export default {
         delete this.profile.info.__typename
         return await this.updateProfile(this.profile)
       } catch (e) {
-       this.$store.commit('setErr',e)
+        this.$store.commit('setErr', e)
       } finally {
         this.$store.commit('busy', false)
       }
