@@ -19,7 +19,6 @@
         v-if="order.payment.method == 'COD'"
         class="bg-green-500 text-white text-center p-1 rounded"
       >
-        
       </p>-->
       <div class="flex justify-center" v-if="order.payment.method == 'COD'">
         <button
@@ -45,7 +44,12 @@
             </div>-->
           </div>
         </div>
-        <div class="flex bg-white py-2 border-b" v-for="i in order.items" :key="i._id">
+        <nuxt-link
+          :to="'/'+i.slug"
+          class="flex bg-white py-2 border-b"
+          v-for="i in order.items"
+          :key="i._id"
+        >
           <img :src="i.img" class="h-12 m-2 w-12" />
           <div class="flex flex-col p-2 text-left">
             <div class="font-bold">{{ i.name }}</div>
@@ -59,7 +63,7 @@
               >{{ i.price | currency }} * {{ i.qty }}</div>
             </div>
           </div>
-        </div>
+        </nuxt-link>
         <nuxt-link
           to="/search/"
           class="block border-b text-red-600 font-semibold text-sm bg-white p-2 text-left rounded"
@@ -72,7 +76,7 @@
         </div>
         <div class="price-breakup">
           <div>Tax & fees</div>
-          <div>{{ order.amount.tax | currency }}</div>
+          <div>{{ order.amount.tax.cgst | currency('₹',2) }} + {{ order.amount.tax.sgst | currency('₹',2) }}</div>
         </div>
         <div class="price-breakup" v-if="order.amount.discount">
           <div>Discount</div>

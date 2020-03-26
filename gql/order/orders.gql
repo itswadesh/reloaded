@@ -10,7 +10,11 @@ query orders {
       amount {
         qty
         subtotal
-        tax
+        tax{
+          cgst
+          sgst
+          igst
+        }
         discount
         total
         shipping

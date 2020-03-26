@@ -9,7 +9,11 @@ query order($id: ID!) {
     amount {
       qty
       subtotal
-      tax
+      tax{
+        cgst
+        sgst
+        igst
+      }
       discount
       total
       shipping

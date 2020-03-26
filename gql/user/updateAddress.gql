@@ -1,17 +1,16 @@
-
-mutation updateAddress($id: ID!
- $email: String
-   $firstName: String 
-    $lastName: String  
-      $address: String 
-       $town: String 
-         $city: String
-           $country: String
-            $state: String
-                $coords: Geo
-    $zip: String  
-     $phone: String
-){
+mutation updateAddress(
+  $id: ID!
+  $email: String
+  $firstName: String
+  $lastName: String
+  $address: String
+  $town: String
+  $city: String
+  $country: String
+  $state: String
+  $zip: Int
+  $phone: String
+) {
   updateAddress(
     id: $id
     email: $email
@@ -22,7 +21,6 @@ mutation updateAddress($id: ID!
     city: $city
     country: $country
     state: $state
-    coords: $coords
     zip: $zip
     phone: $phone
   ) {

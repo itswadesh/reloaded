@@ -53,6 +53,8 @@ export const mutations = {
     if (e.graphQLErrors) state.errors = e.graphQLErrors
     if (e.networkError)
       state.errors = e.networkError.result && e.networkError.result.errors
+    else
+      state.errors = [{ message: e }]
     console.log('err at store...', e.toString())
     // if (state.errors && state.errors[0])
     //   this.$toast.error(state.errors[0].message).goAway(5000)
