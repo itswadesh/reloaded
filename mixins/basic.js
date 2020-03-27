@@ -63,8 +63,8 @@ export default {
     },
     async cloneConfirmed(item) {
       let itemCopy = { ...item }
-      delete itemCopy._id
-      await this.$axios.$post(this.api, itemCopy)
+      delete itemCopy.id
+      await this.$apollo.mutate({ mutation: this.query, variables: itemCopy, fetchPolicy: 'no-cache' })
       this.flush()
       this.getData()
     },
@@ -87,13 +87,11 @@ export default {
     },
     async deleteConfirmed(id) {
       try {
-        this.$store.commit('busy', true);
-        await this.$axios.$delete(this.api + '/' + id)
-        this.$store.commit('busy', false);
+        this.$store.commit('clearErr');
+        await this.$apollo.mutate({ mutation: this.query, variables: { id }, fetchPolicy: 'no-cache' })
         this.flush()
         this.getData()
       } catch (e) {
-        this.$store.commit('busy', false);
         this.$store.commit('setErr', e);
       } finally {
         this.$store.commit('busy', false);
@@ -101,12 +99,12 @@ export default {
     },
     async getData() {
       let params = this.$route.query;
+      params.page = +params.page
       if (this.meta.busy || this.meta.end)
         return
-      this.$store.commit('busy', true);
+      this.$store.commit('clearErr');
       try {
-        let { data, count, pageSize, page } = await this.$axios.$get(this.apiQ || this.api, { params })
-        this.$store.commit('busy', false);
+        let { data, count, pageSize, page } = (await this.$apollo.query({ query: this.query, variables: params, fetchPolicy: 'no-cache' })).data[this.model]
         if (data) {
           this.meta.page = this.$route.query.page || 1
           this.count = count
@@ -118,6 +116,7 @@ export default {
       }
       catch (e) {
         this.$store.commit('setErr', e);
+      } finally {
         this.$store.commit('busy', false);
       }
     }, go(id) {
@@ -154,21 +153,21 @@ export default {
     }
   },
   watch: {
-    // filterInput: {
-    //   immediate: false,
-    //   handler(value, oldValue) {
-    //     if (!oldValue) return; // Do not trigger on page load
-    //     clearTimeout(this.typingTimer);
-    //     let vm = this;
-    //     this.typingTimer = setTimeout(function () {
-    //       if (!value || value == "undefined") value = ""; // When clear button clicked
-    //       let query = { ...vm.$route.query }
-    //       query.page = 1
-    //       query.search = value
-    //       vm.$router.push({ query });
-    //     }, vm.typingTimeout);
-    //   }
-    // },
+    filterInput: {
+      immediate: false,
+      handler(value, oldValue) {
+        if (!oldValue) return; // Do not trigger on page load
+        clearTimeout(this.typingTimer);
+        let vm = this;
+        this.typingTimer = setTimeout(function () {
+          if (!value || value == "undefined") value = ""; // When clear button clicked
+          let query = { ...vm.$route.query }
+          query.page = 1
+          query.search = value
+          vm.$router.push({ query });
+        }, vm.typingTimeout);
+      }
+    },
     "$route.query": {
       immediate: true,
       handler(value, oldValue) {

@@ -1,0 +1,18 @@
+query categories($page: Int,$search: String, $limit:Int, $sort:String) {
+  categories(page: $page, search: $search, limit:$limit, sort:$sort) {
+    count
+    page
+    pageSize
+    data {
+      id
+      name
+      slug
+      img
+      megamenu
+      featured
+      active
+      createdAt
+      updatedAt
+    }
+  }
+}

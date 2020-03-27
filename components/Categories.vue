@@ -1,36 +1,45 @@
 <template>
   <div
     class="flex mb-2 shadow-lg w-full bg-gray-100 border-t overflow-x-auto sticky top-0 z-10 text-gray-600"
+    v-if="categories"
   >
-    <nuxt-link to="/search/rice" class="category-item">
-      <i class="fa fa-search" />
-      <span class="text-xs">Biryani</span>
-    </nuxt-link>
-    <nuxt-link to="/search/tandoori" class="category-item">
-      <i class="fa fa-truck" />
-      <span class="text-xs">Tandoori</span>
-    </nuxt-link>
-    <nuxt-link to="/search/roti" class="category-item">
-      <i class="fa fa-user" />
-      <span class="text-xs">Roti</span>
-    </nuxt-link>
-    <nuxt-link to="/search/tiffin" class="category-item">
-      <i class="fa fa-tag" />
-      <span class="text-xs">Tiffin</span>
-    </nuxt-link>
-    <nuxt-link to="/search/curries" class="category-item">
-      <i class="fa fa-tag" />
-      <span class="text-xs">Curries</span>
-    </nuxt-link>
-    <nuxt-link to="/search/combo" class="category-item">
-      <i class="fa fa-tag" />
-      <span class="text-xs">Combo</span>
+    <nuxt-link
+      v-for="c in categories.data"
+      :key="c.id"
+      :to="`/search/${c.slug}`"
+      class="category-item"
+    >
+      <!-- <i :class="`fa fa-${c.icon}`" /> -->
+      <img :src="c.img" class="w-8 h-8 rounded-full" />
+      <span class="text-xs">{{c.name}}</span>
     </nuxt-link>
   </div>
 </template>
 
 <script>
-export default {}
+import categories from '~/gql/category/categories.gql'
+
+export default {
+  data() {
+    return {
+      categories: null
+    }
+  },
+  async mounted() {
+    try {
+      this.$store.commit('clearErr', false)
+      this.categories = (
+        await this.$apollo.query({
+          query: categories
+        })
+      ).data.categories
+    } catch (e) {
+      this.$store.commit('setErr', e)
+    } finally {
+      this.$store.commit('busy', false)
+    }
+  }
+}
 </script>
 
 <style></style>
