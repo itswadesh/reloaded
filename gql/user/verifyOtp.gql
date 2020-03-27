@@ -3,6 +3,7 @@ mutation verifyOtp($phone:String!, $otp:String!){
     id
     phone
     avatar
+    role
     firstName
     lastName
   }
