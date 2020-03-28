@@ -1,5 +1,5 @@
-query category($id: String) {
-  category(id: $id) {
+query category($id: String, $slug: String) {
+  category(id: $id, slug: $slug) {
     id
     name
     slug

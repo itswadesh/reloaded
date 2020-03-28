@@ -3,12 +3,7 @@
     class="flex mb-2 shadow-lg w-full bg-gray-100 border-t overflow-x-auto sticky top-0 z-10 text-gray-600"
     v-if="categories"
   >
-    <nuxt-link
-      v-for="c in categories.data"
-      :key="c.id"
-      :to="`/search/${c.slug}`"
-      class="category-item"
-    >
+    <nuxt-link v-for="c in categories.data" :key="c.id" :to="`/c/${c.slug}`" class="category-item">
       <!-- <i :class="`fa fa-${c.icon}`" /> -->
       <img :src="c.img" class="w-8 h-8 rounded-full" />
       <span class="text-xs">{{c.name}}</span>

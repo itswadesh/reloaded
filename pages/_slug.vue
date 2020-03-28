@@ -141,18 +141,7 @@
             >{{ product.vendor.info.speciality }}</div>
           </div>
         </div>
-        <!-- <div class="mb-4" v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
-          <h3 class="font-bold mb-2 px-3 text-2xl">Chef's today's menu</h3>
-          <div class="flex flex-wrap px-2">
-            <div
-              class="px-1 w-1/3 mb-2"
-              v-for="(p, ix) in product.vendor.info.kitchenPhotos"
-              :key="ix"
-            >
-              <img v-lazy="p" class="object-cover h-24 rounded-lg shadow" />
-            </div>
-          </div>
-        </div>-->
+        <ChefMenu :vendor="product.vendor.id" />
         <div class="mb-4" v-if="product.vendor.info && product.vendor.info.kitchenPhotos">
           <h3 class="font-bold mb-2 px-3 text-2xl">Kitchen Photos</h3>
           <div class="flex flex-wrap px-2">
@@ -176,6 +165,7 @@
 import CartButtons from '~/components/cart/CartButtons'
 import CartBar from '~/components/cart/CartBar'
 import StickyFooter from '~/components/footer/StickyFooter'
+import ChefMenu from '~/components/ChefMenu'
 import { mapGetters } from 'vuex'
 import productSlug from '~/gql/product/productSlug.gql'
 import { TITLE, DESCRIPTION, KEYWORDS, sharingLogo } from '~/config'
@@ -183,7 +173,7 @@ const host = process.server
   ? this.$ssrContext.req.headers.host
   : window.location.host
 export default {
-  components: { CartButtons, StickyFooter, CartBar },
+  components: { ChefMenu, CartButtons, StickyFooter, CartBar },
   data() {
     return {
       host,

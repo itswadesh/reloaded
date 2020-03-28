@@ -4,6 +4,8 @@ query products(
   $limit: Int
   $search: String
   $sort: String
+  $vendor: String
+  $category: String
 ) {
   products(
     page: $page
@@ -11,6 +13,8 @@ query products(
     limit: $limit
     search: $search
     sort: $sort
+    vendor: $vendor
+    category: $category
   ) {
     data {
       id

@@ -7,6 +7,7 @@ query productSlug($slug: String!) {
     price
     stock
     vendor {
+      id
       firstName
       lastName
       rating
